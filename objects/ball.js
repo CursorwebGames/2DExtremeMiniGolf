@@ -26,6 +26,9 @@ class Ball {
         this.checkBounds();
         this.pos.add(this.vel);
         this.vel.mult(1 - friction);
+        if (this.vel.mag() < 0.02) {
+            this.vel.setMag(0);
+        }
     }
 
     checkBounds() {
