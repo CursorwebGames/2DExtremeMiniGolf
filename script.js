@@ -6,9 +6,10 @@ const walls = [];
 let mainb;
 
 function setup() {
+    noStroke();
     createCanvas(windowWidth, windowHeight);
-    balls.push(new Ball(width / 2 - 30, height / 2, 15));
-    balls.push(new Ball(width / 2 + 30, height / 2, 45));
+    balls.push(new Ball(width / 2 - 30, height / 2, 30));
+    balls.push(new Ball(width / 2 + 30, height / 2, 30));
 
     walls.push(new Wall(width / 2 - 100, height / 2 - 200, 200, 40));
 
@@ -19,7 +20,7 @@ function setup() {
 }
 
 function draw() {
-    background(255);
+    background(123, 255, 123);
 
     // duplicate twice, so as to newton's third law
     for (let i = 0; i < balls.length; i++) {
@@ -56,10 +57,10 @@ function draw() {
 function mouseClicked() {
     // mainb.vel = createVector(2, -16);
     if (!mainb) {
-        mainb = new Ball(mouseX, mouseY);
+        mainb = new MainBall(mouseX, mouseY);
         balls.push(mainb);
     } else {
-        const vec = p5.Vector.sub(createVector(mouseX, mouseY), mainb.pos).limit(16);
+        const vec = p5.Vector.sub(createVector(mouseX, mouseY), mainb.pos).div(32);
         console.log("start", mouseX, mouseY)
         console.log("vec", vec.x, vec.y);
         mainb.vel = vec;
