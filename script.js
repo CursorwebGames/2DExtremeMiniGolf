@@ -57,6 +57,7 @@ class Ball {
     collide(other) {
         // why the perpendicular?
         let dir = p5.Vector.sub(other.pos, this.pos);
+        this.vel.mult(0.8);
         let speed = this.vel.mag();
         other.applyForce(dir.setMag(speed));
     }
@@ -81,12 +82,25 @@ class Wall {
 
         // apply -2 * v to the component
         // as a "bounce"
-        if (cx < this.x || cx > this.x + this.w) {
+        // energy loss
+        if (cx < this.x) {
             obj.vel.x *= -1;
+            obj.pos.x = this.x - rad;
         }
 
-        if (cy < this.y || cy > this.y + this.h) {
+        if (cx > this.x + this.w) {
+            obj.vel.x *= -1;
+            obj.pos.x = this.x + this.w + rad;
+        }
+
+        if (cy < this.y) {
             obj.vel.y *= -1;
+            obj.pos.y = this.y - rad;
+        }
+
+        if (cy > this.y + this.h) {
+            obj.vel.y *= -1;
+            obj.pos.y = this.y + this.h + rad;
         }
     }
 }
