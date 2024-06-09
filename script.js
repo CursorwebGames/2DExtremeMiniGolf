@@ -21,6 +21,8 @@ function setup() {
     static.push(new Bouncer(width / 2 - 70, height / 2 - 120, 30));
     static.push(new Bouncer(width / 2 + 70, height / 2 - 120, 30));
 
+    static.push(new Slope(200, height / 2 - 100, 100, 200, createVector(0, -1)));
+
     mainb = new MainBall(width / 2, height / 2 + 200);
     balls.push(mainb);
 
