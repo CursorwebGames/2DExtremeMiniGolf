@@ -2,7 +2,7 @@
 // for walls
 
 const balls = [];
-const walls = [];
+const static = [];
 let mainb;
 
 let mousex, mousey;
@@ -15,7 +15,11 @@ function setup() {
     balls.push(new Ball(width / 2 - 30, height / 2, 30));
     balls.push(new Ball(width / 2 + 30, height / 2, 30));
 
-    walls.push(new Wall(width / 2 - 100, height / 2 - 200, 200, 40));
+    // static.push(new Wall(width / 2 - 100, height / 2 - 200, 200, 40));
+
+    static.push(new Bouncer(width / 2, height / 2 - 80, 30));
+    static.push(new Bouncer(width / 2 - 70, height / 2 - 120, 30));
+    static.push(new Bouncer(width / 2 + 70, height / 2 - 120, 30));
 
     mainb = new MainBall(width / 2, height / 2 + 200);
     balls.push(mainb);
@@ -78,9 +82,9 @@ function draw() {
         }
 
         // todo: make this ANY static physics object
-        for (const wall of walls) {
-            if (circRectCol(ball.pos.x, ball.pos.y, ball.r, wall.x, wall.y, wall.w, wall.h)) {
-                wall.collide(ball);
+        for (const obj of static) {
+            if (obj.isColliding(ball)) {
+                obj.collide(ball);
             }
         }
     }
@@ -89,38 +93,16 @@ function draw() {
         ball.draw();
     }
 
-    for (const wall of walls) {
-        wall.draw();
+    for (const obj of static) {
+        obj.draw();
     }
 }
 
 function mouseClicked() {
-    if (mainb.vel.mag() != 0) return;
+    // if (mainb.vel.mag() != 0) return;
 
     const vec = p5.Vector.sub(createVector(mousex, mousey), mainb.pos).div(32);
-    console.log("start", mousex, mousey)
+    console.log("start", mousex, mousey);
     console.log("vec", vec.x, vec.y);
     mainb.vel = vec;
-}
-
-function circCircCol(vec1, r1, vec2, r2) {
-    return vec1.dist(vec2) <= r1 + r2;
-}
-
-function circRectCol(cx, cy, r, rx, ry, rw, rh) {
-    let testx, testy;
-
-    // check if on left edge, then check collision left edge, etc
-    if (cx < rx) testx = rx;
-    else if (cx > rx + rw) testx = rx + rw;
-    else testx = cx; // within the rect, so collide
-
-    if (cy < ry) testy = ry;
-    else if (cy > ry + rh) testy = ry + rh;
-    else testy = cy;
-
-    let distx = cx - testx;
-    let disty = cy - testy;
-
-    return Math.sqrt(distx ** 2 + disty ** 2) < r;
 }

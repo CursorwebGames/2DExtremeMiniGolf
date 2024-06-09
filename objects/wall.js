@@ -39,4 +39,8 @@ class Wall {
             obj.pos.y = this.y + this.h + obj.r;
         }
     }
+
+    isColliding(ball) {
+        return circRectCol(ball.pos.x, ball.pos.y, ball.r, this.x, this.y, this.w, this.h);
+    }
 }

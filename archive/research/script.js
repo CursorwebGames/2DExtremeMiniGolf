@@ -1,5 +1,7 @@
 // https://codepen.io/axxl/pen/PVxqPv
 
+// https://jeffreythompson.org/collision-detection/circle-rect.php
+
 // https://github.com/Kimeiga/billiards?tab=readme-ov-file
 
 var ball;
