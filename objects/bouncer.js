@@ -2,11 +2,13 @@ class Bouncer {
     constructor(x, y, r) {
         this.pos = createVector(x, y);
         this.r = r;
+        this.hit = 0;
     }
 
     draw() {
-        fill("pink");
-        circle(this.pos.x, this.pos.y, this.r * 2);
+        fill("yellow");
+        if (this.hit > 0) this.hit--;
+        circle(this.pos.x, this.pos.y, this.r * 2 + (this.hit ? 20 : 0));
     }
 
     isColliding(obj) {
@@ -15,7 +17,7 @@ class Bouncer {
 
     collide(obj) {
         let dir = p5.Vector.sub(obj.pos, this.pos);
-        let speed = obj.vel.mag();
-        obj.applyForce(dir.setMag(speed * 4).limit(50));
+        obj.applyForce(dir.setMag(16));
+        this.hit = 10;
     }
 }
