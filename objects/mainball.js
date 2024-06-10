@@ -1,6 +1,7 @@
 class MainBall extends Ball {
     constructor(x, y) {
         super(x, y, 10);
+        this.inHole = false;
     }
 
     draw() {
@@ -8,7 +9,7 @@ class MainBall extends Ball {
         fill(255);
         circle(this.pos.x, this.pos.y, this.r * 2);
 
-        if (this.vel.mag() == 0) {
+        if (this.vel.mag() == 0 && !this.inHole) {
             for (let i = 1; i < 6; i++) {
                 let x = lerp(this.pos.x, mousex, i / 5);
                 let y = lerp(this.pos.y, mousey, i / 5);

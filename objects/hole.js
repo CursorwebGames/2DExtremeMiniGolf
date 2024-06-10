@@ -14,9 +14,12 @@ class Hole {
         return circCircCol(ball.pos, ball.r, this.pos, this.r);
     }
 
-    collide(ball) {
-        if (ball.vel.mag() < 0.001) {
-            return true;
+    collide(ball, callback) {
+        mainb.inHole = true;
+
+        if (ball.vel.mag() < 0.001 && !this.in) {
+            callback();
+            this.in = true;
         }
 
         // slow ball down

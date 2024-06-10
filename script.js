@@ -7,21 +7,11 @@ const static = [];
 let mainb;
 let hole;
 
-let camera;
+let camera, transition;
 
 function setup() {
     noStroke();
     createCanvas(windowWidth, windowHeight);
-    balls.push(new Ball(width / 2 - 30, height / 2, 30));
-    balls.push(new Ball(width / 2 + 30, height / 2, 30));
-
-    static.push(new Wall(width - 200, height / 2 - 100, 25, 200));
-
-    static.push(new Bouncer(width / 2, height / 2 - 80, 30));
-    static.push(new Bouncer(width / 2 - 70, height / 2 - 120, 30));
-    static.push(new Bouncer(width / 2 + 70, height / 2 - 120, 30));
-
-    static.push(new Slope(200, height / 2 - 100, 100, 200, createVector(0, -1)));
 
     hole = new Hole(width / 2 + 90, height / 2);
 
@@ -29,25 +19,66 @@ function setup() {
     balls.push(mainb);
 
     camera = new Camera(0, 0, width, height);
+    transition = new Transition();
+}
+
+class Transition {
+    constructor() {
+        this.a = 0;
+
+        // 0: nothing
+        // 1: fade out
+        // -1: fade back in
+        this.direction = 0;
+    }
+
+    draw() {
+        fill(255, this.a);
+        rect(0, 0, width, height);
+
+        this.a += this.direction * 5;
+
+        if (this.a == 300) {
+            console.log('todo: next level')
+            this.direction = -1;
+        }
+
+        if (this.a < 0) {
+            this.end();
+        }
+    }
+
+    begin() {
+        // todo: handler
+        this.direction = 1;
+    }
+
+    end() {
+        this.direction = 0;
+        this.a = 0;
+    }
 }
 
 function draw() {
     background(123, 255, 123);
 
+    push();
     camera.draw();
 
+    // todo: boundaries
     push();
     strokeWeight(1);
-    stroke(0);
+    stroke(255);
     line(0, 0, width, 0);
     line(0, 0, 0, height);
     line(width, 0, width, height);
     line(0, height, width, height);
     pop();
 
-    // duplicate twice, so as to newton's third law
     for (let i = 0; i < balls.length; i++) {
         const ball = balls[i];
+
+        // duplicate twice, so as to newton's third law
         for (let j = 0; j < balls.length; j++) {
             if (i == j) continue;
             const other = balls[j];
@@ -64,11 +95,9 @@ function draw() {
     }
 
     if (hole.isColliding(mainb)) {
-        console.log(hole.collide(mainb));
-        if (hole.collide(mainb)) {
-            console.log('next level');
-            noLoop();
-        }
+        hole.collide(mainb, () => {
+            transition.begin();
+        })
     }
 
     hole.draw();
@@ -80,13 +109,17 @@ function draw() {
     for (const obj of static) {
         obj.draw();
     }
+    pop();
+
+    transition.draw();
 }
 
 function mouseClicked() {
     // if (mainb.vel.mag() != 0) return;
 
     const vec = p5.Vector.sub(createVector(mousex, mousey), mainb.pos).div(32);
-    console.log("start", mousex, mousey);
-    console.log("vec", vec.x, vec.y);
     mainb.vel = vec;
+
+    // console.log("start", mainb.pos.x, mainb.pos.y);
+    // console.log("vec", vec.x, vec.y);
 }
