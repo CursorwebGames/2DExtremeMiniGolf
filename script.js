@@ -1,9 +1,11 @@
 // todo: between-frame calculations to truly determine what collide first etc
+// todo: angle on ball collisions
 // for walls
 
 const balls = [];
 const static = [];
 let mainb;
+let hole;
 
 let mousex, mousey;
 
@@ -15,13 +17,15 @@ function setup() {
     balls.push(new Ball(width / 2 - 30, height / 2, 30));
     balls.push(new Ball(width / 2 + 30, height / 2, 30));
 
-    // static.push(new Wall(width / 2 - 100, height / 2 - 200, 200, 40));
+    static.push(new Wall(width - 200, height / 2 - 100, 25, 200));
 
     static.push(new Bouncer(width / 2, height / 2 - 80, 30));
     static.push(new Bouncer(width / 2 - 70, height / 2 - 120, 30));
     static.push(new Bouncer(width / 2 + 70, height / 2 - 120, 30));
 
     static.push(new Slope(200, height / 2 - 100, 100, 200, createVector(0, -1)));
+
+    hole = new Hole(width / 2 + 90, height / 2);
 
     mainb = new MainBall(width / 2, height / 2 + 200);
     balls.push(mainb);
@@ -83,13 +87,18 @@ function draw() {
             }
         }
 
-        // todo: make this ANY static physics object
         for (const obj of static) {
             if (obj.isColliding(ball)) {
                 obj.collide(ball);
             }
         }
     }
+
+
+    if (hole.isColliding(mainb)) {
+        hole.collide(mainb);
+    }
+    hole.draw();
 
     for (const ball of balls) {
         ball.draw();
