@@ -1,6 +1,6 @@
 class MainBall extends Ball {
     constructor(x, y) {
-        super(x, y, 15);
+        super(x, y, 10);
     }
 
     draw() {
