@@ -2,21 +2,23 @@
 // todo: angle on ball collisions
 // for walls
 
-const balls = [];
-const static = [];
+let levels;
+let balls = [];
+let static = [];
 let mainb;
 let hole;
 
 let camera, transition;
 
+let level = 0;
+
 function setup() {
+    levels = genLevels();
+
     noStroke();
     createCanvas(windowWidth, windowHeight);
 
-    hole = new Hole(width / 2 + 90, height / 2);
-
-    mainb = new MainBall(width / 2, height / 2 + 200);
-    balls.push(mainb);
+    generateLevel();
 
     camera = new Camera(0, 0, width, height);
     transition = new Transition();
@@ -39,7 +41,8 @@ class Transition {
         this.a += this.direction * 5;
 
         if (this.a == 300) {
-            console.log('todo: next level')
+            level++;
+            generateLevel();
             this.direction = -1;
         }
 
@@ -97,7 +100,7 @@ function draw() {
     if (hole.isColliding(mainb)) {
         hole.collide(mainb, () => {
             transition.begin();
-        })
+        });
     }
 
     hole.draw();
@@ -122,4 +125,16 @@ function mouseClicked() {
 
     // console.log("start", mainb.pos.x, mainb.pos.y);
     // console.log("vec", vec.x, vec.y);
+}
+
+function generateLevel() {
+    let levelData = levels[level];
+    mainb = new MainBall(...levelData.mainb);
+    hole = new Hole(...levelData.hole);
+
+    // todo: deep copy
+    static = levelData.static;
+    balls = levelData.balls;
+
+    balls.push(mainb);
 }
