@@ -52,7 +52,6 @@ class Transition {
     }
 
     begin() {
-        // todo: handler
         this.direction = 1;
     }
 

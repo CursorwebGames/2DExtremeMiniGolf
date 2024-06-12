@@ -5,7 +5,8 @@ function genLevels() {
             hole: [300, 300],
             bounds: [[0, 0], [900, 900]],
             static: [
-                new Ice(100, 100, 30, 100),
+                new Ice(0, 200, 300 - 50, 50),
+                new Ice(200, 0, 50, 300 - 50),
             ],
             balls: [
 

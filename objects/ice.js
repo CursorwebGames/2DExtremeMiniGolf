@@ -4,6 +4,7 @@ class Ice extends Wall {
         this.disabled = false;
         this.shatter = createVector(this.x, this.y);
         this.normal = createVector(0, 0);
+        this.mag = max(w, h);
     }
 
     draw() {
@@ -18,15 +19,19 @@ class Ice extends Wall {
             push();
             strokeWeight(1);
             stroke(255, 125);
-            fill(123, 0, 255, 125);
+            fill(123, 0, 255, 20);
             rect(this.x + 1, this.y + 1, this.w - 2, this.h - 2);
 
-            // okay, time to ask on stackoverflow!
-            strokeWeight(2);
+            beginClip();
+            rect(this.x + 1, this.y + 1, this.w - 2, this.h - 2);
+            endClip();
+
+            strokeWeight(4);
+            stroke(255, 100);
             for (let i = 0; i < PI / 2; i += 0.5) {
-                let vec = p5.Vector.rotate(this.normal, i).mult(this.w / 2).add(this.shatter);
+                let vec = p5.Vector.rotate(this.normal, i).mult(this.mag).add(this.shatter);
                 line(this.shatter.x, this.shatter.y, vec.x, vec.y);
-                vec = p5.Vector.rotate(this.normal, -i).mult(this.w / 2).add(this.shatter);
+                vec = p5.Vector.rotate(this.normal, -i).mult(this.mag).add(this.shatter);
                 line(this.shatter.x, this.shatter.y, vec.x, vec.y);
             }
             pop();
