@@ -14,35 +14,48 @@ function circRectCol(cx, cy, r, rx, ry, rw, rh) {
     else if (cy > ry + rh) testy = ry + rh;
     else testy = cy;
 
-    let distx = cx - testx;
-    let disty = cy - testy;
+    const distx = cx - testx;
+    const disty = cy - testy;
 
     return Math.sqrt(distx ** 2 + disty ** 2) < r;
 }
 
-function circLineCol(cx, cy, r, x1, y1, x2, y2) {
+function circLineCol(circPoint, r, startPoint, endPoint) {
     // project circle onto line
     // then check if that point is on the line segment
     // and check if radius < r
     // https://en.wikipedia.org/wiki/Vector_projection
 
-    let startPoint = createVector(x1, y1);
-    let endPoint = createVector(x2, y2);
-    let circPoint = createVector(cx, cy);
+    const circVec = p5.Vector.sub(circPoint, startPoint);
+    const lineVec = p5.Vector.sub(endPoint, startPoint);
 
-    let circVec = p5.Vector.sub(circPoint, startPoint);
-    let lineVec = createVector(x2, y2).sub(startPoint);
+    const projPoint = lineVec.setMag(circVec.dot(lineVec) / lineVec.mag()).add(startPoint);
 
-    let projPoint = lineVec.setMag(circVec.dot(lineVec) / lineVec.mag()).add(startPoint);
-    // console.log(projPoint.x, projPoint.y);
-
-    fill(255, 0, 0);
-    circle(projPoint.x, projPoint.y, 5);
-
-    // increase length by 2 for the r on left and right of line from center
-    if (projPoint.dist(startPoint) + projPoint.dist(endPoint) > startPoint.dist(endPoint) + 2 * r) {
+    // increase length by r for leftmost and rightmost points
+    if (projPoint.dist(startPoint) + projPoint.dist(endPoint) > startPoint.dist(endPoint) + r) {
         return false;
     }
 
-    return projPoint.dist(circPoint) < r;
+    if (projPoint.dist(circPoint) < r) {
+        return projPoint;
+    } else {
+        return false;
+    }
+}
+
+// points: [int, int][]
+function circPolyCol(circPoint, r, points) {
+    for (let i = 0; i < points.length; i++) {
+        const n = (i + 1) % points.length;
+
+        const start = createVector(...points[i]);
+        const end = createVector(...points[n]);
+
+        const res = circLineCol(circPoint, r, start, end);
+        if (res) {
+            return res;
+        }
+    }
+
+    return false;
 }

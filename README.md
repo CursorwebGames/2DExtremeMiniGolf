@@ -1,6 +1,8 @@
 # Extreme Mini Golf
 Like the game pigeon golf, but with more fun!
 
+You can play the github hosted game here: https://cursorwebgames.github.io/2DExtremeMiniGolf/
+
 ## Mechanics
 - Wall
     - Moving Wall

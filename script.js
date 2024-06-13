@@ -90,8 +90,9 @@ function draw() {
         }
 
         for (const obj of static) {
-            if (obj.isColliding(ball)) {
-                obj.collide(ball);
+            const res = obj.isColliding(ball);
+            if (res) {
+                obj.collide(ball, res);
             }
         }
     }
@@ -127,7 +128,7 @@ function mouseClicked() {
 }
 
 function generateLevel() {
-    let levelData = levels[level];
+    const levelData = levels[level];
     mainb = new MainBall(...levelData.mainb);
     hole = new Hole(...levelData.hole);
 
