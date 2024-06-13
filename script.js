@@ -13,10 +13,10 @@ let camera, transition;
 let level = 0;
 
 function setup() {
-    levels = genLevels();
+    createCanvas(windowWidth, windowHeight);
 
     noStroke();
-    createCanvas(windowWidth, windowHeight);
+    levels = genLevels();
 
     generateLevel();
 

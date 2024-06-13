@@ -1,6 +1,18 @@
 function genLevels() {
     return [
         {
+            mainb: [20, 20],
+            hole: [200, height / 2 + 200],
+            bounds: [],
+            static: [
+                new Teleporter(80, 80, 80, height - 100),
+                new Wall(0, height / 2 - 50, width, 100)
+            ],
+            balls: [
+
+            ]
+        },
+        {
             mainb: [200, 100],
             hole: [710, 117],
             bounds: [],

@@ -10,6 +10,9 @@
     - Have quadtree store components of static for collisions (e.g. line collision, circle collision)
 - No need for dynamic objects optimizations
 
+- Consider using webpack for imports and also
+- Should allow for typescript and better organization
+
 ## CCD
 CCD by halving velocity and multiple substeps (todo: calculations on ratio & further optimizations)
 
