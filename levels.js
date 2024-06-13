@@ -2,7 +2,7 @@ function genLevels() {
     return [
         {
             mainb: [0, 0],
-            hole: [300, 300],
+            hole: [-500, -500],
             bounds: [[0, 0], [900, 900]],
             static: [
                 new Ice(0, 200, 300 - 50, 50),

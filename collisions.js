@@ -19,3 +19,30 @@ function circRectCol(cx, cy, r, rx, ry, rw, rh) {
 
     return Math.sqrt(distx ** 2 + disty ** 2) < r;
 }
+
+function circLineCol(cx, cy, r, x1, y1, x2, y2) {
+    // project circle onto line
+    // then check if that point is on the line segment
+    // and check if radius < r
+    // https://en.wikipedia.org/wiki/Vector_projection
+
+    let startPoint = createVector(x1, y1);
+    let endPoint = createVector(x2, y2);
+    let circPoint = createVector(cx, cy);
+
+    let circVec = p5.Vector.sub(circPoint, startPoint);
+    let lineVec = createVector(x2, y2).sub(startPoint);
+
+    let projPoint = lineVec.setMag(circVec.dot(lineVec) / lineVec.mag()).add(startPoint);
+    // console.log(projPoint.x, projPoint.y);
+
+    fill(255, 0, 0);
+    circle(projPoint.x, projPoint.y, 5);
+
+    // increase length by 2 for the r on left and right of line from center
+    if (projPoint.dist(startPoint) + projPoint.dist(endPoint) > startPoint.dist(endPoint) + 2 * r) {
+        return false;
+    }
+
+    return projPoint.dist(circPoint) < r;
+}

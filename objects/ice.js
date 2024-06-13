@@ -31,8 +31,10 @@ class Ice extends Wall {
             for (let i = 0; i < PI / 2; i += 0.5) {
                 let vec = p5.Vector.rotate(this.normal, i).mult(this.mag).add(this.shatter);
                 line(this.shatter.x, this.shatter.y, vec.x, vec.y);
-                vec = p5.Vector.rotate(this.normal, -i).mult(this.mag).add(this.shatter);
-                line(this.shatter.x, this.shatter.y, vec.x, vec.y);
+                if (i != 0) {
+                    vec = p5.Vector.rotate(this.normal, -i).mult(this.mag).add(this.shatter);
+                    line(this.shatter.x, this.shatter.y, vec.x, vec.y);
+                }
             }
             pop();
         }

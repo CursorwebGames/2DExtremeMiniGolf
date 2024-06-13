@@ -17,3 +17,9 @@ Like the game pigeon golf, but with more fun!
 - Coins
 - Ice (breaks)
 - Lever rotational whatever
+
+Resources?
+https://www.youtube.com/watch?v=V2JI_P9bvik
+
+Works Consulted
+https://www.jeffreythompson.org/collision-detection/poly-point.php
