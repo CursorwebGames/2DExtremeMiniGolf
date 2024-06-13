@@ -1,4 +1,3 @@
-
 class Wall {
     constructor(x, y, w, h) {
         this.x = x;

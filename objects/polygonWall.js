@@ -15,7 +15,7 @@ class PolygonWall {
     collide(obj, projPoint) {
         let diff = p5.Vector.sub(obj.pos, projPoint);
         let speed = obj.vel.mag();
-        obj.applyForce(diff.setMag(2 * speed));
+        obj.applyForce(diff.setMag(1.9 * speed));
     }
 
     isColliding(ball) {
