@@ -1,4 +1,4 @@
-function genLevels() {
+export function genLevels() {
     return [
         {
             mainb: [20, 20],

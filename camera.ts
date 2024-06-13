@@ -1,7 +1,6 @@
-let mousex, mousey;
+export let mousex, mousey;
 
-
-class Camera {
+export class Camera {
     constructor(minx, miny, maxx, maxy) {
         this.x = mainb.pos.x;
         this.y = mainb.pos.y;

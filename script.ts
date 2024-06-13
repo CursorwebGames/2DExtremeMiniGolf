@@ -1,10 +1,11 @@
 // todo: between-frame calculations to truly determine what collide first etc
 // todo: angle on ball collisions
 // for walls
+import "./collisions";
 
 let levels;
 let balls = [];
-let static = [];
+let statics = [];
 let mainb;
 let hole;
 
@@ -89,7 +90,7 @@ function draw() {
             }
         }
 
-        for (const obj of static) {
+        for (const obj of statics) {
             const res = obj.isColliding(ball);
             if (res) {
                 obj.collide(ball, res);
@@ -109,7 +110,7 @@ function draw() {
         ball.draw();
     }
 
-    for (const obj of static) {
+    for (const obj of statics) {
         obj.draw();
     }
     pop();
@@ -133,7 +134,7 @@ function generateLevel() {
     hole = new Hole(...levelData.hole);
 
     // todo: deep copy
-    static = levelData.static;
+    statics = levelData.static;
     balls = levelData.balls;
 
     balls.push(mainb);

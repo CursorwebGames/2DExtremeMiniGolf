@@ -1,7 +1,11 @@
 const friction = 0.016;
 
-class Ball {
-    constructor(x, y, r) {
+export class Ball {
+    pos: p5.Vector;
+    vel: p5.Vector;
+    r: number;
+
+    constructor(x: number, y: number, r: number) {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
         this.r = r;
@@ -16,9 +20,9 @@ class Ball {
     /**
      * In each frame, multiple forces can be applied
      * And then in update, they will subsequently affect the ball's movement
-     * @param {p5.Vector} f Force
+     * @param f Force
      */
-    applyForce(f) {
+    applyForce(f: p5.Vector) {
         this.vel.add(f);
     }
 
@@ -54,7 +58,7 @@ class Ball {
         }
     }
 
-    collide(other) {
+    collide(other: { pos: Vector; applyForce: (arg0: Vector) => void; }) {
         // why the perpendicular?
         let dir = p5.Vector.sub(other.pos, this.pos);
         this.vel.mult(0.8);
