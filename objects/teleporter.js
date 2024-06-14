@@ -3,7 +3,10 @@ class Teleporter {
         this.start = createVector(sx, sy);
         this.end = createVector(ex, ey);
         this.r = 14;
-        this.cooldown = 0;
+
+        // which portal it should be touching
+        // at the end
+        this.hasTeleported = false;
     }
 
     draw() {
@@ -15,38 +18,46 @@ class Teleporter {
         stroke(255, 179, 3);
         circle(this.end.x, this.end.y, this.r * 2);
         pop();
-
-        if (this.cooldown > 0) this.cooldown--;
     }
 
-    collide(obj, from) {
-        let pos;
-        if (from == -1) {
-            pos = this.start.copy();
+    collide(obj, dest) {
+        let destPos, checkPos;
+        if (dest == -1) {
+            destPos = this.start.copy();
         } else {
-            pos = this.end.copy();
+            destPos = this.end.copy();
         }
 
-        // make sure you can't get stuck
-        obj.vel.mult(1.05);
-        if (obj.vel.mag() == 0) {
-            obj.vel = p5.Vector.sub(pos, obj.pos).setMag(0.5);
+        if (this.hasTeleported == -1) {
+            checkPos = this.start.copy();
+        } else {
+            checkPos = this.end.copy();
         }
 
-        obj.pos = pos;
+        if (obj.pos.dist(checkPos) <= this.r + obj.r) {
+            return;
+        }
+
+        obj.pos = destPos;
     }
 
     isColliding(obj) {
-        if (this.cooldown > 0) return false;
-
         if (circCircCol(obj.pos, obj.r, this.start, this.r)) {
-            this.cooldown = 30;
+            if (!this.hasTeleported) {
+                this.hasTeleported = 1;
+            }
+
             return 1;
         }
 
         if (circCircCol(obj.pos, obj.r, this.end, this.r)) {
-            this.cooldown = 30;
+            if (!this.hasTeleported) {
+                this.hasTeleported = -1;
+            }
+
             return -1;
         }
+
+        this.hasTeleported = false;
     }
 }

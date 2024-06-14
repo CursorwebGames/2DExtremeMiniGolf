@@ -4,6 +4,10 @@
 - Find a way to show physics is real
 - Angle impulse calculations?
 
+## Gameplay
+- Decide whether teleporting, if you can teleport back if that would be fun
+- Color design as always
+
 ## Optimizations
 - Implement a quadtree
 - Due to mostly static nature of the program (few dynamic objects and calculations with many statics)
