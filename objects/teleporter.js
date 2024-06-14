@@ -37,15 +37,15 @@ class Teleporter {
     }
 
     isColliding(obj) {
-        if (this.cooldown > 0) return;
+        if (this.cooldown > 0) return false;
 
         if (circCircCol(obj.pos, obj.r, this.start, this.r)) {
-            this.cooldown = 5;
+            this.cooldown = 30;
             return 1;
         }
 
-        if (circCircCol(obj.pos, obj.r, this.start, this.r)) {
-            this.cooldown = 5;
+        if (circCircCol(obj.pos, obj.r, this.end, this.r)) {
+            this.cooldown = 30;
             return -1;
         }
     }
