@@ -1,7 +1,10 @@
-class MainBall extends Ball {
-    constructor(x, y) {
+import { Ball } from "./ball";
+
+export class MainBall extends Ball {
+    inHole = false;
+
+    constructor(x: number, y: number) {
         super(x, y, 10);
-        this.inHole = false;
     }
 
     draw() {

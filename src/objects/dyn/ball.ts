@@ -1,6 +1,8 @@
+import { PhysicsObj } from "../IStatic";
+
 const friction = 0.016;
 
-export class Ball {
+export class Ball implements PhysicsObj {
     pos: p5.Vector;
     vel: p5.Vector;
     r: number;
@@ -58,7 +60,7 @@ export class Ball {
         }
     }
 
-    collide(other: { pos: Vector; applyForce: (arg0: Vector) => void; }) {
+    collide(other: PhysicsObj) {
         // why the perpendicular?
         let dir = p5.Vector.sub(other.pos, this.pos);
         this.vel.mult(0.8);

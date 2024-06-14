@@ -1,4 +1,4 @@
-export let mousex, mousey;
+declare global { let mousex: number, mousey: number; }
 
 export class Camera {
     constructor(minx, miny, maxx, maxy) {

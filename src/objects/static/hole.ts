@@ -1,5 +1,11 @@
-class Hole {
-    constructor(x, y) {
+import { StaticObj } from "../IStatic";
+
+export class Hole implements StaticObj {
+    pos: p5.Vector;
+    in: boolean;
+    r: number;
+
+    constructor(x: number, y: number) {
         this.pos = createVector(x, y);
         this.in = false;
         this.r = 12;
