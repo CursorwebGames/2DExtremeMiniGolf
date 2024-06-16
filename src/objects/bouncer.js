@@ -1,5 +1,5 @@
 
-import "../collisions";
+import { circCircCol } from "../collisions";
 
 export class Bouncer {
     constructor(x, y, r) {
