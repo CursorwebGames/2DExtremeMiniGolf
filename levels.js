@@ -3,7 +3,6 @@ function genLevels() {
         {
             mainb: [20, 20],
             hole: [200, height / 2 + 200],
-            bounds: [],
             static: [
                 new Teleporter(80, 80, 80, height - 100),
                 new Wall(0, height / 2 - 50, width, 100)
@@ -15,7 +14,7 @@ function genLevels() {
         {
             mainb: [200, 100],
             hole: [710, 117],
-            bounds: [],
+            bounds: [[-120, -120], [width / 2, -250], [width + 130, 0], [width + 280, height / 2], [width, height], [width / 2, height + 130], [0, height]],
             static: [
                 new PolygonWall([
                     [204, 153],
@@ -75,7 +74,6 @@ function genLevels() {
         {
             mainb: [0, 0],
             hole: [300, 300],
-            bounds: [],
             static: [
                 new Ice(0, 200, 300 - 50, 50),
                 new Ice(200, 0, 50, 300 - 50),
@@ -87,7 +85,6 @@ function genLevels() {
         {
             mainb: [0, 0],
             hole: [300, 300],
-            bounds: [],
             static: [
                 new Bouncer(80, 30, 30, 100),
                 new Bouncer(30, 80, 30, 100),

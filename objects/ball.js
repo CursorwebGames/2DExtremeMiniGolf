@@ -33,24 +33,11 @@ class Ball {
     }
 
     checkBounds() {
-        if (this.pos.x > width - this.r) {
-            this.vel.x *= -1;
-            this.pos.x = width - this.r;
-        }
-
-        if (this.pos.x < this.r) {
-            this.vel.x *= - 1;
-            this.pos.x = this.r;
-        }
-
-        if (this.pos.y > height - this.r) {
-            this.vel.y *= -1;
-            this.pos.y = height - this.r;
-        }
-
-        if (this.pos.y < this.r) {
-            this.vel.y *= -1;
-            this.pos.y = this.r;
+        let projPoint = circPolyCol(this.pos, this.r, levelBounds);
+        if (projPoint) {
+            let diff = p5.Vector.sub(this.pos, projPoint);
+            let speed = this.vel.mag();
+            this.applyForce(diff.setMag(1.9 * speed));
         }
     }
 

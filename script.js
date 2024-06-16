@@ -3,6 +3,7 @@
 // for walls
 
 let levels;
+let levelBounds;
 let balls = [];
 let static = [];
 let mainb;
@@ -20,7 +21,6 @@ function setup() {
 
     generateLevel();
 
-    camera = new Camera(0, 0, width, height);
     transition = new Transition();
 }
 
@@ -67,14 +67,15 @@ function draw() {
     push();
     camera.draw();
 
-    // todo: boundaries
     push();
+    noFill();
     strokeWeight(1);
     stroke(255);
-    line(0, 0, width, 0);
-    line(0, 0, 0, height);
-    line(width, 0, width, height);
-    line(0, height, width, height);
+    beginShape();
+    for (const [x, y] of levelBounds) {
+        vertex(x, y);
+    }
+    endShape(CLOSE);
     pop();
 
     for (let i = 0; i < balls.length; i++) {
@@ -129,12 +130,29 @@ function mouseClicked() {
 
 function generateLevel() {
     const levelData = levels[level];
+    let bounds = levelData.bounds;
+    if (!bounds) {
+        bounds = [[0, 0], [width, 0], [width, height], [0, height]];
+    }
     mainb = new MainBall(...levelData.mainb);
     hole = new Hole(...levelData.hole);
 
     // todo: deep copy
     static = levelData.static;
     balls = levelData.balls;
+    levelBounds = bounds;
+
+    let minx = bounds[0][0], miny = bounds[0][1], maxx = bounds[0][0], maxy = bounds[0][1];
+
+    for (let i = 1; i < bounds.length; i++) {
+        let [x, y] = bounds[i];
+        if (x < minx) minx = x;
+        if (y < miny) miny = y;
+        if (x > maxx) maxx = x;
+        if (y > maxy) maxy = y;
+    }
+
+    camera = new Camera(minx, miny, maxx, maxy);
 
     balls.push(mainb);
 }
