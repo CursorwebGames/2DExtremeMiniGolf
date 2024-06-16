@@ -1,4 +1,6 @@
-class Slope {
+
+import "./collisions";
+export class Slope {
     constructor(x, y, w, h, force) {
         this.x = x;
         this.y = y;

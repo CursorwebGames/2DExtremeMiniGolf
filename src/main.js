@@ -1,18 +1,23 @@
 // todo: between-frame calculations to truly determine what collide first etc
 // todo: angle on ball collisions
 // for walls
+import "./collisions";
+import { genLevels } from "./levels";
+import { MainBall } from "./objects/mainball";
+import { Hole } from "./objects/hole";
+import { Camera } from "./camera";
 
 let levels;
 let balls = [];
-let static = [];
-let mainb;
+let staticObjs = [];
+// let mainb;
 let hole;
 
 let camera, transition;
 
 let level = 0;
 
-function setup() {
+window.setup = function setup() {
     createCanvas(windowWidth, windowHeight);
 
     noStroke();
@@ -61,7 +66,7 @@ class Transition {
     }
 }
 
-function draw() {
+window.draw = function draw() {
     background(123, 255, 123);
 
     push();
@@ -89,7 +94,7 @@ function draw() {
             }
         }
 
-        for (const obj of static) {
+        for (const obj of staticObjs) {
             const res = obj.isColliding(ball);
             if (res) {
                 obj.collide(ball, res);
@@ -109,7 +114,7 @@ function draw() {
         ball.draw();
     }
 
-    for (const obj of static) {
+    for (const obj of staticObjs) {
         obj.draw();
     }
     pop();
@@ -117,7 +122,7 @@ function draw() {
     transition.draw();
 }
 
-function mouseClicked() {
+window.mouseClicked = function mouseClicked() {
     // if (mainb.vel.mag() != 0) return;
 
     const vec = p5.Vector.sub(createVector(mousex, mousey), mainb.pos).div(32);
@@ -129,11 +134,11 @@ function mouseClicked() {
 
 function generateLevel() {
     const levelData = levels[level];
-    mainb = new MainBall(...levelData.mainb);
+    window.mainb = new MainBall(...levelData.mainb);
     hole = new Hole(...levelData.hole);
 
     // todo: deep copy
-    static = levelData.static;
+    staticObjs = levelData.static;
     balls = levelData.balls;
 
     balls.push(mainb);

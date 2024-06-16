@@ -1,4 +1,10 @@
-function genLevels() {
+import { Teleporter } from "./objects/teleporter";
+import { Wall } from "./objects/wall";
+import { PolygonWall } from "./objects/polygonWall";
+import { Ice } from "./objects/ice";
+import { Bouncer } from "./objects/bouncer";
+
+export function genLevels() {
     return [
         {
             mainb: [20, 20],

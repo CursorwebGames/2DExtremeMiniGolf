@@ -1,4 +1,6 @@
-class PolygonWall {
+
+import "../collisions";
+export class PolygonWall {
     constructor(points) {
         this.points = points;
     }

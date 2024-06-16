@@ -1,4 +1,8 @@
-class Ice extends Wall {
+import { Wall } from "./wall";
+
+
+import "../collisions";
+export class Ice extends Wall {
     constructor(x, y, w, h) {
         super(x, y, w, h);
         this.disabled = false;
