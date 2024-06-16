@@ -1,6 +1,8 @@
 // todo: between-frame calculations to truly determine what collide first etc
 // todo: angle on ball collisions
 // for walls
+import p5 from "p5";
+
 import "./collisions";
 import { genLevels } from "./levels";
 import { MainBall } from "./objects/mainball";
