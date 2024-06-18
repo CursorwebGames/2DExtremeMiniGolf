@@ -39,8 +39,7 @@ class Ball {
             let diff = p5.Vector.sub(this.pos, projPoint);
             let speed = this.vel.mag();
 
-            // no negative 1 cuz internal instead of external collision
-            let ang = this.vel.angleBetween(edge);
+            let ang = Math.abs(this.vel.angleBetween(edge));
 
             this.pos.add(p5.Vector.setMag(diff, this.r - diff.mag()));
             this.applyForce(diff.setMag(2 * Math.sin(ang) * speed));
