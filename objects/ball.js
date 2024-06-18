@@ -34,12 +34,16 @@ class Ball {
     }
 
     checkBounds() {
-        let projPoint = circPolyCol(this.pos, this.r, levelBounds);
+        let { projPoint, edge } = circPolyCol(this.pos, this.r, levelBounds);
         if (projPoint) {
             let diff = p5.Vector.sub(this.pos, projPoint);
-            this.pos.add(diff);
             let speed = this.vel.mag();
-            this.applyForce(diff.setMag(1.5 * speed));
+
+            // no negative 1 cuz internal instead of external collision
+            let ang = this.vel.angleBetween(edge);
+
+            this.pos.add(p5.Vector.setMag(diff, this.r - diff.mag()));
+            this.applyForce(diff.setMag(2 * Math.sin(ang) * speed));
         }
     }
 

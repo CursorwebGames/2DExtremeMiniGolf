@@ -1,7 +1,7 @@
 // todo: between-frame calculations to truly determine what collide first etc
 // todo: angle on ball collisions
 // for walls
-const CCD_COUNT = 2;
+const CCD_STEPS = 2;
 
 let levels;
 let levelBounds;
@@ -79,10 +79,10 @@ function draw() {
     endShape(CLOSE);
     pop();
 
-    for (let c = 0; c < CCD_COUNT; c++) {
+    for (let c = 0; c < CCD_STEPS; c++) {
         for (let i = 0; i < balls.length; i++) {
             const ball = balls[i];
-            ball.update(CCD_COUNT);
+            ball.update(CCD_STEPS);
 
             // duplicate twice, so as to newton's third law
             for (let j = 0; j < balls.length; j++) {
@@ -110,13 +110,14 @@ function draw() {
 
     hole.draw();
 
+    for (const obj of static) {
+        obj.draw();
+    }
+
     for (const ball of balls) {
         ball.draw();
     }
 
-    for (const obj of static) {
-        obj.draw();
-    }
     pop();
 
     transition.draw();

@@ -51,9 +51,9 @@ function circPolyCol(circPoint, r, points) {
         const start = createVector(...points[i]);
         const end = createVector(...points[n]);
 
-        const res = circLineCol(circPoint, r, start, end);
-        if (res) {
-            return res;
+        const projPoint = circLineCol(circPoint, r, start, end);
+        if (projPoint) {
+            return { projPoint, edge: p5.Vector.sub(end, start) };
         }
     }
 

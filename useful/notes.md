@@ -3,6 +3,7 @@
 ## Realisms
 - Find a way to show physics is real
 - Angle impulse calculations?
+- Stop double colliding (push out of it)
 
 ## Gameplay
 - Decide whether teleporting, if you can teleport back if that would be fun
