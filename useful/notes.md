@@ -20,6 +20,7 @@
 CCD by halving velocity and multiple substeps (todo: calculations on ratio & further optimizations)
 - Boundary clipping redundancies (centripetal)? Is worth it?
     - Same with polygons as a radial force (centrifugal) in case ball goes inside
+    - dt
 
 ## Level Editor
 Good luck on this one!

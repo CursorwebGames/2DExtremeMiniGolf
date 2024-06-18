@@ -5,6 +5,7 @@ class Ball {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
         this.r = r;
+        this.prevPos = this.pos.copy();
     }
 
     draw() {
@@ -27,7 +28,8 @@ class Ball {
         this.pos.add(this.vel);
         this.vel.mult(1 - friction);
         this.vel.limit(10);
-        if (this.vel.mag() < 0.02) {
+        if (this.vel.mag() > 0 && this.vel.mag() < 0.03) {
+            this.prevPos = this.pos.copy();
             this.vel.setMag(0);
         }
     }
