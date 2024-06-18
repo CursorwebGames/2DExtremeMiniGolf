@@ -108,11 +108,11 @@ function draw() {
         });
     }
 
-    hole.draw();
-
     for (const obj of static) {
         obj.draw();
     }
+
+    hole.draw();
 
     for (const ball of balls) {
         ball.draw();

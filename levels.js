@@ -3,6 +3,12 @@ function genLevels() {
         {
             mainb: [110, 90],
             hole: [820, 570],
+            static: [new Slope(0, 0, width, height, createVector(0, 0.5))],
+            balls: []
+        },
+        {
+            mainb: [110, 90],
+            hole: [820, 570],
             static: [new PolygonWall([
                 [313, 261],
                 [452, 292],
@@ -112,7 +118,7 @@ function genLevels() {
             balls: []
         },
         {
-            mainb: [0, 0],
+            mainb: [30, 30],
             hole: [300, 300],
             static: [
                 new Ice(0, 200, 300 - 50, 50),
@@ -123,7 +129,7 @@ function genLevels() {
             ]
         },
         {
-            mainb: [0, 0],
+            mainb: [30, 30],
             hole: [300, 300],
             static: [
                 new Bouncer(80, 30, 30, 100),

@@ -6,6 +6,8 @@ html {
     position: relative;
 }
 
-canvas {
-    position: fixed;
+.canvas-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
