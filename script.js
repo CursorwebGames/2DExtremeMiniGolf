@@ -1,6 +1,7 @@
 // todo: between-frame calculations to truly determine what collide first etc
 // todo: angle on ball collisions
 // for walls
+const CCD_COUNT = 2;
 
 let levels;
 let levelBounds;
@@ -78,22 +79,25 @@ function draw() {
     endShape(CLOSE);
     pop();
 
-    for (let i = 0; i < balls.length; i++) {
-        const ball = balls[i];
+    for (let c = 0; c < CCD_COUNT; c++) {
+        for (let i = 0; i < balls.length; i++) {
+            const ball = balls[i];
+            ball.update(CCD_COUNT);
 
-        // duplicate twice, so as to newton's third law
-        for (let j = 0; j < balls.length; j++) {
-            if (i == j) continue;
-            const other = balls[j];
-            if (circCircCol(ball.pos, ball.r, other.pos, other.r)) {
-                ball.collide(other);
+            // duplicate twice, so as to newton's third law
+            for (let j = 0; j < balls.length; j++) {
+                if (i == j) continue;
+                const other = balls[j];
+                if (circCircCol(ball.pos, ball.r, other.pos, other.r)) {
+                    ball.collide(other);
+                }
             }
-        }
 
-        for (const obj of static) {
-            const res = obj.isColliding(ball);
-            if (res) {
-                obj.collide(ball, res);
+            for (const obj of static) {
+                const res = obj.isColliding(ball);
+                if (res) {
+                    obj.collide(ball, res);
+                }
             }
         }
     }

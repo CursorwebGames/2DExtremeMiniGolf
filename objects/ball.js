@@ -9,7 +9,6 @@ class Ball {
     }
 
     draw() {
-        this.update();
         fill(100);
         circle(this.pos.x, this.pos.y, this.r * 2);
     }
@@ -23,10 +22,10 @@ class Ball {
         this.vel.add(f);
     }
 
-    update() {
+    update(frac = 1) {
         this.checkBounds();
-        this.pos.add(this.vel);
-        this.vel.mult(1 - friction);
+        this.pos.add(p5.Vector.div(this.vel, frac));
+        this.vel.mult(1 - friction / frac);
         this.vel.limit(10);
         if (this.vel.mag() > 0 && this.vel.mag() < 0.03) {
             this.prevPos = this.pos.copy();
@@ -38,8 +37,9 @@ class Ball {
         let projPoint = circPolyCol(this.pos, this.r, levelBounds);
         if (projPoint) {
             let diff = p5.Vector.sub(this.pos, projPoint);
+            this.pos.add(diff);
             let speed = this.vel.mag();
-            this.applyForce(diff.setMag(1.9 * speed));
+            this.applyForce(diff.setMag(1.5 * speed));
         }
     }
 
