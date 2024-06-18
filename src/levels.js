@@ -1,3 +1,4 @@
+import "p5";
 import { Teleporter } from "./objects/teleporter";
 import { Wall } from "./objects/wall";
 import { PolygonWall } from "./objects/polygonWall";

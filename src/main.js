@@ -2,70 +2,34 @@
 // todo: angle on ball collisions
 // for walls
 import p5 from "p5";
+window.p5 = p5;
 
 import "./collisions";
 import { genLevels } from "./levels";
-import { MainBall } from "./objects/mainball";
-import { Hole } from "./objects/hole";
+// import { MainBall } from "./objects/mainball";
+// import { Hole } from "./objects/hole";
 import { Camera } from "./camera";
+import { Transition, generateLevel } from "./transition";
 
-let levels;
-let balls = [];
-let staticObjs = [];
+// window.levels = null;
+// let balls = [];
+// let staticObjs = [];
 // let mainb;
-let hole;
+// window.hole;
 
 let camera, transition;
 
-let level = 0;
 
 window.setup = function setup() {
     createCanvas(windowWidth, windowHeight);
 
     noStroke();
-    levels = genLevels();
+    window.levels = genLevels();
 
     generateLevel();
 
     camera = new Camera(0, 0, width, height);
     transition = new Transition();
-}
-
-class Transition {
-    constructor() {
-        this.a = 0;
-
-        // 0: nothing
-        // 1: fade out
-        // -1: fade back in
-        this.direction = 0;
-    }
-
-    draw() {
-        fill(255, this.a);
-        rect(0, 0, width, height);
-
-        this.a += this.direction * 5;
-
-        if (this.a == 300) {
-            level++;
-            generateLevel();
-            this.direction = -1;
-        }
-
-        if (this.a < 0) {
-            this.end();
-        }
-    }
-
-    begin() {
-        this.direction = 1;
-    }
-
-    end() {
-        this.direction = 0;
-        this.a = 0;
-    }
 }
 
 window.draw = function draw() {
@@ -132,16 +96,4 @@ window.mouseClicked = function mouseClicked() {
 
     // console.log("start", mainb.pos.x, mainb.pos.y);
     // console.log("vec", vec.x, vec.y);
-}
-
-function generateLevel() {
-    const levelData = levels[level];
-    window.mainb = new MainBall(...levelData.mainb);
-    hole = new Hole(...levelData.hole);
-
-    // todo: deep copy
-    staticObjs = levelData.static;
-    balls = levelData.balls;
-
-    balls.push(mainb);
 }
