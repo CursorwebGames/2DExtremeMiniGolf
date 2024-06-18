@@ -6,7 +6,7 @@ You can play the github hosted game here: https://cursorwebgames.github.io/2DExt
 ## Mechanics
 - Wall
     - Moving Wall
-- Pool/Water (you restart)
+- Pool/Water (you restart, with an extra stroke)
 - Bouncy (radial vector)
 - Hill (constant vector field)
 - Teleporter
