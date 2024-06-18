@@ -1,9 +1,14 @@
 class BallUI {
     constructor(obj) {
         this.obj = obj;
+        this.selected = false;
     }
 
     draw() {
+        if (this.selected) {
+            fill(255, 125);
+            circle(this.obj.pos.x, this.obj.pos.y, this.r * 2 + 10);
+        }
         this.obj.draw();
     }
 
