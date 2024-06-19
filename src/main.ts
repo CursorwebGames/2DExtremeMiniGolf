@@ -1,21 +1,13 @@
 // todo: between-frame calculations to truly determine what collide first etc
 // todo: angle on ball collisions
 // for walls
-import p5 from "p5";
+import * as p5 from "p5";
 window.p5 = p5;
 
 import "./collisions";
 import { genLevels } from "./levels";
-// import { MainBall } from "./objects/mainball";
-// import { Hole } from "./objects/hole";
 import { Camera } from "./camera";
 import { Transition, generateLevel } from "./transition";
-
-// window.levels = null;
-// let balls = [];
-// let staticObjs = [];
-// let mainb;
-// window.hole;
 
 let camera, transition;
 

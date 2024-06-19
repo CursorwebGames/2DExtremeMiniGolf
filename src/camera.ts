@@ -1,7 +1,19 @@
+declare global {
+    let mousex: number;
+    let mousey: number;
+}
 // let mousex, mousey;
 
 export class Camera {
-    constructor(minx, miny, maxx, maxy) {
+    x: number;
+    y: number;
+
+    minx: number;
+    miny: number;
+    maxx: number;
+    maxy: number;
+
+    constructor(minx: number, miny: number, maxx: number, maxy: number) {
         this.x = mainb.pos.x;
         this.y = mainb.pos.y;
 
