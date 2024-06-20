@@ -59,3 +59,28 @@ function circPolyCol(circPoint, r, points) {
 
     return false;
 }
+
+function pointPolyCol(point, points) {
+    // check if the point is actually in the circle
+    // as circPolyCol only checks edges
+    let collide = false;
+
+    const px = point.x;
+    const py = point.y;
+
+    for (let i = 0; i < points.length; i++) {
+        const n = (i + 1) % points.length;
+
+        const start = createVector(...points[i]);
+        const end = createVector(...points[n]);
+
+        // bro literally no one knows what this thing does LOL
+        if (((start.y >= py && end.y < py) || (start.y < py && end.y >= py)) &&
+            (px < (end.x - start.x) * (py - start.y) / (end.y - start.y) + start.x)) {
+            collide = !collide;
+        }
+
+    }
+
+    return collide;
+}

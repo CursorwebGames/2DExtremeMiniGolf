@@ -15,7 +15,7 @@
     - Have quadtree store components of static for collisions (e.g. line collision, circle collision)
 - No need for dynamic objects optimizations
 
-- Vite rewrite (once I feel like it)
+- Vite rewrite (once I feel like it) (ONLY IN JS NOT TYPESCRIPT)
 
 ## CCD
 CCD by halving velocity and multiple substeps (todo: calculations on ratio & further optimizations)
