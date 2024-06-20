@@ -13,7 +13,7 @@ function setup() {
     createCanvas(900, 900).parent(document.querySelector(".canvas-content"));
     hole = new Single(new Hole(width / 2, height / 2));
     mainb = new Single(new MainBall(width / 2, height / 2));
-    statics.push(new Polygon(new PolygonWall([])));
+    statics.push(new Polygon(new Water([])));
 }
 
 function draw() {

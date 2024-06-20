@@ -44,6 +44,19 @@ class Polygon {
             this.centerKnot.pos = createVector(cx, cy);
         }
 
+        if (this.obj instanceof Water) {
+            const cx = this.centerKnot.pos.x;
+            const cy = this.centerKnot.pos.y
+            this.obj.cx = cx;
+            this.obj.cy = cy;
+
+            const render = [];
+            for (const knot of this.knots) {
+                render.push([knot.pos.x - cx, knot.pos.y - cy]);
+            }
+            this.obj.render = render;
+        }
+
         this.obj.points = this.convertKnots();
     }
 }
