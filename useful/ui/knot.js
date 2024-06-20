@@ -1,13 +1,19 @@
 class Knot {
-    constructor(x, y) {
+    constructor(x, y, parent) {
         this.pos = createVector(x, y);
         this.r = 4;
         this.selected = false;
+
+        this.prevPos = createVector(x, y);
+        this.parent = parent;
     }
 
     draw() {
+        this.prevPos = this.pos.copy();
+
         if (this.selected) {
             this.pos = mousePos;
+            this.parent.update(this, p5.Vector.sub(this.pos, this.prevPos));
         }
 
         push();

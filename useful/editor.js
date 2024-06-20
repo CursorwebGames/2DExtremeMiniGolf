@@ -4,7 +4,7 @@
 let mainb;
 let hole;
 let statics = [];
-let knots = [];
+let staticKnots = [];
 let mousePos;
 let hasSelected = false;
 
@@ -20,24 +20,40 @@ function draw() {
     mousePos = createVector(mouseX, mouseY);
 
     background(123, 255, 123);
+    for (const obj of statics) {
+        obj.draw();
+    }
     hole.draw();
     mainb.draw();
-    statics[0].draw();
 
-    // the topmost knot will be the most recently added knot
-    // only one knot can be checked at a time
-    // once a knot is being dragged, don't check for any more collisions
     if (!hasSelected) {
-        for (let i = knots.length - 1; i >= 0; i--) {
-            const knot = knots[i];
-            if (knot.check()) {
-                hasSelected = true;
-                break;
-            }
-        }
+        checkKnots();
     }
 }
 
 function mouseReleased() {
     hasSelected = false;
+}
+
+function checkKnots() {
+    // the topmost knot will be the most recently added knot
+    // only one knot can be checked at a time
+    // once a knot is being dragged, don't check for any more collisions
+    // based on reverse render order: hole, balls, objects
+    if (mainb.knot.check()) {
+        hasSelected = true;
+        return;
+    }
+
+    if (hole.knot.check()) {
+        hasSelected = true;
+    }
+
+    for (let i = staticKnots.length - 1; i >= 0; i--) {
+        const knot = staticKnots[i];
+        if (knot.check()) {
+            hasSelected = true;
+            return;
+        }
+    }
 }
