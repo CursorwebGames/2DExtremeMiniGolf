@@ -1,22 +1,22 @@
 // todo: between-frame calculations to truly determine what collide first etc
 // todo: angle on ball collisions
 // for walls
-import * as p5 from "p5";
-window.p5 = p5;
 
-import "./collisions";
-import { genLevels } from "./levels";
-import { Camera } from "./camera";
-import { Transition, generateLevel } from "./transition";
+let levels;
+let balls = [];
+let static = [];
+let mainb;
+let hole;
 
 let camera, transition;
 
+let level = 0;
 
-window.setup = function setup() {
+function setup() {
     createCanvas(windowWidth, windowHeight);
 
     noStroke();
-    window.levels = genLevels();
+    levels = genLevels();
 
     generateLevel();
 
@@ -24,7 +24,44 @@ window.setup = function setup() {
     transition = new Transition();
 }
 
-window.draw = function draw() {
+class Transition {
+    constructor() {
+        this.a = 0;
+
+        // 0: nothing
+        // 1: fade out
+        // -1: fade back in
+        this.direction = 0;
+    }
+
+    draw() {
+        fill(255, this.a);
+        rect(0, 0, width, height);
+
+        this.a += this.direction * 5;
+
+        if (this.a == 300) {
+            level++;
+            generateLevel();
+            this.direction = -1;
+        }
+
+        if (this.a < 0) {
+            this.end();
+        }
+    }
+
+    begin() {
+        this.direction = 1;
+    }
+
+    end() {
+        this.direction = 0;
+        this.a = 0;
+    }
+}
+
+function draw() {
     background(123, 255, 123);
 
     push();
@@ -52,7 +89,7 @@ window.draw = function draw() {
             }
         }
 
-        for (const obj of staticObjs) {
+        for (const obj of static) {
             const res = obj.isColliding(ball);
             if (res) {
                 obj.collide(ball, res);
@@ -72,7 +109,7 @@ window.draw = function draw() {
         ball.draw();
     }
 
-    for (const obj of staticObjs) {
+    for (const obj of static) {
         obj.draw();
     }
     pop();
@@ -80,7 +117,7 @@ window.draw = function draw() {
     transition.draw();
 }
 
-window.mouseClicked = function mouseClicked() {
+function mouseClicked() {
     // if (mainb.vel.mag() != 0) return;
 
     const vec = p5.Vector.sub(createVector(mousex, mousey), mainb.pos).div(32);
@@ -88,4 +125,16 @@ window.mouseClicked = function mouseClicked() {
 
     // console.log("start", mainb.pos.x, mainb.pos.y);
     // console.log("vec", vec.x, vec.y);
+}
+
+function generateLevel() {
+    const levelData = levels[level];
+    mainb = new MainBall(...levelData.mainb);
+    hole = new Hole(...levelData.hole);
+
+    // todo: deep copy
+    static = levelData.static;
+    balls = levelData.balls;
+
+    balls.push(mainb);
 }

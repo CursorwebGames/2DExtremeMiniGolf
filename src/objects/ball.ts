@@ -5,10 +5,10 @@ export class Ball {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
         this.r = r;
+        this.prevPos = this.pos.copy();
     }
 
     draw() {
-        this.update();
         fill(100);
         circle(this.pos.x, this.pos.y, this.r * 2);
     }
@@ -22,35 +22,27 @@ export class Ball {
         this.vel.add(f);
     }
 
-    update() {
+    update(frac = 1) {
         this.checkBounds();
-        this.pos.add(this.vel);
-        this.vel.mult(1 - friction);
+        this.pos.add(p5.Vector.div(this.vel, frac));
+        this.vel.mult(1 - friction / frac);
         this.vel.limit(10);
-        if (this.vel.mag() < 0.02) {
+        if (this.vel.mag() > 0 && this.vel.mag() < 0.03) {
+            this.prevPos = this.pos.copy();
             this.vel.setMag(0);
         }
     }
 
     checkBounds() {
-        if (this.pos.x > width - this.r) {
-            this.vel.x *= -1;
-            this.pos.x = width - this.r;
-        }
+        let { projPoint, edge } = circPolyCol(this.pos, this.r, levelBounds);
+        if (projPoint) {
+            let diff = p5.Vector.sub(this.pos, projPoint);
+            let speed = this.vel.mag();
 
-        if (this.pos.x < this.r) {
-            this.vel.x *= - 1;
-            this.pos.x = this.r;
-        }
+            let ang = Math.abs(this.vel.angleBetween(edge));
 
-        if (this.pos.y > height - this.r) {
-            this.vel.y *= -1;
-            this.pos.y = height - this.r;
-        }
-
-        if (this.pos.y < this.r) {
-            this.vel.y *= -1;
-            this.pos.y = this.r;
+            this.pos.add(p5.Vector.setMag(diff, this.r - diff.mag()));
+            this.applyForce(diff.setMag(2 * Math.sin(ang) * speed));
         }
     }
 

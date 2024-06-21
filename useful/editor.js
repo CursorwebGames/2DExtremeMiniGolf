@@ -1,83 +1,59 @@
+// wrapper class to store ui components which can affect the object properties
+// components themselves can be dragged and dropped
+
+let mainb;
+let hole;
+let statics = [];
+let staticKnots = [];
+let mousePos;
+let hasSelected = false;
+
 function setup() {
     noStroke();
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(900, 900).parent(document.querySelector(".canvas-content"));
+    hole = new Single(new Hole(width / 2, height / 2));
+    mainb = new Single(new MainBall(width / 2, height / 2));
+    statics.push(new Polygon(new Water([])));
 }
-
-let things = [new PolygonWall([
-    [204, 153],
-    [102, 261],
-    [179, 383],
-    [362, 486],
-    [388, 329],
-    [380, 225],
-    [290, 278],
-    [234, 213],
-    [235, 161]
-]),
-new PolygonWall([
-    [275, 113],
-    [296, 179],
-    [376, 193],
-    [495, 176],
-    [500, 248],
-    [470, 329],
-    [448, 383],
-    [496, 421],
-    [563, 430],
-    [620, 326],
-    [650, 221],
-    [632, 103],
-    [554, 49],
-    [410, 45],
-    [304, 45],
-]), new PolygonWall([
-    [407, 450],
-    [405, 557],
-    [500, 478]
-]), new PolygonWall([
-    [144, 523],
-    [214, 624],
-    [420, 645],
-    [631, 589],
-    [719, 469],
-    [726, 329],
-    [726, 226],
-    [782, 212],
-    [860, 259],
-    [914, 329],
-    [914, 477],
-    [848, 579],
-    [736, 652],
-    [568, 707],
-    [384, 729],
-    [172, 721],
-    [37, 621]
-])];
-
-let points = [];
 
 function draw() {
+    mousePos = createVector(mouseX, mouseY);
+
     background(123, 255, 123);
-
-    fill(99, 88, 77);
-    beginShape();
-    for (const [x, y] of points) {
-        vertex(x, y);
+    for (const obj of statics) {
+        obj.draw();
     }
-    endShape();
+    hole.draw();
+    mainb.draw();
 
-    for (const x of things) {
-        x.draw();
+    if (!hasSelected) {
+        checkKnots();
     }
 }
 
-function mouseClicked() {
-    points.push([round(mouseX), round(mouseY)]);
-    let text = "new PolygonWall([\n";
-    for (let i = 0; i < points.length; i++) {
-        const [x, y] = points[i];
-        text += `    [${x}, ${y}]${i < points.length - 1 ? "," : ""}\n`;
+function mouseReleased() {
+    hasSelected = false;
+}
+
+function checkKnots() {
+    // the topmost knot will be the most recently added knot
+    // only one knot can be checked at a time
+    // once a knot is being dragged, don't check for any more collisions
+    // based on reverse render order: hole, balls, objects
+    if (mainb.knot.check()) {
+        hasSelected = true;
+        return;
     }
-    text += "])";
-    console.log(text);
+
+    if (hole.knot.check()) {
+        hasSelected = true;
+    }
+
+    for (let i = staticKnots.length - 1; i >= 0; i--) {
+        const knot = staticKnots[i];
+        if (knot.check()) {
+            hasSelected = true;
+            return;
+        }
+    }
 }

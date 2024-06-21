@@ -9,7 +9,6 @@ export class MainBall extends Ball {
     }
 
     draw() {
-        this.update();
         fill(255);
         circle(this.pos.x, this.pos.y, this.r * 2);
 
