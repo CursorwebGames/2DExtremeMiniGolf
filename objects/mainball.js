@@ -1,8 +1,4 @@
-import { Ball } from "./ball";
-
-import "../collisions";
-
-export class MainBall extends Ball {
+class MainBall extends Ball {
     constructor(x, y) {
         super(x, y, 10);
         this.inHole = false;

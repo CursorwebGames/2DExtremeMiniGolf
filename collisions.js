@@ -1,8 +1,8 @@
-export function circCircCol(vec1: p5.Vector, r1: number, vec2: p5.Vector, r2: number) {
+function circCircCol(vec1, r1, vec2, r2) {
     return vec1.dist(vec2) <= r1 + r2;
 }
 
-export function circRectCol(cx: number, cy: number, r: number, rx: number, ry: number, rw: number, rh: number) {
+function circRectCol(cx, cy, r, rx, ry, rw, rh) {
     let testx, testy;
 
     // check if on left edge, then check collision left edge, etc
@@ -20,7 +20,7 @@ export function circRectCol(cx: number, cy: number, r: number, rx: number, ry: n
     return Math.sqrt(distx ** 2 + disty ** 2) < r;
 }
 
-export function circLineCol(circPoint: p5.Vector, r: number, startPoint: p5.Vector, endPoint: p5.Vector) {
+function circLineCol(circPoint, r, startPoint, endPoint) {
     // project circle onto line
     // then check if that point is on the line segment
     // and check if radius < r
@@ -44,7 +44,7 @@ export function circLineCol(circPoint: p5.Vector, r: number, startPoint: p5.Vect
 }
 
 // points: [int, int][]
-export function circPolyCol(circPoint: p5.Vector, r: number, points: [number, number][]) {
+function circPolyCol(circPoint, r, points) {
     for (let i = 0; i < points.length; i++) {
         const n = (i + 1) % points.length;
 

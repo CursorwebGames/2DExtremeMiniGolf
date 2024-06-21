@@ -1,6 +1,4 @@
-
-import { circPolyCol } from "../collisions";
-export class PolygonWall {
+class PolygonWall {
     constructor(points) {
         this.points = points;
     }
