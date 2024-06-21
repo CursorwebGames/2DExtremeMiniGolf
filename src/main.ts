@@ -1,10 +1,8 @@
 // todo: between-frame calculations to truly determine what collide first etc
 // todo: angle on ball collisions
 // for walls
-const CCD_STEPS = 2;
 
 let levels;
-let levelBounds;
 let balls = [];
 let static = [];
 let mainb;
@@ -22,6 +20,7 @@ function setup() {
 
     generateLevel();
 
+    camera = new Camera(0, 0, width, height);
     transition = new Transition();
 }
 
@@ -68,36 +67,32 @@ function draw() {
     push();
     camera.draw();
 
+    // todo: boundaries
     push();
-    noFill();
     strokeWeight(1);
     stroke(255);
-    beginShape();
-    for (const [x, y] of levelBounds) {
-        vertex(x, y);
-    }
-    endShape(CLOSE);
+    line(0, 0, width, 0);
+    line(0, 0, 0, height);
+    line(width, 0, width, height);
+    line(0, height, width, height);
     pop();
 
-    for (let c = 0; c < CCD_STEPS; c++) {
-        for (let i = 0; i < balls.length; i++) {
-            const ball = balls[i];
-            ball.update(CCD_STEPS);
+    for (let i = 0; i < balls.length; i++) {
+        const ball = balls[i];
 
-            // duplicate twice, so as to newton's third law
-            for (let j = 0; j < balls.length; j++) {
-                if (i == j) continue;
-                const other = balls[j];
-                if (circCircCol(ball.pos, ball.r, other.pos, other.r)) {
-                    ball.collide(other);
-                }
+        // duplicate twice, so as to newton's third law
+        for (let j = 0; j < balls.length; j++) {
+            if (i == j) continue;
+            const other = balls[j];
+            if (circCircCol(ball.pos, ball.r, other.pos, other.r)) {
+                ball.collide(other);
             }
+        }
 
-            for (const obj of static) {
-                const res = obj.isColliding(ball);
-                if (res) {
-                    obj.collide(ball, res);
-                }
+        for (const obj of static) {
+            const res = obj.isColliding(ball);
+            if (res) {
+                obj.collide(ball, res);
             }
         }
     }
@@ -108,16 +103,15 @@ function draw() {
         });
     }
 
-    for (const obj of static) {
-        obj.draw();
-    }
-
     hole.draw();
 
     for (const ball of balls) {
         ball.draw();
     }
 
+    for (const obj of static) {
+        obj.draw();
+    }
     pop();
 
     transition.draw();
@@ -135,29 +129,12 @@ function mouseClicked() {
 
 function generateLevel() {
     const levelData = levels[level];
-    let bounds = levelData.bounds;
-    if (!bounds) {
-        bounds = [[0, 0], [width, 0], [width, height], [0, height]];
-    }
     mainb = new MainBall(...levelData.mainb);
     hole = new Hole(...levelData.hole);
 
     // todo: deep copy
     static = levelData.static;
     balls = levelData.balls;
-    levelBounds = bounds;
-
-    let minx = bounds[0][0], miny = bounds[0][1], maxx = bounds[0][0], maxy = bounds[0][1];
-
-    for (let i = 1; i < bounds.length; i++) {
-        let [x, y] = bounds[i];
-        if (x < minx) minx = x;
-        if (y < miny) miny = y;
-        if (x > maxx) maxx = x;
-        if (y > maxy) maxy = y;
-    }
-
-    camera = new Camera(minx, miny, maxx, maxy);
 
     balls.push(mainb);
 }

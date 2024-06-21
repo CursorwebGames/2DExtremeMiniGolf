@@ -1,6 +1,6 @@
 const friction = 0.016;
 
-class Ball {
+export class Ball {
     constructor(x, y, r) {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
@@ -16,9 +16,9 @@ class Ball {
     /**
      * In each frame, multiple forces can be applied
      * And then in update, they will subsequently affect the ball's movement
-     * @param {p5.Vector} f Force
+     * @param f Force
      */
-    applyForce(f) {
+    applyForce(f: p5.Vector) {
         this.vel.add(f);
     }
 
