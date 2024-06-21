@@ -1,4 +1,6 @@
-class Hole {
+import { circCircCol } from "../collisions";
+
+export class Hole {
     constructor(x, y) {
         this.pos = createVector(x, y);
         this.in = false;

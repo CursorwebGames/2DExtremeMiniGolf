@@ -1,7 +1,9 @@
-// todo: AHHHHH
-const _friction = 0.05;
+import { circPolyCol, pointPolyCol } from "../collisions";
 
-class Sand {
+// todo: AHHHHH
+const friction = 0.05;
+
+export class Sand {
     constructor(points) {
         this.points = points;
         let minx = points[0][0], miny = points[0][1], maxx = points[0][0], maxy = points[0][1];
@@ -40,7 +42,7 @@ class Sand {
     collide(ball) {
         // do note this will be amplified
         // based on ccd count
-        ball.vel.mult(1 - _friction);
+        ball.vel.mult(1 - friction);
     }
 
     isColliding(ball) {

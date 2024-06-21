@@ -1,4 +1,6 @@
-class Wall {
+import { circRectCol } from "../collisions";
+
+export class Wall {
     constructor(x, y, w, h) {
         this.x = x;
         this.y = y;

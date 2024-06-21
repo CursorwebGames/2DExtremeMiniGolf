@@ -1,6 +1,8 @@
+import { circPolyCol } from "../collisions";
+
 const friction = 0.016;
 
-class Ball {
+export class Ball {
     constructor(x, y, r) {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);

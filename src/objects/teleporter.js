@@ -1,4 +1,6 @@
-class Teleporter {
+import { circCircCol } from "../collisions";
+
+export class Teleporter {
     constructor(sx, sy, ex, ey) {
         this.start = createVector(sx, sy);
         this.end = createVector(ex, ey);

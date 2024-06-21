@@ -1,4 +1,6 @@
-class Water {
+import { circPolyCol } from "../collisions";
+
+export class Water {
     constructor(points) {
         this.points = points;
 

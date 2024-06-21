@@ -1,4 +1,6 @@
-function genLevels() {
+import { Sand, PolygonWall, Wall, Water, Teleporter, Ice, Bouncer } from "./objects";
+
+export function genLevels() {
     return [
         {
             mainb: [505, 428],
