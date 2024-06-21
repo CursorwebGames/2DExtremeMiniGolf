@@ -1,5 +1,4 @@
 import { circPolyCol } from "../collisions";
-import { main } from "../main";
 
 const friction = 0.016;
 

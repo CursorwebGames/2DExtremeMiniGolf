@@ -1,5 +1,3 @@
-import { main } from "./main";
-
 export class Transition {
     constructor() {
         this.a = 0;

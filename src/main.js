@@ -60,7 +60,7 @@ class GameManager {
     }
 }
 
-export const main = new GameManager();
+window.main = new GameManager();
 
 window.setup = function setup() {
     createCanvas(windowWidth, windowHeight);

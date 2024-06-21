@@ -1,7 +1,3 @@
-// let mousex, mousey;
-
-import { main } from "./main.js";
-
 export class Camera {
     constructor(minx, miny, maxx, maxy) {
         this.x = main.mainb.pos.x;

@@ -1,5 +1,4 @@
 import { circCircCol } from "../collisions";
-import { main } from "../main";
 
 export class Hole {
     constructor(x, y) {
