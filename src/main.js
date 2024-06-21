@@ -60,6 +60,8 @@ class GameManager {
     }
 }
 
+// do this because
+// the downsides of vite glitches just aren't worth it
 window.main = new GameManager();
 
 window.setup = function setup() {
