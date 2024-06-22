@@ -16,6 +16,7 @@
 - No need for dynamic objects optimizations
 
 - Relationship Reveal: classes extend a base class (if I feel like it)
+    - make your own editorCamera
 
 ## CCD
 CCD by halving velocity and multiple substeps (todo: calculations on ratio & further optimizations)

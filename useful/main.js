@@ -3,13 +3,13 @@
 import p5 from "p5";
 window.p5 = p5;
 
-import { Editor } from "./editor";
+import { EditorManager } from "./editorManager";
 
 // once camera added, remove
 window.mousex = undefined;
 window.mousey = undefined;
 
-window.main = new Editor();
+window.main = new EditorManager();
 
 window.setup = () => {
     noStroke();

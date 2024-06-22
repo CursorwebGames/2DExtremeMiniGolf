@@ -7,19 +7,27 @@ const CCD_STEPS = 2;
 
 // todo: separation of genLevels
 export class GameManager {
+    /**
+     * this.mainb
+     * this.hole
+     * this.levelBounds
+     * this.camera
+     */
+    constructor() {
+        this.balls = [];
+        this.staticObjs = [];
+    }
+
+    /**
+     * Game mode specific details (levels, or editor?)
+     */
     init() {
         this.levels = genLevels();
         this.level = 0;
 
-        this.balls = [];
-        this.staticObjs = [];
-
         this.transition = new Transition();
 
-        // camera
-        // levelBounds
-
-        // mainb, hole
+        // defines: camera, levelBounds, mainb, hole
         this.generateLevel();
     }
 
@@ -57,34 +65,34 @@ export class GameManager {
         background(123, 255, 123);
 
         push();
-        main.camera.draw();
+        this.camera.draw();
 
         push();
         noFill();
         strokeWeight(1);
         stroke(255);
         beginShape();
-        for (const [x, y] of main.levelBounds) {
+        for (const [x, y] of this.levelBounds) {
             vertex(x, y);
         }
         endShape(CLOSE);
         pop();
 
         for (let c = 0; c < CCD_STEPS; c++) {
-            for (let i = 0; i < main.balls.length; i++) {
-                const ball = main.balls[i];
+            for (let i = 0; i < this.balls.length; i++) {
+                const ball = this.balls[i];
                 ball.update(CCD_STEPS);
 
                 // duplicate twice, so as to newton's third law
-                for (let j = 0; j < main.balls.length; j++) {
+                for (let j = 0; j < this.balls.length; j++) {
                     if (i == j) continue;
-                    const other = main.balls[j];
+                    const other = this.balls[j];
                     if (circCircCol(ball.pos, ball.r, other.pos, other.r)) {
                         ball.collide(other);
                     }
                 }
 
-                for (const obj of main.staticObjs) {
+                for (const obj of this.staticObjs) {
                     const res = obj.isColliding(ball);
                     if (res) {
                         obj.collide(ball, res);
@@ -93,24 +101,24 @@ export class GameManager {
             }
         }
 
-        if (main.hole.isColliding(main.mainb)) {
-            main.hole.collide(main.mainb, () => {
-                main.transition.begin();
+        if (this.hole.isColliding(this.mainb)) {
+            this.hole.collide(this.mainb, () => {
+                this.transition.begin();
             });
         }
 
-        for (const obj of main.staticObjs) {
-            obj.draw();
+        for (const staticObj of this.staticObjs) {
+            staticObj.draw();
         }
 
-        main.hole.draw();
+        this.hole.draw();
 
-        for (const ball of main.balls) {
+        for (const ball of this.balls) {
             ball.draw();
         }
 
         pop();
 
-        main.transition.draw();
+        this.transition.draw();
     }
 }
