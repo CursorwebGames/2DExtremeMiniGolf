@@ -13,7 +13,7 @@ export class Polygon {
             new Knot(width / 2, height / 2 + 50, this),
         ];
         this.centerKnot = new Knot(0, 0, this);
-        staticKnots.push(...this.knots, this.centerKnot);
+        main.staticKnots.push(...this.knots, this.centerKnot);
         this.update();
     }
 
