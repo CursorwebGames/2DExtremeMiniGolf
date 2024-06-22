@@ -1,7 +1,10 @@
+import { Water } from "../../src/objects";
+import { Knot } from "./knot";
+
 /**
  * Components that require multiple knots
  */
-class Polygon {
+export class Polygon {
     constructor(obj) {
         this.obj = obj;
         this.knots = [

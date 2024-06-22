@@ -1,4 +1,4 @@
-class Knot {
+export class Knot {
     constructor(x, y, parent) {
         this.pos = createVector(x, y);
         this.r = 4;

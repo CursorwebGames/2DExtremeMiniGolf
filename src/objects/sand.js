@@ -1,6 +1,5 @@
 import { circPolyCol, pointPolyCol } from "../collisions";
 
-// todo: AHHHHH
 const friction = 0.05;
 
 export class Sand {

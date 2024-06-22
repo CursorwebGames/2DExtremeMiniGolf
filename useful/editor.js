@@ -1,14 +1,24 @@
 // wrapper class to store ui components which can affect the object properties
 // components themselves can be dragged and dropped
+import p5 from "p5";
+window.p5 = p5;
+
+import { Single } from "./ui/single";
+import { Polygon } from "./ui/polygon";
+
+import { Hole, MainBall, Water } from "../src/objects";
 
 let mainb;
 let hole;
 let statics = [];
-let staticKnots = [];
-let mousePos;
+// let staticKnots = [];
+window.staticKnots = [];
+window.mousex = undefined;
+window.mousey = undefined;
+// window.mousePos;
 let hasSelected = false;
 
-function setup() {
+window.setup = () => {
     noStroke();
     createCanvas(900, 900).parent(document.querySelector(".canvas-content"));
     hole = new Single(new Hole(width / 2, height / 2));
@@ -16,8 +26,8 @@ function setup() {
     statics.push(new Polygon(new Water([])));
 }
 
-function draw() {
-    mousePos = createVector(mouseX, mouseY);
+window.draw = () => {
+    window.mousePos = createVector(mouseX, mouseY);
 
     background(123, 255, 123);
     for (const obj of statics) {
@@ -31,7 +41,7 @@ function draw() {
     }
 }
 
-function mouseReleased() {
+window.mouseReleased = () => {
     hasSelected = false;
 }
 
