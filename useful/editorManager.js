@@ -1,7 +1,8 @@
-import { Single } from "./ui/single";
-import { Polygon } from "./ui/polygon";
+import { SingleUI } from "./ui/singleUI";
+import { PolygonUI } from "./ui/polygonUI";
+import { RectUI } from "./ui/rectUI";
 
-import { Hole, MainBall, Water } from "../src/objects";
+import { Hole, Ice, MainBall, Water } from "../src/objects";
 
 import { GameManager } from "../src/gameManager";
 
@@ -14,9 +15,12 @@ export class EditorManager extends GameManager {
     }
 
     init() {
-        this.hole = new Single(new Hole(width / 2, height / 2));
-        this.mainb = new Single(new MainBall(width / 2, height / 2));
-        this.staticObjs.push(new Polygon(new Water([])));
+        this.hole = new SingleUI(new Hole(width / 2, height / 2));
+        this.mainb = new SingleUI(new MainBall(width / 2, height / 2));
+        this.staticObjs.push(
+            new PolygonUI(new Water([])),
+            new RectUI(new Ice(50, 50, 100, 20)),
+        );
         this.balls.push(this.mainb);
     }
 

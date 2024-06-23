@@ -3,7 +3,7 @@ import { Knot } from "./knot";
 /**
  * Components that require only a single knot
  */
-export class Single {
+export class SingleUI {
     constructor(obj, isStatic = false) {
         this.obj = obj;
         this.knot = new Knot(obj.pos.x, obj.pos.y, this);

@@ -4,7 +4,7 @@ import { Knot } from "./knot";
 /**
  * Components that require multiple knots
  */
-export class Polygon {
+export class PolygonUI {
     constructor(obj) {
         this.obj = obj;
         this.knots = [
