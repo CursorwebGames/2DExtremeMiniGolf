@@ -9,12 +9,7 @@ export class Knot {
     }
 
     draw() {
-        this.prevPos = this.pos.copy();
-
-        if (this.selected) {
-            this.update();
-            this.parent.update(this, p5.Vector.sub(this.pos, this.prevPos));
-        }
+        this.update();
 
         push();
         if (this.selected || this.pos.dist(mousePos) < this.r) {
@@ -29,7 +24,12 @@ export class Knot {
     }
 
     update() {
-        this.pos = mousePos;
+        this.prevPos = this.pos.copy();
+
+        if (this.selected) {
+            this.pos = mousePos;
+            this.parent.update(this, p5.Vector.sub(this.pos, this.prevPos));
+        }
     }
 
     check() {
