@@ -1,4 +1,4 @@
-class Knot {
+export class Knot {
     constructor(x, y, parent) {
         this.pos = createVector(x, y);
         this.r = 4;
@@ -9,15 +9,10 @@ class Knot {
     }
 
     draw() {
-        this.prevPos = this.pos.copy();
-
-        if (this.selected) {
-            this.pos = mousePos;
-            this.parent.update(this, p5.Vector.sub(this.pos, this.prevPos));
-        }
+        this.update();
 
         push();
-        if (this.pos.dist(mousePos) < this.r) {
+        if (this.selected || this.pos.dist(mousePos) < this.r) {
             strokeWeight(1);
             stroke(0);
             fill(0, 138, 124);
@@ -26,6 +21,15 @@ class Knot {
         }
         circle(this.pos.x, this.pos.y, this.r * 2);
         pop();
+    }
+
+    update() {
+        this.prevPos = this.pos.copy();
+
+        if (this.selected) {
+            this.pos = mousePos;
+            this.parent.update(this, p5.Vector.sub(this.pos, this.prevPos));
+        }
     }
 
     check() {

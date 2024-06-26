@@ -1,4 +1,6 @@
-class Hole {
+import { circCircCol } from "../collisions";
+
+export class Hole {
     constructor(x, y) {
         this.pos = createVector(x, y);
         this.in = false;
@@ -15,7 +17,7 @@ class Hole {
     }
 
     collide(ball, callback) {
-        mainb.inHole = true;
+        main.mainb.inHole = true;
 
         if (ball.vel.mag() < 0.001 && !this.in) {
             callback();

@@ -1,6 +1,8 @@
+import { circPolyCol } from "../collisions";
+
 const friction = 0.016;
 
-class Ball {
+export class Ball {
     constructor(x, y, r) {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
@@ -34,7 +36,7 @@ class Ball {
     }
 
     checkBounds() {
-        let { projPoint, edge } = circPolyCol(this.pos, this.r, levelBounds);
+        let { projPoint, edge } = circPolyCol(this.pos, this.r, main.levelBounds);
         if (projPoint) {
             let diff = p5.Vector.sub(this.pos, projPoint);
             let speed = this.vel.mag();

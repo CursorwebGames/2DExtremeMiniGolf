@@ -15,7 +15,8 @@
     - Have quadtree store components of static for collisions (e.g. line collision, circle collision)
 - No need for dynamic objects optimizations
 
-- Vite rewrite (once I feel like it) (ONLY IN JS NOT TYPESCRIPT)
+- Relationship Reveal: classes extend a base class (if I feel like it)
+    - make your own editorCamera
 
 ## CCD
 CCD by halving velocity and multiple substeps (todo: calculations on ratio & further optimizations)

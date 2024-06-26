@@ -1,7 +1,10 @@
+import { Water } from "../../src/objects";
+import { Knot } from "./knot";
+
 /**
  * Components that require multiple knots
  */
-class Polygon {
+export class PolygonUI {
     constructor(obj) {
         this.obj = obj;
         this.knots = [
@@ -10,7 +13,7 @@ class Polygon {
             new Knot(width / 2, height / 2 + 50, this),
         ];
         this.centerKnot = new Knot(0, 0, this);
-        staticKnots.push(...this.knots, this.centerKnot);
+        main.staticKnots.push(...this.knots, this.centerKnot);
         this.update();
     }
 
