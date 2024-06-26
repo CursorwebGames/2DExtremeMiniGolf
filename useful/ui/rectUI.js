@@ -22,7 +22,11 @@ export class RectUI {
         this.heightKnot.draw();
     }
 
-    update() {
+    update(knot, delta) {
+        if (knot == this.posKnot) {
+            this.widthKnot.originUpdate(delta);
+            this.heightKnot.originUpdate(delta);
+        }
         const pos = this.posKnot.pos;
         this.obj.x = pos.x;
         this.obj.y = pos.y;
