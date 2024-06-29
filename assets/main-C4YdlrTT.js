@@ -1,0 +1,1 @@
+import{p as i,G as e}from"./gameManager-D417MKQO.js";window.p5=i;window.main=new e;window.setup=()=>{createCanvas(windowWidth,windowHeight),noStroke(),main.init()};window.draw=()=>{main.draw()};window.mouseClicked=function(){const n=i.Vector.sub(createVector(mousex,mousey),main.mainb.pos).div(32);main.mainb.vel=n};
