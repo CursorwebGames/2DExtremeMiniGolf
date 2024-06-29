@@ -1,26 +1,32 @@
 import { SingleUI } from "./ui/singleUI";
-import { PolygonUI } from "./ui/polygonUI";
-import { RectUI } from "./ui/rectUI";
 
-import { Hole, Ice, MainBall, Water } from "../src/objects";
-
+import { Hole, MainBall } from "../src/objects";
 import { GameManager } from "../src/gameManager";
 
 
 export class EditorManager extends GameManager {
     constructor() {
+        /*
+        this.mainb
+        this.hole
+        this.levelBounds
+        this.camera
+        this.balls
+        this.staticObjs
+        */
         super();
+
+        /** if there is a knot currently being dragged */
         this.hasSelected = false;
+        /** list of static knots of static objects (as opposed to mainb and hole) */
         this.staticKnots = [];
+        /** polygon mode: right click to remove, left click to add for a polygon */
+        // this.selectedPolygon;
     }
 
     init() {
         this.mainb = new SingleUI(new MainBall(80, 80), false);
         this.hole = new SingleUI(new Hole(width - 80, height - 80), false);
-        // this.staticObjs.push(
-        //     new PolygonUI(new Water([])),
-        //     new RectUI(new Ice(50, 50, 100, 20)),
-        // );
         this.balls.push(this.mainb);
     }
 
@@ -43,6 +49,9 @@ export class EditorManager extends GameManager {
     }
 
     checkKnots() {
+        if (this.selectedPolygon) {
+            return;
+        }
         // the topmost knot will be the most recently added knot
         // only one knot can be checked at a time
         // once a knot is being dragged, don't check for any more collisions

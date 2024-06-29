@@ -33,14 +33,17 @@ export class Knot {
     }
 
     check() {
+        // mouse released
         if (!mouseIsPressed && this.selected) {
             this.selected = false;
         }
 
+        // mouse just clicked on it
         if (mouseIsPressed && !this.selected && this.pos.dist(mousePos) < this.r) {
             this.selected = true;
         }
 
+        // if neither happened, continue current state (unlikely)
         return this.selected;
     }
 }

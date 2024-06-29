@@ -14,13 +14,53 @@ window.main = new EditorManager();
 
 window.setup = () => {
     noStroke();
-    createCanvas(900, 900).parent(document.querySelector(".canvas-content"));
+    const canvas = createCanvas(900, 900).parent(document.querySelector(".canvas-content"));
+    canvas.mousePressed(mousePressed);
+    canvas.elt.addEventListener("contextmenu", e => e.preventDefault());
     main.init();
 }
 
 window.draw = () => {
     window.mousePos = createVector(mouseX, mouseY);
     main.draw();
+
+    if (main.selectedPolygon) {
+        fill(0);
+        textAlign(CENTER);
+        textSize(30);
+        text("Left click to add vertex, Right click to remove vertex\nEsc to finish", width / 2, 40);
+    }
+}
+
+// todo: move into editorManager?
+function mousePressed() {
+    if (!main.selectedPolygon) {
+        return;
+    }
+
+    let poly = main.selectedPolygon;
+
+    if (mouseButton == LEFT) {
+        poly.addPoint(mouseX, mouseY);
+    } else if (mouseButton == RIGHT) {
+        for (let i = poly.knots.length - 1; i >= 0; i--) {
+            const knot = poly.knots[i];
+            // this so lazy lmao
+            if (knot.check()) {
+                poly.knots.splice(i, 1);
+                poly.update();
+                break;
+            }
+        }
+    }
+
+    return false;
+}
+
+window.keyPressed = () => {
+    if (main.selectedPolygon && key == 'Escape') {
+        main.selectedPolygon = null;
+    }
 }
 
 window.mouseReleased = () => {

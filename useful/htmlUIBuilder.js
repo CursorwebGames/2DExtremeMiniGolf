@@ -1,4 +1,5 @@
-import { Bouncer, Ice, Slope, Wall } from "../src/objects";
+import { Bouncer, Ice, PolygonWall, Slope, Wall } from "../src/objects";
+import { PolygonUI } from "./ui/polygonUI";
 import { RectUI } from "./ui/rectUI";
 import { SingleUI } from "./ui/singleUI";
 
@@ -18,6 +19,14 @@ const objTemplates = [
     {
         name: "Slope",
         create: (x, y) => new RectUI(new Slope(x, y, 30, 30, createVector(1, 0))),
+    },
+    {
+        name: "Polygon Wall",
+        create: () => {
+            const ui = new PolygonUI(new PolygonWall([]));
+            main.selectedPolygon = ui;
+            return ui;
+        },
     }
 ];
 

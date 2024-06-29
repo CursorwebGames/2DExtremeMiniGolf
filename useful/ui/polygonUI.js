@@ -7,14 +7,9 @@ import { Knot } from "./knot";
 export class PolygonUI {
     constructor(obj) {
         this.obj = obj;
-        this.knots = [
-            new Knot(width / 2 - 50, height / 2, this),
-            new Knot(width / 2 + 50, height / 2, this),
-            new Knot(width / 2, height / 2 + 50, this),
-        ];
+        this.knots = [];
         this.centerKnot = new Knot(0, 0, this);
-        main.staticKnots.push(...this.knots, this.centerKnot);
-        this.update();
+        main.staticKnots.push(this.centerKnot);
     }
 
     draw() {
@@ -61,5 +56,12 @@ export class PolygonUI {
         }
 
         this.obj.points = this.convertKnots();
+    }
+
+    addPoint(x, y) {
+        const knot = new Knot(x, y, this);
+        this.knots.push(knot);
+        main.staticKnots.push(knot);
+        this.update();
     }
 }
