@@ -153,8 +153,8 @@ export function genLevels() {
             mainb: [30, 30],
             hole: [300, 300],
             static: [
-                new Bouncer(80, 30, 30, 100),
-                new Bouncer(30, 80, 30, 100),
+                new Bouncer(80, 30),
+                new Bouncer(30, 80),
             ],
             balls: [
 

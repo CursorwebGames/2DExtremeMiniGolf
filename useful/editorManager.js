@@ -15,12 +15,12 @@ export class EditorManager extends GameManager {
     }
 
     init() {
-        this.hole = new SingleUI(new Hole(width / 2, height / 2));
-        this.mainb = new SingleUI(new MainBall(width / 2, height / 2));
-        this.staticObjs.push(
-            new PolygonUI(new Water([])),
-            new RectUI(new Ice(50, 50, 100, 20)),
-        );
+        this.mainb = new SingleUI(new MainBall(80, 80), false);
+        this.hole = new SingleUI(new Hole(width - 80, height - 80), false);
+        // this.staticObjs.push(
+        //     new PolygonUI(new Water([])),
+        //     new RectUI(new Ice(50, 50, 100, 20)),
+        // );
         this.balls.push(this.mainb);
     }
 
@@ -59,6 +59,7 @@ export class EditorManager extends GameManager {
 
         if (this.hole.knot.check()) {
             this.hasSelected = true;
+            return;
         }
 
         for (let i = this.staticKnots.length - 1; i >= 0; i--) {

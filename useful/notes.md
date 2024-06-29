@@ -3,27 +3,30 @@
 ## Realisms
 - Find a way to show physics is real
 - Angle impulse calculations?
-- Stop double colliding (push out of it)
+- Stop double colliding (push out of it) ??? this still a thing in 2024?
 
 ## Gameplay
 - Decide whether teleporting, if you can teleport back if that would be fun
 - Color design as always
 
 ## Optimizations
-- Implement a quadtree
+<!-- - Implement a quadtree
 - Due to mostly static nature of the program (few dynamic objects and calculations with many statics)
     - Have quadtree store components of static for collisions (e.g. line collision, circle collision)
-- No need for dynamic objects optimizations
+- No need for dynamic objects optimizations -->
 
 - Relationship Reveal: classes extend a base class (if I feel like it)
     - make your own editorCamera
 
-## CCD
+<!-- ## CCD
 CCD by halving velocity and multiple substeps (todo: calculations on ratio & further optimizations)
 - Boundary clipping redundancies (centripetal)? Is worth it?
     - Same with polygons as a radial force (centrifugal) in case ball goes inside
-    - dt
+    - dt -->
 
-## Level Editor
-Good luck on this one!
+# Level Editor
+- do whatever you want and if you are inconvenienced fix it
+
+
+
 - Ray tracing to determine hole in one

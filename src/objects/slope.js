@@ -20,7 +20,7 @@ export class Slope {
         push();
         translate(cx, cy);
         rotate(this.force.heading());
-        triangle(-5, -15, 5, 0, -5, 15);
+        triangle(-5, -10, 5, 0, -5, 10);
         pop();
     }
 

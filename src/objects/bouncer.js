@@ -1,9 +1,9 @@
 import { circCircCol } from "../collisions";
 
 export class Bouncer {
-    constructor(x, y, r) {
+    constructor(x, y) {
         this.pos = createVector(x, y);
-        this.r = r;
+        this.r = 30;
         this.hit = 0;
     }
 

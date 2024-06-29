@@ -4,6 +4,7 @@ import p5 from "p5";
 window.p5 = p5;
 
 import { EditorManager } from "./editorManager";
+import "./htmlUIBuilder";
 
 // once camera added, remove
 window.mousex = undefined;
