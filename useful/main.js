@@ -14,7 +14,7 @@ window.main = new EditorManager();
 
 window.setup = () => {
     noStroke();
-    const canvas = createCanvas(900, 900).parent(document.querySelector(".canvas-content"));
+    const canvas = createCanvas(0.8 * windowWidth, windowHeight).parent(document.querySelector(".canvas-content"));
     canvas.mousePressed(mousePressed);
     canvas.elt.addEventListener("contextmenu", e => e.preventDefault());
     main.init();
@@ -27,8 +27,8 @@ window.draw = () => {
     if (main.selectedPolygon) {
         fill(0);
         textAlign(CENTER);
-        textSize(30);
-        text("Left click to add vertex, Right click to remove vertex\nEsc to finish", width / 2, 40);
+        textSize(20);
+        text("Left click to add vertex, Right click to remove vertex\nEsc to finish", width / 2, 30);
     }
 }
 

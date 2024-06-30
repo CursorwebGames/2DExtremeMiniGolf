@@ -1,4 +1,4 @@
-import { Bouncer, Ice, PolygonWall, Slope, Wall } from "../src/objects";
+import { Bouncer, Ice, PolygonWall, Sand, Slope, Wall, Water } from "../src/objects";
 import { PolygonUI } from "./ui/polygonUI";
 import { RectUI } from "./ui/rectUI";
 import { SingleUI } from "./ui/singleUI";
@@ -27,7 +27,23 @@ const objTemplates = [
             main.selectedPolygon = ui;
             return ui;
         },
-    }
+    },
+    {
+        name: "Water",
+        create: () => {
+            const ui = new PolygonUI(new Water([]));
+            main.selectedPolygon = ui;
+            return ui;
+        },
+    },
+    {
+        name: "Sand",
+        create: () => {
+            const ui = new PolygonUI(new Sand([]));
+            main.selectedPolygon = ui;
+            return ui;
+        },
+    },
 ];
 
 const templateEl = document.querySelector(".object-template");
