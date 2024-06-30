@@ -1,0 +1,1 @@
+import{p as i,G as w}from"./gameManager-D2O641lT.js";window.p5=i;window.main=new w;window.setup=()=>{createCanvas(windowWidth,windowHeight),noStroke(),main.init()};window.draw=()=>{main.draw()};window.mouseClicked=()=>{const n=i.Vector.sub(createVector(mousex,mousey),main.mainb.pos).div(32);main.mainb.vel=n};window.windowResized=()=>{resizeCanvas(windowWidth,windowHeight)};
