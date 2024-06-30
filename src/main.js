@@ -22,7 +22,7 @@ window.draw = () => {
     main.draw();
 }
 
-window.mouseClicked = function mouseClicked() {
+window.mouseClicked = () => {
     // if (mainb.vel.mag() != 0) return;
 
     const vec = p5.Vector.sub(createVector(mousex, mousey), main.mainb.pos).div(32);
@@ -30,4 +30,8 @@ window.mouseClicked = function mouseClicked() {
 
     // console.log("start", mainb.pos.x, mainb.pos.y);
     // console.log("vec", vec.x, vec.y);
+}
+
+window.windowResized = () => {
+    resizeCanvas(windowWidth, windowHeight);
 }

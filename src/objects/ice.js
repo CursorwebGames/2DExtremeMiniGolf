@@ -12,14 +12,14 @@ export class Ice extends Wall {
     draw() {
         if (!this.disabled) {
             push();
-            strokeWeight(1);
+            strokeWeight(4);
             stroke(255, 125);
             fill(123, 0, 255, 125);
             rect(this.x + 1, this.y + 1, this.w - 2, this.h - 2);
             pop();
         } else {
             push();
-            strokeWeight(1);
+            strokeWeight(4);
             stroke(255, 125);
             fill(123, 0, 255, 20);
             rect(this.x + 1, this.y + 1, this.w - 2, this.h - 2);

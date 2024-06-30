@@ -1,5 +1,5 @@
-// wrapper class to store ui components which can affect the object properties
-// components themselves can be dragged and dropped
+// motivation: wrapper class to store ui components which can affect the object properties
+// the components themselves can be dragged and dropped
 import p5 from "p5";
 window.p5 = p5;
 
@@ -16,6 +16,7 @@ window.setup = () => {
     noStroke();
     const canvas = createCanvas(0.8 * windowWidth, windowHeight).parent(document.querySelector(".canvas-content"));
     canvas.mousePressed(mousePressed);
+    canvas.elt.addEventListener("selectstart", e => e.preventDefault())
     canvas.elt.addEventListener("contextmenu", e => e.preventDefault());
     main.init();
 }
@@ -58,7 +59,7 @@ function mousePressed() {
 }
 
 window.keyPressed = () => {
-    if (main.selectedPolygon && key == 'Escape') {
+    if (main.selectedPolygon && key == "Escape") {
         main.selectedPolygon = null;
     }
 }
