@@ -1,5 +1,6 @@
 export class Camera {
     constructor(minx, miny, maxx, maxy) {
+        console.log(main);
         this.x = main.mainb.pos.x;
         this.y = main.mainb.pos.y;
 

@@ -64,7 +64,6 @@ for (const template of objTemplates) {
         const obj = template.create(width / 2, height / 2);
         main.staticObjs.push(obj);
 
-        console.log(obj)
         const renderer = template.render || htmlUIRenderer;
         const el = renderer(obj, template.name);
         objectsList.append(el);

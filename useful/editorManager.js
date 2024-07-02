@@ -24,7 +24,7 @@ export class EditorManager extends GameManager {
         /** polygon mode: right click to remove, left click to add for a polygon */
         // this.selectedPolygon;
 
-        this.playMode = true;
+        // this.gameManager = null;
     }
 
     init() {
@@ -34,57 +34,55 @@ export class EditorManager extends GameManager {
         this.levelBounds = [[0, 0], [width, 0], [width, height], [0, height]];
     }
 
+    playMode() {
+        this.gameManager = new GameManager();
+        this.gameManager.playMode = true;
+        window.main = this.gameManager;
+        this.gameManager.init();
+        this.gameManager.generateLevel = () => {
+            this.gameManager.transition.end();
+
+            // exit play mode
+            window.main = this;
+            this.gameManager = null;
+            this.mainb.update();
+            this.hole.update();
+            for (const objUI of this.staticObjs) {
+                objUI.update();
+            }
+        };
+
+        this.gameManager.mainb = this.mainb.obj;
+        this.gameManager.hole = this.hole.obj;
+        this.gameManager.balls = [this.mainb.obj];
+        this.gameManager.levelBounds = this.levelBounds;
+        const staticObjs = [];
+        for (const objUI of this.staticObjs) {
+            staticObjs.push(objUI.obj);
+        }
+        this.gameManager.staticObjs = staticObjs;
+    }
+
     draw() {
+        if (this.gameManager) {
+            this.gameManager.draw();
+            return;
+        }
+
         background(123, 255, 123);
 
-        if (!this.playMode) {
-            for (const staticObj of this.staticObjs) {
-                staticObj.draw();
-            }
+        for (const staticObj of this.staticObjs) {
+            staticObj.draw();
+        }
 
-            this.hole.draw();
+        this.hole.draw();
 
-            for (const ball of this.balls) {
-                ball.draw();
-            }
+        for (const ball of this.balls) {
+            ball.draw();
+        }
 
-            if (!this.hasSelected) {
-                this.checkKnots();
-            }
-        } else {
-            // todo: get the super class to do something
-            for (let c = 0; c < CCD_STEPS; c++) {
-                for (let i = 0; i < this.balls.length; i++) {
-                    const ball = this.balls[i].obj;
-                    ball.update(CCD_STEPS);
-
-                    // duplicate twice, so as to newton's third law
-                    for (let j = 0; j < this.balls.length; j++) {
-                        if (i == j) continue;
-                        const other = this.balls[j].obj;
-                        if (circCircCol(ball.pos, ball.r, other.pos, other.r)) {
-                            ball.collide(other);
-                        }
-                    }
-
-                    for (const objUI of this.staticObjs) {
-                        const res = objUI.obj.isColliding(ball);
-                        if (res) {
-                            objUI.obj.collide(ball, res);
-                        }
-                    }
-                }
-            }
-
-            for (const staticObj of this.staticObjs) {
-                staticObj.obj.draw();
-            }
-
-            this.hole.obj.draw();
-
-            for (const ball of this.balls) {
-                ball.obj.draw();
-            }
+        if (!this.hasSelected) {
+            this.checkKnots();
         }
     }
 

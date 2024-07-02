@@ -26,7 +26,6 @@ export function htmlUIRenderer(ui, name) {
 }
 
 export function htmlSlopeUI(ui, name) {
-    console.log('yeah?')
     const el = htmlUIRenderer(ui, name);
     const slopeBtn = document.createElement("button");
     slopeBtn.textContent = "rotate";

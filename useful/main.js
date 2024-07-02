@@ -16,6 +16,7 @@ window.setup = () => {
     noStroke();
     const canvas = createCanvas(0.8 * windowWidth, windowHeight).parent(document.querySelector(".canvas-content"));
     canvas.mousePressed(mousePressed);
+    canvas.mouseClicked(mouseClicked);
     canvas.elt.addEventListener("selectstart", e => e.preventDefault())
     canvas.elt.addEventListener("contextmenu", e => e.preventDefault());
     main.init();
@@ -58,10 +59,10 @@ function mousePressed() {
     return false;
 }
 
-window.mouseClicked = () => {
+function mouseClicked() {
     if (main.playMode) {
-        const vec = p5.Vector.sub(createVector(mouseX, mouseY), main.mainb.obj.pos).div(32);
-        main.mainb.obj.vel = vec;
+        const vec = p5.Vector.sub(createVector(mousex, mousey), main.mainb.pos).div(32);
+        main.mainb.vel = vec;
     }
 }
 
@@ -77,5 +78,5 @@ window.mouseReleased = () => {
 
 // todo
 document.querySelector(".play-btn").addEventListener("click", () => {
-    main.playMode = !main.playMode;
+    main.playMode();
 });
