@@ -60,7 +60,7 @@ function mousePressed() {
 }
 
 function mouseClicked() {
-    if (main.playMode) {
+    if (main.inPlay) {
         const vec = p5.Vector.sub(createVector(mousex, mousey), main.mainb.pos).div(32);
         main.mainb.vel = vec;
     }
@@ -78,5 +78,9 @@ window.mouseReleased = () => {
 
 // todo
 document.querySelector(".play-btn").addEventListener("click", () => {
-    main.playMode();
+    if (main.inPlay) {
+        main.generateLevel();
+    } else {
+        main.playMode();
+    }
 });

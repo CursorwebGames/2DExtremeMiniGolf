@@ -29,6 +29,7 @@ export class EditorManager extends GameManager {
 
     init() {
         this.mainb = new SingleUI(new MainBall(80, 80), false);
+        // this.mainb.obj.inHole = true;
         this.hole = new SingleUI(new Hole(width - 80, height - 80), false);
         this.balls.push(this.mainb);
 
@@ -45,7 +46,7 @@ export class EditorManager extends GameManager {
      */
     playMode() {
         this.gameManager = new GameManager();
-        this.gameManager.playMode = true;
+        this.gameManager.inPlay = true;
 
         // replace global main with gameManager
         window.main = this.gameManager;
@@ -53,6 +54,8 @@ export class EditorManager extends GameManager {
         this.gameManager.init();
         this.gameManager.generateLevel = () => {
             this.gameManager.transition.end();
+            this.gameManager.mainb.vel.mult(0);
+            this.gameManager.mainb.inHole = true;
 
             // exit play mode
             window.main = this;
@@ -66,6 +69,7 @@ export class EditorManager extends GameManager {
         this.gameManager.camera = new Camera(0, 0, width, height);
 
         this.gameManager.mainb = this.mainb.obj;
+        this.gameManager.mainb.inHole = false;
         this.gameManager.hole = this.hole.obj;
         this.gameManager.balls = [this.mainb.obj];
         this.gameManager.levelBounds = this.levelBounds;

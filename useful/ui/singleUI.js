@@ -19,6 +19,6 @@ export class SingleUI {
     }
 
     update() {
-        this.obj.pos = this.knot.pos;
+        this.obj.pos = this.knot.pos.copy();
     }
 }
