@@ -1,7 +1,8 @@
 import { SingleUI } from "./ui/singleUI";
 
 import { Hole, MainBall } from "../src/objects";
-import { GameManager } from "../src/gameManager";
+import { CCD_STEPS, GameManager } from "../src/gameManager";
+import { circCircCol } from "../src/collisions";
 
 
 export class EditorManager extends GameManager {
@@ -22,29 +23,68 @@ export class EditorManager extends GameManager {
         this.staticKnots = [];
         /** polygon mode: right click to remove, left click to add for a polygon */
         // this.selectedPolygon;
+
+        this.playMode = true;
     }
 
     init() {
         this.mainb = new SingleUI(new MainBall(80, 80), false);
         this.hole = new SingleUI(new Hole(width - 80, height - 80), false);
         this.balls.push(this.mainb);
+        this.levelBounds = [[0, 0], [width, 0], [width, height], [0, height]];
     }
 
     draw() {
         background(123, 255, 123);
 
-        for (const staticObj of this.staticObjs) {
-            staticObj.draw();
-        }
+        if (!this.playMode) {
+            for (const staticObj of this.staticObjs) {
+                staticObj.draw();
+            }
 
-        this.hole.draw();
+            this.hole.draw();
 
-        for (const ball of this.balls) {
-            ball.draw();
-        }
+            for (const ball of this.balls) {
+                ball.draw();
+            }
 
-        if (!this.hasSelected) {
-            this.checkKnots();
+            if (!this.hasSelected) {
+                this.checkKnots();
+            }
+        } else {
+            // todo: get the super class to do something
+            for (let c = 0; c < CCD_STEPS; c++) {
+                for (let i = 0; i < this.balls.length; i++) {
+                    const ball = this.balls[i].obj;
+                    ball.update(CCD_STEPS);
+
+                    // duplicate twice, so as to newton's third law
+                    for (let j = 0; j < this.balls.length; j++) {
+                        if (i == j) continue;
+                        const other = this.balls[j].obj;
+                        if (circCircCol(ball.pos, ball.r, other.pos, other.r)) {
+                            ball.collide(other);
+                        }
+                    }
+
+                    for (const objUI of this.staticObjs) {
+                        const res = objUI.obj.isColliding(ball);
+                        if (res) {
+                            objUI.obj.collide(ball, res);
+                        }
+                    }
+                }
+            }
+
+            for (const staticObj of this.staticObjs) {
+                staticObj.obj.draw();
+            }
+
+            this.hole.obj.draw();
+
+            for (const ball of this.balls) {
+                ball.obj.draw();
+            }
         }
     }
 

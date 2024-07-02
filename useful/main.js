@@ -58,6 +58,13 @@ function mousePressed() {
     return false;
 }
 
+window.mouseClicked = () => {
+    if (main.playMode) {
+        const vec = p5.Vector.sub(createVector(mouseX, mouseY), main.mainb.obj.pos).div(32);
+        main.mainb.obj.vel = vec;
+    }
+}
+
 window.keyPressed = () => {
     if (main.selectedPolygon && key == "Escape") {
         main.selectedPolygon = null;
@@ -67,3 +74,8 @@ window.keyPressed = () => {
 window.mouseReleased = () => {
     main.hasSelected = false;
 }
+
+// todo
+document.querySelector(".play-btn").addEventListener("click", () => {
+    main.playMode = !main.playMode;
+});

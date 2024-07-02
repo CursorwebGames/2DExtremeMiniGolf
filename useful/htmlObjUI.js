@@ -1,4 +1,3 @@
-
 // haven't found a need for any extend state
 // probably because the state is in the object itself
 // so, these are just functions.

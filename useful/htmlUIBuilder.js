@@ -1,8 +1,9 @@
-import { Bouncer, Ice, PolygonWall, Sand, Slope, Wall, Water } from "../src/objects";
+import { Bouncer, Ice, PolygonWall, Sand, Slope, Teleporter, Wall, Water } from "../src/objects";
 import { htmlSlopeUI, htmlUIRenderer } from "./htmlObjUI";
 import { PolygonUI } from "./ui/polygonUI";
 import { RectUI } from "./ui/rectUI";
 import { SingleUI } from "./ui/singleUI";
+import { TeleporterUI } from "./ui/teleporterUI";
 
 const objTemplates = [
     {
@@ -46,6 +47,10 @@ const objTemplates = [
             return ui;
         },
     },
+    {
+        name: "Teleporter",
+        create: (x, y) => new TeleporterUI(new Teleporter(x, y, x, y)),
+    }
 ];
 
 const templateEl = document.querySelector(".object-template");

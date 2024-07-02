@@ -3,7 +3,7 @@ import { Camera } from "./camera.js";
 import { MainBall, Hole } from "./objects/index.js";
 import { Transition } from "./transition.js";
 
-const CCD_STEPS = 2;
+export const CCD_STEPS = 2;
 
 // todo: separation of genLevels
 export class GameManager {

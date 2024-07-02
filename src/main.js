@@ -23,13 +23,8 @@ window.draw = () => {
 }
 
 window.mouseClicked = () => {
-    // if (mainb.vel.mag() != 0) return;
-
     const vec = p5.Vector.sub(createVector(mousex, mousey), main.mainb.pos).div(32);
     main.mainb.vel = vec;
-
-    // console.log("start", mainb.pos.x, mainb.pos.y);
-    // console.log("vec", vec.x, vec.y);
 }
 
 window.windowResized = () => {

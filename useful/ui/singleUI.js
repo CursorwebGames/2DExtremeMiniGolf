@@ -2,7 +2,7 @@ import { Knot } from "./knot";
 
 /**
  * Components that require only a single knot
- * @param isStatic whether it's a static object, so knots should add to the static knot pool for event checking
+ * @param isStatic whether it's a static object, so knots should add to the static knot pool for event checking (i.e. mainball or not)
  */
 export class SingleUI {
     constructor(obj, isStatic = true) {
