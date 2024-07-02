@@ -1,8 +1,8 @@
 import { SingleUI } from "./ui/singleUI";
 
 import { Hole, MainBall } from "../src/objects";
-import { CCD_STEPS, GameManager } from "../src/gameManager";
-import { circCircCol } from "../src/collisions";
+import { GameManager } from "../src/gameManager";
+import { Camera } from "../src/camera";
 
 
 export class EditorManager extends GameManager {
@@ -31,13 +31,25 @@ export class EditorManager extends GameManager {
         this.mainb = new SingleUI(new MainBall(80, 80), false);
         this.hole = new SingleUI(new Hole(width - 80, height - 80), false);
         this.balls.push(this.mainb);
+
+        // todo: get this to be with others
         this.levelBounds = [[0, 0], [width, 0], [width, height], [0, height]];
     }
 
+    /**
+     * GameManager injection
+     * essentially, we create a fake gameManager, and then
+     * replace the global main (which is the only instance of the singleton)
+     * 
+     * after we are done, we just refresh the position of the main ball based on its knot
+     */
     playMode() {
         this.gameManager = new GameManager();
         this.gameManager.playMode = true;
+
+        // replace global main with gameManager
         window.main = this.gameManager;
+
         this.gameManager.init();
         this.gameManager.generateLevel = () => {
             this.gameManager.transition.end();
@@ -45,17 +57,19 @@ export class EditorManager extends GameManager {
             // exit play mode
             window.main = this;
             this.gameManager = null;
+
+            // refresh
             this.mainb.update();
-            this.hole.update();
-            for (const objUI of this.staticObjs) {
-                objUI.update();
-            }
         };
+
+        // create a custom level according to us
+        this.gameManager.camera = new Camera(0, 0, width, height);
 
         this.gameManager.mainb = this.mainb.obj;
         this.gameManager.hole = this.hole.obj;
         this.gameManager.balls = [this.mainb.obj];
         this.gameManager.levelBounds = this.levelBounds;
+
         const staticObjs = [];
         for (const objUI of this.staticObjs) {
             staticObjs.push(objUI.obj);
@@ -64,11 +78,6 @@ export class EditorManager extends GameManager {
     }
 
     draw() {
-        if (this.gameManager) {
-            this.gameManager.draw();
-            return;
-        }
-
         background(123, 255, 123);
 
         for (const staticObj of this.staticObjs) {
