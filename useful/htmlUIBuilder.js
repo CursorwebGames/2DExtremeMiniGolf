@@ -1,5 +1,5 @@
 import { Bouncer, Ice, PolygonWall, Sand, Slope, Teleporter, Wall, Water } from "../src/objects";
-import { htmlSlopeUI, htmlUIRenderer } from "./htmlObjUI";
+import { htmlPolygonUI, htmlSlopeUI, htmlUIRenderer } from "./htmlObjUI";
 import { PolygonUI } from "./ui/polygonUI";
 import { RectUI } from "./ui/rectUI";
 import { SingleUI } from "./ui/singleUI";
@@ -30,6 +30,7 @@ const objTemplates = [
             main.selectedPolygon = ui;
             return ui;
         },
+        render: htmlPolygonUI,
     },
     {
         name: "Water",
@@ -38,6 +39,7 @@ const objTemplates = [
             main.selectedPolygon = ui;
             return ui;
         },
+        render: htmlPolygonUI,
     },
     {
         name: "Sand",
@@ -46,6 +48,7 @@ const objTemplates = [
             main.selectedPolygon = ui;
             return ui;
         },
+        render: htmlPolygonUI,
     },
     {
         name: "Teleporter",

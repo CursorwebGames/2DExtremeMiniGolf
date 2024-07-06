@@ -35,3 +35,14 @@ export function htmlSlopeUI(ui, name) {
     el.append(slopeBtn);
     return el;
 }
+
+export function htmlPolygonUI(ui, name) {
+    const el = htmlUIRenderer(ui, name);
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "edit";
+    editBtn.addEventListener("click", () => {
+        window.main.selectedPolygon = ui;
+    });
+    el.append(editBtn);
+    return el;
+}
