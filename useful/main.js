@@ -3,7 +3,7 @@
 import p5 from "p5";
 window.p5 = p5;
 
-import { EditorManager } from "./editorManager";
+import { EditorManager, EditorPlayer } from "./editorManager";
 import "./htmlUIBuilder";
 
 // once camera added, remove
@@ -60,7 +60,7 @@ function mousePressed() {
 }
 
 function mouseClicked() {
-    if (main.inPlay) {
+    if (main instanceof EditorPlayer) {
         const vec = p5.Vector.sub(createVector(mousex, mousey), main.mainb.pos).div(32);
         main.mainb.vel = vec;
     }

@@ -25,12 +25,13 @@ export class GameManager {
         this.levels = genLevels();
         this.level = 0;
 
-        this.transition = new Transition();
-
-        // defines: camera, levelBounds, mainb, hole
-        this.generateLevel();
+        this.transition = new Transition(() => {
+            this.level++;
+            this.generateLevel();
+        });
     }
 
+    // defines: camera, levelBounds, mainb, hole
     generateLevel() {
         const levelData = this.levels[this.level];
         let bounds = levelData.bounds;

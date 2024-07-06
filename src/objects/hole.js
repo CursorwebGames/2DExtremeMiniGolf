@@ -3,7 +3,7 @@ import { circCircCol } from "../collisions";
 export class Hole {
     constructor(x, y) {
         this.pos = createVector(x, y);
-        this.in = false;
+        this.ballIn = false;
         this.r = 12;
     }
 
@@ -19,9 +19,9 @@ export class Hole {
     collide(ball, callback) {
         main.mainb.inHole = true;
 
-        if (ball.vel.mag() < 0.001 && !this.in) {
+        if (ball.vel.mag() < 0.001 && !this.ballIn) {
             callback();
-            this.in = true;
+            this.ballIn = true;
         }
 
         // slow ball down

@@ -16,6 +16,7 @@ window.setup = () => {
     noStroke();
 
     main.init();
+    main.generateLevel();
 }
 
 window.draw = () => {

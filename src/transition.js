@@ -1,11 +1,13 @@
 export class Transition {
-    constructor() {
+    constructor(onDone) {
         this.a = 0;
 
         // 0: nothing
         // 1: fade out
         // -1: fade back in
         this.direction = 0;
+
+        this.onDone = onDone;
     }
 
     draw() {
@@ -15,8 +17,7 @@ export class Transition {
         this.a += this.direction * 5;
 
         if (this.a == 300) {
-            main.level++;
-            main.generateLevel();
+            this.onDone();
             this.direction = -1;
         }
 

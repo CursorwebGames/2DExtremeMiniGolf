@@ -3,19 +3,14 @@ import { SingleUI } from "./ui/singleUI";
 import { Hole, MainBall } from "../src/objects";
 import { GameManager } from "../src/gameManager";
 import { Camera } from "../src/camera";
+import { Transition } from "../src/transition";
 
 
-export class EditorManager extends GameManager {
+// todo remove unnecessary
+export class EditorManager {
     constructor() {
-        /*
-        this.mainb
-        this.hole
-        this.levelBounds
-        this.camera
-        this.balls
-        this.staticObjs
-        */
-        super();
+        this.balls = [];
+        this.staticObjs = [];
 
         /** if there is a knot currently being dragged */
         this.hasSelected = false;
@@ -23,13 +18,10 @@ export class EditorManager extends GameManager {
         this.staticKnots = [];
         /** polygon mode: right click to remove, left click to add for a polygon */
         // this.selectedPolygon;
-
-        // this.gameManager = null;
     }
 
     init() {
         this.mainb = new SingleUI(new MainBall(80, 80), false);
-        // this.mainb.obj.inHole = true;
         this.hole = new SingleUI(new Hole(width - 80, height - 80), false);
         this.balls.push(this.mainb);
 
@@ -45,40 +37,10 @@ export class EditorManager extends GameManager {
      * after we are done, we just refresh the position of the main ball based on its knot
      */
     playMode() {
-        this.gameManager = new GameManager();
-        this.gameManager.inPlay = true;
-
-        // replace global main with gameManager
-        window.main = this.gameManager;
-
-        this.gameManager.init();
-        this.gameManager.generateLevel = () => {
-            this.gameManager.transition.end();
-            this.gameManager.mainb.vel.mult(0);
-            this.gameManager.mainb.inHole = true;
-
-            // exit play mode
-            window.main = this;
-            this.gameManager = null;
-
-            // refresh
-            this.mainb.update();
-        };
-
-        // create a custom level according to us
-        this.gameManager.camera = new Camera(0, 0, width, height);
-
-        this.gameManager.mainb = this.mainb.obj;
-        this.gameManager.mainb.inHole = false;
-        this.gameManager.hole = this.hole.obj;
-        this.gameManager.balls = [this.mainb.obj];
-        this.gameManager.levelBounds = this.levelBounds;
-
-        const staticObjs = [];
-        for (const objUI of this.staticObjs) {
-            staticObjs.push(objUI.obj);
-        }
-        this.gameManager.staticObjs = staticObjs;
+        const player = new EditorPlayer(this);
+        window.main = player;
+        player.init();
+        player.generateLevel();
     }
 
     draw() {
@@ -129,5 +91,49 @@ export class EditorManager extends GameManager {
                 return;
             }
         }
+    }
+}
+
+export class EditorPlayer extends GameManager {
+    constructor(editor) {
+        super();
+        this.editor = editor;
+    }
+
+    // ???
+    init() {
+        this.transition = new Transition(() => {
+            window.main = this.editor;
+
+            this.editor.mainb.update();
+        });
+    }
+
+    generateLevel() {
+        this.mainb = this.editor.mainb.obj;
+        this.mainb.inHole = false;
+        this.balls.push(this.mainb);
+
+        this.hole = this.editor.hole.obj;
+        this.hole.ballIn = false;
+
+        for (const objUI of this.editor.staticObjs) {
+            this.staticObjs.push(objUI.obj);
+        }
+
+        const bounds = this.editor.levelBounds;
+        this.levelBounds = bounds;
+
+        let minx = bounds[0][0], miny = bounds[0][1], maxx = bounds[0][0], maxy = bounds[0][1];
+
+        for (let i = 1; i < bounds.length; i++) {
+            let [x, y] = bounds[i];
+            if (x < minx) minx = x;
+            if (y < miny) miny = y;
+            if (x > maxx) maxx = x;
+            if (y > maxy) maxy = y;
+        }
+
+        this.camera = new Camera(minx, miny, maxx, maxy);
     }
 }
