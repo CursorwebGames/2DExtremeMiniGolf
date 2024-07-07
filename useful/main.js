@@ -78,8 +78,8 @@ window.mouseReleased = () => {
 
 // todo
 document.querySelector(".play-btn").addEventListener("click", () => {
-    if (main.inPlay) {
-        main.generateLevel();
+    if (main instanceof EditorPlayer) {
+        main.reset();
     } else {
         main.playMode();
     }

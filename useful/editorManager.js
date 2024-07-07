@@ -102,11 +102,17 @@ export class EditorPlayer extends GameManager {
 
     // ???
     init() {
-        this.transition = new Transition(() => {
-            window.main = this.editor;
+        this.transition = new Transition(this.reset);
+    }
 
-            this.editor.mainb.update();
-        });
+    reset() {
+        window.main = this.editor;
+
+        const mainb = this.editor.mainb.obj;
+        mainb.vel.setMag(0);
+        mainb.inHole = true;
+
+        this.editor.mainb.update();
     }
 
     generateLevel() {

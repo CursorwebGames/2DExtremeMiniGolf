@@ -31,7 +31,7 @@ export function htmlSlopeUI(ui, name) {
     slopeBtn.textContent = "rotate";
     slopeBtn.addEventListener("click", () => {
         ui.obj.force.rotate(PI / 2);
-    })
+    });
     el.append(slopeBtn);
     return el;
 }
