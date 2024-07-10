@@ -4,6 +4,7 @@ import { Hole, MainBall } from "../src/objects";
 import { GameManager } from "../src/gameManager";
 import { Camera } from "../src/camera";
 import { Transition } from "../src/transition";
+import { EditorCamera } from "./editorCamera";
 
 
 // todo remove unnecessary
@@ -27,6 +28,8 @@ export class EditorManager {
 
         // todo: get this to be with others
         this.levelBounds = [[0, 0], [width, 0], [width, height], [0, height]];
+
+        this.camera = new EditorCamera();
     }
 
     /**
@@ -44,6 +47,7 @@ export class EditorManager {
     }
 
     draw() {
+        this.camera.draw();
         background(123, 255, 123);
 
         for (const staticObj of this.staticObjs) {

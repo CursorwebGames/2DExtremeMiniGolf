@@ -17,13 +17,17 @@ window.setup = () => {
     const canvas = createCanvas(0.8 * windowWidth, windowHeight).parent(document.querySelector(".canvas-content"));
     canvas.mousePressed(mousePressed);
     canvas.mouseClicked(mouseClicked);
-    canvas.elt.addEventListener("selectstart", e => e.preventDefault())
+    canvas.elt.addEventListener("selectstart", e => e.preventDefault());
     canvas.elt.addEventListener("contextmenu", e => e.preventDefault());
+    canvas.elt.addEventListener("mousedown", e => {
+        if (e.button == 1) {
+            e.preventDefault();
+        }
+    });
     main.init();
 }
 
 window.draw = () => {
-    window.mousePos = createVector(mouseX, mouseY);
     main.draw();
 
     if (main.selectedPolygon) {
@@ -36,6 +40,14 @@ window.draw = () => {
 
 // todo: move into editorManager?
 function mousePressed() {
+    if (main instanceof EditorPlayer) {
+        return;
+    }
+
+    if (mouseButton == CENTER) {
+        main.camera.beginMove();
+    }
+
     if (!main.selectedPolygon) {
         return;
     }
@@ -74,6 +86,7 @@ window.keyPressed = () => {
 
 window.mouseReleased = () => {
     main.hasSelected = false;
+    main.camera.endMove();
 }
 
 // todo
