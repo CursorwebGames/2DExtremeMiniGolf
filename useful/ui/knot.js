@@ -1,11 +1,12 @@
 export class Knot {
-    constructor(x, y, parent) {
+    constructor(x, y, parent, l = 0) {
         this.pos = createVector(x, y);
         this.r = 4;
         this.selected = false;
 
         this.prevPos = createVector(x, y);
         this.parent = parent;
+        this.l = l;
     }
 
     draw() {
@@ -20,6 +21,8 @@ export class Knot {
             fill(0, 186, 168);
         }
         circle(this.pos.x, this.pos.y, this.r * 2);
+        fill(0);
+        text(this.l, this.pos.x, this.pos.y);
         pop();
     }
 

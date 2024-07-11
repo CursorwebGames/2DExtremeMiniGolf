@@ -85,6 +85,10 @@ window.keyPressed = () => {
 }
 
 window.mouseReleased = () => {
+    if (main instanceof EditorPlayer) {
+        return;
+    }
+
     main.hasSelected = false;
     main.camera.endMove();
 }
