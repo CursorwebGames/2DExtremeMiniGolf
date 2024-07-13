@@ -28,7 +28,9 @@ window.setup = () => {
 }
 
 window.draw = () => {
+    push();
     main.draw();
+    pop();
 
     if (main.selectedPolygon) {
         fill(0);
@@ -55,7 +57,7 @@ function mousePressed() {
     let poly = main.selectedPolygon;
 
     if (mouseButton == LEFT) {
-        poly.addPoint(mouseX, mouseY);
+        poly.addPoint(mousePos.x, mousePos.y);
     } else if (mouseButton == RIGHT) {
         for (let i = poly.knots.length - 1; i >= 0; i--) {
             const knot = poly.knots[i];

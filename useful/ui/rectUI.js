@@ -11,9 +11,7 @@ export class RectUI extends PolygonUI {
 
         this.knots = [
             new Knot(this.obj.x, this.obj.y, this),
-            // new Knot(this.obj.x + this.obj.w, this.obj.y, this),
             new Knot(this.obj.x + this.obj.w, this.obj.y + this.obj.h, this),
-            // new Knot(this.obj.x, this.obj.y + this.obj.h, this),
         ];
 
         main.staticKnots.push(...this.knots);

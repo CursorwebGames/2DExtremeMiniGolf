@@ -64,7 +64,7 @@ for (const template of objTemplates) {
     btn.textContent = template.name;
 
     btn.addEventListener("click", () => {
-        const obj = template.create(width / 2, height / 2);
+        const obj = template.create(main.camera.pos.x, main.camera.pos.y);
         main.staticObjs.push(obj);
 
         const renderer = template.render || htmlUIRenderer;
