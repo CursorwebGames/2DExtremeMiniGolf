@@ -1,36 +1,31 @@
-import { ConstrainedKnot } from "./constrainedKnot";
+// import { ConstrainedKnot } from "./constrainedKnot";
 import { Knot } from "./knot";
+import { PolygonUI } from "./polygonUI";
 
 /**
- * Three knots rectangle
+ * Two corner, one center rectangle
  */
-export class RectUI {
+export class RectUI extends PolygonUI {
     constructor(obj) {
-        this.obj = obj;
+        super(obj);
 
-        this.posKnot = new Knot(this.obj.x, this.obj.y, this);
-        this.widthKnot = new ConstrainedKnot(this.obj.x + this.obj.w, this.obj.y, this, this.posKnot, createVector(1, 0));
-        this.heightKnot = new ConstrainedKnot(this.obj.x, this.obj.y + this.obj.h, this, this.posKnot, createVector(0, 1));
+        this.knots = [
+            new Knot(this.obj.x, this.obj.y, this),
+            // new Knot(this.obj.x + this.obj.w, this.obj.y, this),
+            new Knot(this.obj.x + this.obj.w, this.obj.y + this.obj.h, this),
+            // new Knot(this.obj.x, this.obj.y + this.obj.h, this),
+        ];
 
-        main.staticKnots.push(this.posKnot, this.widthKnot, this.heightKnot);
+        main.staticKnots.push(...this.knots);
+
+        this.update();
     }
 
-    draw() {
-        this.obj.draw();
-        this.posKnot.draw();
-        this.widthKnot.draw();
-        this.heightKnot.draw();
-    }
-
-    update(knot, delta) {
-        if (knot == this.posKnot) {
-            this.widthKnot.originUpdate(delta);
-            this.heightKnot.originUpdate(delta);
-        }
-        const pos = this.posKnot.pos;
-        this.obj.x = pos.x;
-        this.obj.y = pos.y;
-        this.obj.w = this.widthKnot.pos.x - pos.x;
-        this.obj.h = this.heightKnot.pos.y - pos.y;
+    update(knot, dpos) {
+        super.update(knot, dpos);
+        this.obj.x = this.knots[0].pos.x;
+        this.obj.y = this.knots[0].pos.y;
+        this.obj.w = this.knots[1].pos.x - this.obj.x;
+        this.obj.h = this.knots[1].pos.y - this.obj.y;
     }
 }

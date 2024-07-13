@@ -12,7 +12,7 @@ export class Knot {
         this.update();
 
         push();
-        if (this.selected || this.pos.dist(mousePos) < this.r) {
+        if (this.selected || this.pos.dist(mousePos) < this.r * 2) {
             strokeWeight(1);
             stroke(0);
             fill(0, 138, 124);
@@ -41,7 +41,7 @@ export class Knot {
         }
 
         // mouse just clicked on it
-        if (mouseIsPressed && !this.selected && this.pos.dist(mousePos) < this.r) {
+        if (mouseIsPressed && !this.selected && this.pos.dist(mousePos) < this.r * 2) {
             this.selected = true;
         }
 
