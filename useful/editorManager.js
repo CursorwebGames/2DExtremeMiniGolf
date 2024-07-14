@@ -5,6 +5,8 @@ import { GameManager } from "../src/gameManager";
 import { Camera } from "../src/camera";
 import { Transition } from "../src/transition";
 import { EditorCamera } from "./editorCamera";
+import { Knot } from "./ui/knot";
+import { LevelBoundsUI } from "./ui/levelBoundsUI";
 
 
 // todo remove unnecessary
@@ -27,7 +29,7 @@ export class EditorManager {
         this.balls.push(this.mainb);
 
         // todo: get this to be with others
-        this.levelBounds = [[0, 0], [width, 0], [width, height], [0, height]];
+        this.levelBounds = new LevelBoundsUI();
 
         this.camera = new EditorCamera();
     }
@@ -49,6 +51,7 @@ export class EditorManager {
     draw() {
         this.camera.draw();
         background(123, 255, 123);
+        this.levelBounds.draw();
 
         for (const staticObj of this.staticObjs) {
             staticObj.draw();
@@ -106,7 +109,7 @@ export class EditorPlayer extends GameManager {
 
     // ???
     init() {
-        this.transition = new Transition(this.reset);
+        this.transition = new Transition(this.reset.bind(this));
     }
 
     reset() {
@@ -131,7 +134,7 @@ export class EditorPlayer extends GameManager {
             this.staticObjs.push(objUI.obj);
         }
 
-        const bounds = this.editor.levelBounds;
+        const bounds = this.editor.levelBounds.convertKnots();
         this.levelBounds = bounds;
 
         let minx = bounds[0][0], miny = bounds[0][1], maxx = bounds[0][0], maxy = bounds[0][1];

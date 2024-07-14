@@ -20,8 +20,6 @@ export class Knot {
             fill(0, 186, 168);
         }
         circle(this.pos.x, this.pos.y, this.r * 2);
-        fill(0);
-        text(this.l, this.pos.x, this.pos.y);
         pop();
     }
 
@@ -41,7 +39,7 @@ export class Knot {
         }
 
         // mouse just clicked on it
-        if (mouseIsPressed && !this.selected && this.pos.dist(mousePos) < this.r * 2) {
+        if (mouseIsPressed && mouseButton != CENTER && !this.selected && this.pos.dist(mousePos) < this.r * 2) {
             this.selected = true;
         }
 

@@ -16,7 +16,7 @@ export class EditorCamera {
         if (this.offset) {
             window.mousePos = p5.Vector.sub(this.offset, createVector(mouseX, mouseY));
         } else {
-            window.mousePos = createVector(mouseX, mouseY).add(this.pos).sub(createVector(width / 2, height / 2));
+            window.mousePos = createVector(round(mouseX), round(mouseY)).sub(createVector(round(tx), round(ty)));
         }
 
         if (this.offset) {

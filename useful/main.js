@@ -103,3 +103,7 @@ document.querySelector(".play-btn").addEventListener("click", () => {
         main.playMode();
     }
 });
+
+document.querySelector(".edit-bound-btn").addEventListener("click", () => {
+    main.selectedPolygon = main.levelBounds;
+});

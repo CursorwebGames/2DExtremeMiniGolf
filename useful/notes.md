@@ -1,8 +1,9 @@
 # Physics Notes
 
 ## Realisms
-- Find a way to show physics is real (momentum is the only way)
-- Angle impulse calculations?
+- Angle impulse between balls (which won't even happen for a bit)
+<!-- - Find a way to show physics is real (momentum is the only way) -->
+<!-- - Angle impulse calculations? -->
 <!-- - Stop double colliding (push out of it) ??? this still a thing in 2024? -->
 
 ## Gameplay
@@ -16,7 +17,7 @@
 - No need for dynamic objects optimizations -->
 
 - Relationship Reveal: classes extend a base class (if I feel like it)
-    - make your own editorCamera
+    <!-- - make your own editorCamera -->
 
 <!-- ## CCD
 CCD by halving velocity and multiple substeps (todo: calculations on ratio & further optimizations)
@@ -25,8 +26,19 @@ CCD by halving velocity and multiple substeps (todo: calculations on ratio & fur
     - dt -->
 
 # Level Editor
-- We need to redo gamemanager and editormanager I think
-    - Re-evaluate the meaning of "generateLevel" ... how should levels be created?
+<!-- - We need to redo gamemanager and editormanager I think
+    - Re-evaluate the meaning of "generateLevel" ... how should levels be created? -->
 
 - do whatever you want and if you are inconvenienced fix it
 - Ray tracing to determine hole in one
+
+Add zooming out
+Fix state bug for ice
+
+## Release Plans
+Post release or something rewrite thing to use javascript
+Get multiplayer??
+Try to find not p5.js because I just can't anymore ;-; (the library is so good but like it doesn't behave well with typescript and like i want types man i don't understand crap)
+
+Level editor, let's fix the evil that is knots
+like i don't get this code duplication just get editormanager to do the things for you man make it draw the knots, make knots add themselves, stuffs like that bruh
