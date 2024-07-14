@@ -74,4 +74,8 @@ export class LevelBoundsUI {
         main.staticKnots.push(knot);
         this.update();
     }
+
+    export() {
+        return JSON.stringify(this.convertKnots());
+    }
 }

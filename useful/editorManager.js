@@ -28,7 +28,6 @@ export class EditorManager {
         this.hole = new SingleUI(new Hole(width - 80, height - 80), false);
         this.balls.push(this.mainb);
 
-        // todo: get this to be with others
         this.levelBounds = new LevelBoundsUI();
 
         this.camera = new EditorCamera();

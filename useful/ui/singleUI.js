@@ -21,4 +21,8 @@ export class SingleUI {
     update() {
         this.obj.pos = this.knot.pos.copy();
     }
+
+    export() {
+        return `new ${this.obj.constructor.name}(${this.obj.pos.x}, ${this.obj.pos.y})`;
+    }
 }

@@ -96,4 +96,8 @@ export class PolygonUI {
         main.staticKnots.push(knot);
         this.update();
     }
+
+    export() {
+        return `new ${this.obj.constructor.name}(${JSON.stringify(this.obj.points)})`;
+    }
 }

@@ -26,4 +26,8 @@ export class RectUI extends PolygonUI {
         this.obj.w = this.knots[1].pos.x - this.obj.x;
         this.obj.h = this.knots[1].pos.y - this.obj.y;
     }
+
+    export() {
+        return `new ${this.obj.constructor.name}(${this.obj.x}, ${this.obj.y}, ${this.obj.w}, ${this.obj.h})`;
+    }
 }

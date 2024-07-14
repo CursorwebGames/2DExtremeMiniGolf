@@ -46,10 +46,13 @@ function mousePressed() {
         return;
     }
 
+    // camera logic
     if (mouseButton == CENTER) {
         main.camera.beginMove();
     }
 
+
+    // polygon logic
     if (!main.selectedPolygon) {
         return;
     }
@@ -106,4 +109,22 @@ document.querySelector(".play-btn").addEventListener("click", () => {
 
 document.querySelector(".edit-bound-btn").addEventListener("click", () => {
     main.selectedPolygon = main.levelBounds;
+});
+
+document.querySelector(".export-btn").addEventListener("click", () => {
+    let staticObjs = "";
+
+    for (const obj of main.staticObjs) {
+        staticObjs += obj.export() + ",";
+    }
+
+    let out = `{
+        mainb: [${main.mainb.obj.pos.x}, ${main.mainb.obj.pos.y}],
+        hole: [${main.hole.obj.pos.x}, ${main.hole.obj.pos.y}],
+        static: [${staticObjs}],
+        balls: [],
+        bounds: [${main.levelBounds.export()}],
+    }`;
+
+    document.querySelector(".export-text").value = out;
 });

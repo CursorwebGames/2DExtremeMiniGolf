@@ -18,4 +18,8 @@ export class TeleporterUI {
         this.obj.start = this.startKnot.pos;
         this.obj.end = this.endKnot.pos;
     }
+
+    export() {
+        return `new ${this.obj.constructor.name}(${this.obj.start.x}, ${this.obj.start.y}, ${this.obj.end.x}, ${this.obj.end.y})`;
+    }
 }
