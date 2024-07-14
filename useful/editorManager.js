@@ -5,7 +5,6 @@ import { GameManager } from "../src/gameManager";
 import { Camera } from "../src/camera";
 import { Transition } from "../src/transition";
 import { EditorCamera } from "./editorCamera";
-import { Knot } from "./ui/knot";
 import { LevelBoundsUI } from "./ui/levelBoundsUI";
 
 

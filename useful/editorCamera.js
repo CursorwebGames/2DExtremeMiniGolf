@@ -5,6 +5,7 @@ export class EditorCamera {
          * this.offset
          * this.initialPos
          */
+        this.scale = 0.8;
     }
 
     draw() {
@@ -12,11 +13,13 @@ export class EditorCamera {
         const ty = height / 2 - this.pos.y;
 
         translate(tx, ty);
+        scale(this.scale);
 
         if (this.offset) {
             window.mousePos = p5.Vector.sub(this.offset, createVector(mouseX, mouseY));
         } else {
-            window.mousePos = createVector(round(mouseX), round(mouseY)).sub(createVector(round(tx), round(ty)));
+            // why???
+            window.mousePos = createVector(mouseX, mouseY).sub(createVector(tx, ty)).div(this.scale);
         }
 
         if (this.offset) {
@@ -32,5 +35,15 @@ export class EditorCamera {
     endMove() {
         this.initialPos = null;
         this.offset = null;
+    }
+
+    changeScale(delta) {
+        if (delta > 0) {
+            this.scale *= 0.9;
+        } else {
+            this.scale *= 1.1;
+        }
+
+        // todo: get camera to move somehow
     }
 }

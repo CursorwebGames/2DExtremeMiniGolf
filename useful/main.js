@@ -17,10 +17,12 @@ window.setup = () => {
     const canvas = createCanvas(0.8 * windowWidth, windowHeight).parent(document.querySelector(".canvas-content"));
     canvas.mousePressed(mousePressed);
     canvas.mouseClicked(mouseClicked);
+    canvas.mouseWheel(mouseWheel);
     canvas.elt.addEventListener("selectstart", e => e.preventDefault());
     canvas.elt.addEventListener("contextmenu", e => e.preventDefault());
+    canvas.elt.addEventListener("wheel", e => e.preventDefault());
     canvas.elt.addEventListener("mousedown", e => {
-        if (e.button == 1) {
+        if (e.button == 1) { // middle click
             e.preventDefault();
         }
     });
@@ -72,8 +74,6 @@ function mousePressed() {
             }
         }
     }
-
-    return false;
 }
 
 function mouseClicked() {
@@ -96,6 +96,10 @@ window.mouseReleased = () => {
 
     main.hasSelected = false;
     main.camera.endMove();
+}
+
+function mouseWheel(e) {
+    main.camera.changeScale(e.deltaY);
 }
 
 // todo
