@@ -127,7 +127,7 @@ document.querySelector(".export-btn").addEventListener("click", () => {
         hole: [${main.hole.obj.pos.x}, ${main.hole.obj.pos.y}],
         static: [${staticObjs}],
         balls: [],
-        bounds: [${main.levelBounds.export()}],
+        bounds: ${main.levelBounds.export()},
     }`;
 
     document.querySelector(".export-text").value = out;

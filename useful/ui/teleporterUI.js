@@ -1,4 +1,5 @@
 import { Knot } from "./knot";
+import { nameMap } from "./nameMap";
 
 export class TeleporterUI {
     constructor(obj) {
@@ -20,6 +21,6 @@ export class TeleporterUI {
     }
 
     export() {
-        return `new ${this.obj.constructor.name}(${this.obj.start.x}, ${this.obj.start.y}, ${this.obj.end.x}, ${this.obj.end.y})`;
+        return `new ${nameMap[this.obj.constructor]}(${this.obj.start.x}, ${this.obj.start.y}, ${this.obj.end.x}, ${this.obj.end.y})`;
     }
 }

@@ -1,5 +1,6 @@
 import { Water } from "../../src/objects";
 import { Knot } from "./knot";
+import { nameMap } from "./nameMap";
 
 /**
  * Components that require multiple knots
@@ -98,6 +99,6 @@ export class PolygonUI {
     }
 
     export() {
-        return `new ${this.obj.constructor.name}(${JSON.stringify(this.obj.points)})`;
+        return `new ${nameMap[this.obj.constructor]}(${JSON.stringify(this.obj.points)})`;
     }
 }

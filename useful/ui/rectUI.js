@@ -1,5 +1,6 @@
 // import { ConstrainedKnot } from "./constrainedKnot";
 import { Knot } from "./knot";
+import { nameMap } from "./nameMap";
 import { PolygonUI } from "./polygonUI";
 
 /**
@@ -28,6 +29,6 @@ export class RectUI extends PolygonUI {
     }
 
     export() {
-        return `new ${this.obj.constructor.name}(${this.obj.x}, ${this.obj.y}, ${this.obj.w}, ${this.obj.h})`;
+        return `new ${nameMap[this.obj.constructor]}(${this.obj.x}, ${this.obj.y}, ${this.obj.w}, ${this.obj.h})`;
     }
 }

@@ -1,4 +1,5 @@
 import { Knot } from "./knot";
+import { nameMap } from "./nameMap";
 
 /**
  * Components that require only a single knot
@@ -23,6 +24,6 @@ export class SingleUI {
     }
 
     export() {
-        return `new ${this.obj.constructor.name}(${this.obj.pos.x}, ${this.obj.pos.y})`;
+        return `new ${nameMap[this.obj.constructor]}(${this.obj.pos.x}, ${this.obj.pos.y})`;
     }
 }
