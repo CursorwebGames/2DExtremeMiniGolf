@@ -21,6 +21,6 @@ export class TeleporterUI {
     }
 
     export() {
-        return `new ${nameMap[this.obj.constructor]}(${this.obj.start.x}, ${this.obj.start.y}, ${this.obj.end.x}, ${this.obj.end.y})`;
+        return `new ${nameMap[this.obj.constructor]}(${this.startKnot}, ${this.endKnot})`;
     }
 }

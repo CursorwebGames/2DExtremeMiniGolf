@@ -99,6 +99,11 @@ export class PolygonUI {
     }
 
     export() {
-        return `new ${nameMap[this.obj.constructor]}(${JSON.stringify(this.obj.points)})`;
+        const points = [];
+        for (const [x, y] of this.obj.points) {
+            points.push([round(x), round(y)]);
+        }
+
+        return `new ${nameMap[this.obj.constructor]}(${JSON.stringify(points)})`;
     }
 }

@@ -1,4 +1,5 @@
 // import { ConstrainedKnot } from "./constrainedKnot";
+import { Slope } from "../../src/objects";
 import { Knot } from "./knot";
 import { nameMap } from "./nameMap";
 import { PolygonUI } from "./polygonUI";
@@ -29,6 +30,12 @@ export class RectUI extends PolygonUI {
     }
 
     export() {
-        return `new ${nameMap[this.obj.constructor]}(${this.obj.x}, ${this.obj.y}, ${this.obj.w}, ${this.obj.h})`;
+        // new (...
+        let text = `new ${nameMap[this.obj.constructor]}(${round(this.obj.x)}, ${round(this.obj.y)}, ${round(this.obj.w)}, ${round(this.obj.h)}`;
+        if (this.obj instanceof Slope) {
+            const force = p5.Vector.normalize(this.obj.force);
+            text += `, createVector(${round(force.x)}, ${round(force.y)})`
+        }
+        return `${text})`;
     }
 }

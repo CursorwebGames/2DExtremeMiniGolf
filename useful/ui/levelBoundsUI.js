@@ -1,13 +1,14 @@
 import { Knot } from "./knot";
+import { SnapKnot } from "./snapKnot";
 
 // todo: make on same level as polygon and have a grandfather to both
 export class LevelBoundsUI {
     constructor() {
         this.knots = [
-            new Knot(0, 0, this),
-            new Knot(width, 0, this),
-            new Knot(width, height, this),
-            new Knot(0, height, this),
+            new SnapKnot(0, 0, this),
+            new SnapKnot(width, 0, this),
+            new SnapKnot(width, height, this),
+            new SnapKnot(0, height, this),
         ];
 
         main.staticKnots.push(...this.knots);
@@ -37,7 +38,7 @@ export class LevelBoundsUI {
     }
 
     addPoint(x, y) {
-        const knot = new Knot(x, y, this);
+        const knot = new SnapKnot(x, y, this);
 
         const knots = this.knots;
 

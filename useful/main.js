@@ -119,16 +119,16 @@ document.querySelector(".export-btn").addEventListener("click", () => {
     let staticObjs = "";
 
     for (const obj of main.staticObjs) {
-        staticObjs += obj.export() + ",";
+        staticObjs += obj.export() + ",\n";
     }
 
     let out = `{
-        mainb: [${main.mainb.obj.pos.x}, ${main.mainb.obj.pos.y}],
-        hole: [${main.hole.obj.pos.x}, ${main.hole.obj.pos.y}],
-        static: [${staticObjs}],
-        balls: [],
-        bounds: ${main.levelBounds.export()},
-    }`;
+mainb: [${main.mainb.knot}],
+hole: [${main.hole.knot}],
+static: [${staticObjs}],
+balls: [],
+bounds: ${main.levelBounds.export()},
+}`;
 
     document.querySelector(".export-text").value = out;
 });

@@ -24,6 +24,6 @@ export class SingleUI {
     }
 
     export() {
-        return `new ${nameMap[this.obj.constructor]}(${this.obj.pos.x}, ${this.obj.pos.y})`;
+        return `new ${nameMap[this.obj.constructor]}(${this.knot})`;
     }
 }

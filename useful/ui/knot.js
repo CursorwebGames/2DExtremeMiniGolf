@@ -46,4 +46,8 @@ export class Knot {
         // if neither happened, continue current state (unlikely)
         return this.selected;
     }
+
+    toString() {
+        return `${Math.round(this.pos.x)}, ${Math.round(this.pos.y)}`;
+    }
 }
