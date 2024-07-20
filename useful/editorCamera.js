@@ -16,7 +16,9 @@ export class EditorCamera {
         translate(-this.pos.x, -this.pos.y);
 
         if (this.offset) {
-            window.mousePos = p5.Vector.sub(this.offset, createVector(mouseX, mouseY));
+            // this is in 'screen' coordinates, in other words, from 0 to width limited
+            // offset was when the drag started
+            window.mousePos = p5.Vector.sub(this.offset, createVector(mouseX, mouseY)).div(this.scale);
         } else {
             // looks like you need to reverse the order:
             // translate to center, scale, translate pos
@@ -60,7 +62,5 @@ export class EditorCamera {
         } else {
             this.scale *= 1.1;
         }
-
-        // todo: get camera to move somehow
     }
 }
