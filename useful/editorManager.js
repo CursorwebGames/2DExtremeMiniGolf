@@ -50,6 +50,7 @@ export class EditorManager {
         this.camera.draw();
         background(123, 255, 123);
         this.levelBounds.draw();
+        this.camera.drawGrid();
 
         for (const staticObj of this.staticObjs) {
             staticObj.draw();

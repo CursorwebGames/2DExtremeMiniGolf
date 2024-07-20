@@ -16,6 +16,6 @@ export class SnapKnot extends Knot {
 
 }
 
-function snap(x) {
-    return round(x / 100) * 100;
+export function snap(x) {
+    return round(x / 50) * 50;
 }

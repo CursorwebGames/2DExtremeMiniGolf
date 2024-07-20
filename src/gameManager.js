@@ -69,8 +69,8 @@ export class GameManager {
         this.camera.draw();
 
         push();
-        noFill();
-        strokeWeight(1);
+        fill(94, 230, 83);
+        strokeWeight(3);
         stroke(255);
         beginShape();
         for (const [x, y] of this.levelBounds) {

@@ -16,8 +16,9 @@ export class LevelBoundsUI {
 
     draw() {
         push();
-        noFill();
-        strokeWeight(1);
+        // noFill();
+        fill(94, 230, 83);
+        strokeWeight(3);
         stroke(255);
         beginShape();
         for (const knot of this.knots) {
