@@ -32,12 +32,12 @@ export class EditorCamera {
     drawGrid() {
         push();
         strokeWeight(1);
-        for (let i = snap(this.pos.x - width / 2 / this.scale); i < snap(this.pos.x + width / 2 / this.scale); i += 25) {
+        for (let i = snap(this.pos.x - width / 2 / this.scale); i <= snap(this.pos.x + width / 2 / this.scale); i += 25) {
             stroke(255, i % 50 == 0 ? 125 : 50);
             line(i, this.pos.y - height / 2 / this.scale, i, this.pos.y + height / 2 / this.scale);
         }
 
-        for (let i = snap(this.pos.y - height / 2 / this.scale); i < snap(this.pos.y + height / 2 / this.scale); i += 25) {
+        for (let i = snap(this.pos.y - height / 2 / this.scale); i <= snap(this.pos.y + height / 2 / this.scale); i += 25) {
             stroke(255, i % 50 == 0 ? 125 : 50);
             line(this.pos.x - width / 2 / this.scale, i, this.pos.x + width / 2 / this.scale, i);
         }
