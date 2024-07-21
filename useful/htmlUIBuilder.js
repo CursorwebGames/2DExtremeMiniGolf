@@ -1,5 +1,7 @@
 import { Bouncer, Ice, PolygonWall, Sand, Slope, Teleporter, Wall, Water } from "../src/objects";
+import { MovingPlatform } from "../src/objects/movingPlatform";
 import { htmlPolygonUI, htmlSlopeUI, htmlUIRenderer } from "./htmlObjUI";
+import { MovingPlatformUI } from "./ui/movingPlatformUI";
 import { PolygonUI } from "./ui/polygonUI";
 import { RectUI } from "./ui/rectUI";
 import { SingleUI } from "./ui/singleUI";
@@ -53,6 +55,10 @@ const objTemplates = [
     {
         name: "Teleporter",
         create: (x, y) => new TeleporterUI(new Teleporter(x, y, x, y)),
+    },
+    {
+        name: "Moving Platform",
+        create: (x, y) => new MovingPlatformUI(new MovingPlatform(x, y, 30, 30, 0, 0))
     }
 ];
 

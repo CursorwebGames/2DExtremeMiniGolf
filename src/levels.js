@@ -1,7 +1,15 @@
 import { Sand, PolygonWall, Wall, Water, Teleporter, Ice, Bouncer, Slope } from "./objects";
+import { MovingPlatform } from "./objects/movingPlatform";
 
 export function genLevels() {
     return [
+        {
+            mainb: [80, 80],
+            hole: [1149, 666],
+            static: [new MovingPlatform(50, 50, 100, 100, 100, 100)],
+            balls: [],
+            bounds: [[0, 0], [1250, 0], [1250, 750], [0, 750]],
+        },
         {
             mainb: [48, 45],
             hole: [297, 310],
@@ -136,6 +144,13 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[0, 0], [800, 0], [800, 750], [0, 750]],
+        },
+        {
+            mainb: [69, 162],
+            hole: [1218, 113],
+            static: [],
+            balls: [],
+            bounds: [[50, 0], [150, 150], [250, 0], [350, 150], [450, 0], [550, 150], [650, 0], [750, 150], [850, 0], [950, 150], [1050, 0], [1150, 150], [1250, 0], [1250, 150], [1150, 300], [1050, 150], [950, 300], [850, 150], [750, 300], [650, 150], [550, 300], [450, 150], [350, 300], [250, 150], [150, 300], [50, 200]],
         },
         {
             mainb: [666, 160],

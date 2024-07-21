@@ -1,9 +1,9 @@
-// import { ConstrainedKnot } from "./constrainedKnot";
 import { Slope } from "../../src/objects";
 import { Knot } from "./knot";
 import { nameMap } from "./nameMap";
 import { PolygonUI } from "./polygonUI";
 
+// todo: ancestor class of both
 /**
  * Two corner, one center rectangle
  */
@@ -11,6 +11,7 @@ export class RectUI extends PolygonUI {
     constructor(obj) {
         super(obj);
 
+        // top left, top right
         this.knots = [
             new Knot(this.obj.x, this.obj.y, this),
             new Knot(this.obj.x + this.obj.w, this.obj.y + this.obj.h, this),
@@ -18,7 +19,7 @@ export class RectUI extends PolygonUI {
 
         main.staticKnots.push(...this.knots);
 
-        this.update();
+        this.calcCenter();
     }
 
     update(knot, dpos) {

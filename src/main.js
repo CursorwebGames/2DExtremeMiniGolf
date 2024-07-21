@@ -24,6 +24,7 @@ window.draw = () => {
 }
 
 window.mouseClicked = () => {
+    if (main.mainb.vel.mag() != 0) return;
     const vec = p5.Vector.sub(createVector(mousex, mousey), main.mainb.pos).div(32);
     main.mainb.vel = vec;
 }

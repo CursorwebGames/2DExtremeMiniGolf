@@ -1,4 +1,8 @@
+/**
+ * Name map is necessary because minification mangles class names
+ */
 import { Ball, Bouncer, Hole, Ice, PolygonWall, Sand, Slope, Teleporter, Wall, Water } from "../../src/objects";
+import { MovingPlatform } from "../../src/objects/movingPlatform";
 
 export const nameMap = {
     [Ball]: "Ball",
@@ -10,5 +14,6 @@ export const nameMap = {
     [Slope]: "Slope",
     [Teleporter]: "Teleporter",
     [Wall]: "Wall",
-    [Water]: "Water"
+    [Water]: "Water",
+    [MovingPlatform]: "MovingPlatform"
 };

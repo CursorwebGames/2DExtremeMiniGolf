@@ -1,9 +1,9 @@
 import { Knot } from "./knot";
 
 export class ConstrainedKnot extends Knot {
-    constructor(x, y, parent, originKnot, axis) {
+    constructor(x, y, parent, axis) {
         super(x, y, parent);
-        this.originKnot = originKnot;
+        this.origin = createVector(x, y);
         this.axis = axis;
     }
 
@@ -16,9 +16,9 @@ export class ConstrainedKnot extends Knot {
 
         if (this.selected) {
             const pos = mousePos;
-            const vec = p5.Vector.sub(pos, this.originKnot.pos);
+            const vec = p5.Vector.sub(pos, this.origin);
 
-            const projPoint = p5.Vector.setMag(this.axis, vec.dot(this.axis) / this.axis.mag()).add(this.originKnot.pos);
+            const projPoint = p5.Vector.setMag(this.axis, vec.dot(this.axis) / this.axis.mag()).add(this.origin);
 
             this.pos = projPoint;
             this.parent.update(this, p5.Vector.sub(this.pos, this.prevPos));

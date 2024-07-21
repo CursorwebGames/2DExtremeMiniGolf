@@ -31,16 +31,7 @@ export class PolygonUI {
                 knot.pos.add(dpos);
             }
         } else {
-            let cx = 0, cy = 0;
-            for (const knot of this.knots) {
-                cx += knot.pos.x;
-                cy += knot.pos.y;
-            }
-
-            cx /= this.knots.length;
-            cy /= this.knots.length;
-
-            this.centerKnot.pos = createVector(cx, cy);
+            this.calcCenter();
         }
 
         if (this.obj instanceof Water) {
@@ -57,6 +48,19 @@ export class PolygonUI {
         }
 
         this.obj.points = this.convertKnots();
+    }
+
+    calcCenter() {
+        let cx = 0, cy = 0;
+        for (const knot of this.knots) {
+            cx += knot.pos.x;
+            cy += knot.pos.y;
+        }
+
+        cx /= this.knots.length;
+        cy /= this.knots.length;
+
+        this.centerKnot.pos = createVector(cx, cy);
     }
 
     addPoint(x, y) {

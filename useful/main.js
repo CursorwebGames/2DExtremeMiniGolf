@@ -6,7 +6,6 @@ window.p5 = p5;
 import { EditorManager, EditorPlayer } from "./editorManager";
 import "./htmlUIBuilder";
 
-// once camera added, remove
 window.mousex = undefined;
 window.mousey = undefined;
 
@@ -131,4 +130,15 @@ bounds: ${main.levelBounds.export()},
 }`;
 
     document.querySelector(".export-text").value = out;
+});
+
+document.querySelector(".copy-export-btn").addEventListener("click", async () => {
+    const text = document.querySelector(".export-text").value;
+    await navigator.clipboard.writeText(text);
+
+    document.querySelector(".copy-export-btn").textContent = "Copied!";
+
+    setTimeout(() => {
+        document.querySelector(".copy-export-btn").textContent = "Copy";
+    }, 1000);
 });
