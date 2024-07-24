@@ -17,11 +17,10 @@ export class Hole {
     }
 
     collide(ball, callback) {
-        main.mainb.inHole = true;
-
         if (ball.vel.mag() < 0.001 && !this.ballIn) {
             callback();
             this.ballIn = true;
+            main.mainb.inHole = true;
         }
 
         // slow ball down

@@ -70,6 +70,7 @@ for (const template of objTemplates) {
     btn.textContent = template.name;
 
     btn.addEventListener("click", () => {
+
         const obj = template.create(main.camera.pos.x, main.camera.pos.y);
         main.staticObjs.push(obj);
 

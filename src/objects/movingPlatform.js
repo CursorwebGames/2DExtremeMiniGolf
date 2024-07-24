@@ -15,5 +15,12 @@ export class MovingPlatform extends Wall {
         this.t += this.speed;
         this.x = this.sx + this.dw * cos(this.t);
         this.y = this.sy + this.dh * sin(this.t);
+
+        push();
+        noFill();
+        strokeWeight(1);
+        stroke(255, 0, 0);
+        rect(this.sx + this.w / 2 - this.dw, this.sy + this.h / 2 - this.dh, 2 * this.dw, 2 * this.dh);
+        pop();
     }
 }

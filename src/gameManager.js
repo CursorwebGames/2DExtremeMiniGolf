@@ -2,6 +2,7 @@ import { genLevels } from "./levels.js";
 import { Camera } from "./camera.js";
 import { MainBall, Hole } from "./objects/index.js";
 import { Transition } from "./transition.js";
+import { circCircCol } from "./collisions.js";
 
 export const CCD_STEPS = 2;
 
@@ -12,6 +13,7 @@ export class GameManager {
      * this.hole
      * this.levelBounds
      * this.camera
+     * this.guideText
      */
     constructor() {
         this.balls = [];
@@ -22,6 +24,7 @@ export class GameManager {
      * Game mode specific details (levels, or editor?)
      */
     init() {
+        this.strokes = 0;
         this.levels = genLevels();
         this.level = 0;
 
@@ -46,6 +49,8 @@ export class GameManager {
         this.staticObjs = levelData.static;
         this.balls = levelData.balls;
         this.levelBounds = bounds;
+        this.guideText = levelData.text;
+        this.guideOpacity = 255;
 
         let minx = bounds[0][0], miny = bounds[0][1], maxx = bounds[0][0], maxy = bounds[0][1];
 
@@ -118,6 +123,15 @@ export class GameManager {
             ball.draw();
         }
 
+        pop();
+
+        push();
+        fill(255);
+        stroke(1);
+        strokeWeight(3);
+        textAlign(CENTER);
+        textSize(30);
+        text(this.guideText, width / 2, 50);
         pop();
 
         this.transition.draw();

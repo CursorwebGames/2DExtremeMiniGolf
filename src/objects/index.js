@@ -9,3 +9,4 @@ export * from "./slope";
 export * from "./teleporter";
 export * from "./wall";
 export * from "./water";
+export * from "./movingPlatform";

@@ -1,27 +1,21 @@
 import { Sand, PolygonWall, Wall, Water, Teleporter, Ice, Bouncer, Slope } from "./objects";
-import { MovingPlatform } from "./objects/movingPlatform";
 
 export function genLevels() {
     return [
-        {
-            mainb: [80, 80],
-            hole: [1149, 666],
-            static: [new MovingPlatform(50, 50, 100, 100, 100, 100)],
-            balls: [],
-            bounds: [[0, 0], [1250, 0], [1250, 750], [0, 750]],
-        },
         {
             mainb: [48, 45],
             hole: [297, 310],
             static: [],
             balls: [],
             bounds: [[0, 0], [200, 0], [400, 100], [400, 400], [200, 400], [200, 200], [0, 200]],
+            text: "Click to move"
         },
         {
             mainb: [165, 182],
             hole: [989, 82],
             static: [new Wall(498, 1, 226, 299), new Teleporter(882, 172, 340, 181),],
             balls: [], bounds: [[0, 0], [1200, 0], [1200, 300], [0, 300]],
+            text: "Teleporters teleport you places"
         },
         {
             mainb: [80, 80],
@@ -31,6 +25,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[0, 0], [700, 0], [700, 400], [0, 400]],
+            text: "Ice breaks when you touch it"
         },
         {
             mainb: [49, 48],
@@ -97,6 +92,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[550, 200], [550, 750], [0, 750]],
+            text: "Don't touch the water!"
         },
         {
             mainb: [399, 152],
@@ -116,20 +112,15 @@ export function genLevels() {
             bounds: [[0, 0], [750, 0], [750, 100], [850, 100], [850, 200], [750, 200], [750, 300], [0, 300]],
         },
         {
-            mainb: [80, 80],
-            hole: [700, 700],
-            static: [new Wall(133, 2, 52, 648),
-            new Wall(268, 104, 65, 640),
-            new Wall(435, 7, 65, 625),
-            new Wall(589, 138, 59, 612),
-            new Slope(81, 662, 105, 75, createVector(1, 0)),
-            new Slope(209, 7, 121, 84, createVector(1, 0)),
-            new Slope(351, 654, 154, 82, createVector(1, 0)),
-            new Slope(524, 12, 118, 108, createVector(1, 0)),
-            new Slope(703, 346, 38, 137, createVector(0, 1)),
+            mainb: [61, 195],
+            hole: [956, 55],
+            static: [new Bouncer(235, 56),
+            new Bouncer(398, 186),
+            new Bouncer(595, 58),
+            new Bouncer(783, 187),
             ],
             balls: [],
-            bounds: [[50, 0], [750, 0], [750, 750], [50, 750]],
+            bounds: [[0, 0], [1050, 0], [1050, 250], [0, 250]],
         },
         {
             mainb: [26, 166],
@@ -242,6 +233,36 @@ export function genLevels() {
                 [1200, 0],
                 [600, 300]
             ],
-        }
+        },
+        {
+            mainb: [95, 145],
+            hole: [280, 479],
+            static: [new Wall(4, 346, 195, 48),
+            new Teleporter(167, 437, 99, 230),
+            new Water([[22, 440], [73, 429], [101, 512], [17, 543]]),
+            new Bouncer(176, 622),
+            ],
+            balls: [],
+            bounds: [[0, 100], [200, 100], [200, 400], [400, 400], [400, 700], [0, 700]],
+        },
+        {
+            mainb: [80, 80],
+            hole: [1149, 666],
+            static: [
+                new Sand([[1032, 198], [981, 252], [720, 248], [602, 264], [529, 242], [490, 100], [626, 150], [989, 56]]),
+                new Sand([[1109, 448], [1093, 349], [677, 476], [733, 676]]),
+                new Water([[544, 485], [53, 436], [83, 708], [534, 679]]),
+                new Bouncer(220, 108),
+                new Ice(928, 621, 164, 62),
+                new Ice(1099, 515, 120, 94),
+                new Ice(1003, 555, 92, 62),
+                new Teleporter(482, 363, 28, 33),
+                new Wall(620, 296, 621, 31),
+                new Wall(617, 411, 28, 329),
+                new Slope(312, 16, 134, 311, createVector(1, 0)),
+            ],
+            balls: [],
+            bounds: [[0, 0], [1250, 0], [1250, 750], [0, 750]],
+        },
     ];
 }
