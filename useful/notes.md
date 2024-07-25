@@ -9,6 +9,7 @@
 ## Gameplay
 - Decide whether teleporting, if you can teleport back if that would be fun
 - Color design as always
+- Camera calculate to include the ball so is always center
 
 ## Optimizations
 <!-- - Implement a quadtree

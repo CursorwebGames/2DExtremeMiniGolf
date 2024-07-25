@@ -8,14 +8,16 @@ export function genLevels() {
             static: [],
             balls: [],
             bounds: [[0, 0], [200, 0], [400, 100], [400, 400], [200, 400], [200, 200], [0, 200]],
-            text: "Click to move"
+            text: "Click to move",
+            par: 2,
         },
         {
             mainb: [165, 182],
             hole: [989, 82],
             static: [new Wall(498, 1, 226, 299), new Teleporter(882, 172, 340, 181),],
             balls: [], bounds: [[0, 0], [1200, 0], [1200, 300], [0, 300]],
-            text: "Teleporters teleport you places"
+            text: "Teleporters teleport you places",
+            par: 2,
         },
         {
             mainb: [80, 80],
@@ -25,7 +27,8 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[0, 0], [700, 0], [700, 400], [0, 400]],
-            text: "Ice breaks when you touch it"
+            text: "Ice breaks when you touch it",
+            par: 2
         },
         {
             mainb: [49, 48],
@@ -37,6 +40,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[0, 0], [200, 0], [200, 400], [700, 400], [900, 600], [900, 1000], [700, 1200], [0, 1200], [0, 1000], [700, 1000], [700, 600], [200, 600], [0, 400]],
+            par: 2,
         },
         {
             mainb: [406, 43],
@@ -62,6 +66,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[0, 0], [800, 0], [800, 550], [550, 750], [0, 750]],
+            par: 7
         },
         {
             mainb: [-25, 54],
@@ -71,6 +76,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[-100, 0], [300, 0], [300, 400], [500, 600], [700, 600], [600, 800], [300, 800], [300, 600], [100, 400], [100, 200], [-100, 200]],
+            par: 3
         },
         {
             mainb: [240, 108],
@@ -84,6 +90,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[150, 0], [500, 0], [650, 150], [650, 600], [150, 600]],
+            par: 5
         },
         {
             mainb: [70, 705],
@@ -92,7 +99,8 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[550, 200], [550, 750], [0, 750]],
-            text: "Don't touch the water!"
+            text: "Don't touch the water!",
+            par: 1
         },
         {
             mainb: [399, 152],
@@ -110,6 +118,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[0, 0], [750, 0], [750, 100], [850, 100], [850, 200], [750, 200], [750, 300], [0, 300]],
+            par: 5,
         },
         {
             mainb: [61, 195],
@@ -121,6 +130,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[0, 0], [1050, 0], [1050, 250], [0, 250]],
+            par: 4
         },
         {
             mainb: [26, 166],
@@ -135,6 +145,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[0, 0], [800, 0], [800, 750], [0, 750]],
+            par: 2
         },
         {
             mainb: [69, 162],
@@ -142,6 +153,7 @@ export function genLevels() {
             static: [],
             balls: [],
             bounds: [[50, 0], [150, 150], [250, 0], [350, 150], [450, 0], [550, 150], [650, 0], [750, 150], [850, 0], [950, 150], [1050, 0], [1150, 150], [1250, 0], [1250, 150], [1150, 300], [1050, 150], [950, 300], [850, 150], [750, 300], [650, 150], [550, 300], [450, 150], [350, 300], [250, 150], [150, 300], [50, 200]],
+            par: 6
         },
         {
             mainb: [666, 160],
@@ -166,6 +178,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[1100, 0], [100, 0], [700, 900]],
+            par: 4,
         },
         {
             mainb: [80, 80],
@@ -175,6 +188,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[0, 0], [526, -2], [528, 168], [3, 177]],
+            par: 2
         },
         {
             mainb: [58, -847],
@@ -233,6 +247,7 @@ export function genLevels() {
                 [1200, 0],
                 [600, 300]
             ],
+            par: 5,
         },
         {
             mainb: [95, 145],
@@ -244,6 +259,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[0, 100], [200, 100], [200, 400], [400, 400], [400, 700], [0, 700]],
+            par: 3,
         },
         {
             mainb: [80, 80],
@@ -263,6 +279,21 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[0, 0], [1250, 0], [1250, 750], [0, 750]],
+            stroke: 7,
+        },
+        {
+            mainb: [58, 60],
+            hole: [441, 364],
+            static: [new Water([[438, 78], [379, -66], [209, -14]]),
+            new Bouncer(274, 128),
+            new Bouncer(284, 306),
+            new Sand([[55, 312], [30, 518], [204, 448], [159, 346]]),
+            new Bouncer(125, 205),
+            new PolygonWall([[248, 187], [251, 241], [193, 207]]),
+            ],
+            balls: [],
+            bounds: [[0, 0], [400, -100], [600, 350], [0, 600]],
+            par: 5,
         },
     ];
 }

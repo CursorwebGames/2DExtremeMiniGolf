@@ -18,15 +18,15 @@ export class GameManager {
     constructor() {
         this.balls = [];
         this.staticObjs = [];
+        this.totalStrokes = 0;
     }
 
     /**
      * Game mode specific details (levels, or editor?)
      */
     init() {
-        this.strokes = 0;
         this.levels = genLevels();
-        this.level = 0;
+        this.level = 17;
 
         this.transition = new Transition(() => {
             this.level++;
@@ -37,6 +37,10 @@ export class GameManager {
     // defines: camera, levelBounds, mainb, hole
     generateLevel() {
         const levelData = this.levels[this.level];
+
+        this.strokes = 0;
+        this.par = levelData.par;
+
         let bounds = levelData.bounds;
         if (!bounds) {
             bounds = [[0, 0], [width, 0], [width, height], [0, height]];
@@ -132,6 +136,10 @@ export class GameManager {
         textAlign(CENTER);
         textSize(30);
         text(this.guideText, width / 2, 50);
+
+        textAlign(LEFT);
+        textSize(20);
+        text(`Stroke: ${this.strokes}\nPar: ${this.par}`, 10, height - 60);
         pop();
 
         this.transition.draw();

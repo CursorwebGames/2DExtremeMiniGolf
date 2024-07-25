@@ -28,6 +28,7 @@ window.mouseClicked = () => {
     const vec = p5.Vector.sub(createVector(mousex, mousey), main.mainb.pos).div(32);
     main.mainb.vel = vec;
     main.strokes++;
+    main.totalStrokes++;
 }
 
 window.windowResized = () => {
