@@ -279,7 +279,7 @@ export function genLevels() {
             ],
             balls: [],
             bounds: [[0, 0], [1250, 0], [1250, 750], [0, 750]],
-            stroke: 7,
+            par: 7,
         },
         {
             mainb: [58, 60],

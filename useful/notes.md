@@ -1,4 +1,5 @@
 # Physics Notes
+After first release, let's work on rewriting in typescript!
 
 ## Realisms
 - Angle impulse between balls (which won't even happen for a bit)

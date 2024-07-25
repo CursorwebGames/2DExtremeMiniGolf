@@ -19,6 +19,9 @@ export class GameManager {
         this.balls = [];
         this.staticObjs = [];
         this.totalStrokes = 0;
+        this.holeInOnes = 0;
+        this.strokes = 0;
+        this.scene = "menu";
     }
 
     /**
@@ -26,11 +29,23 @@ export class GameManager {
      */
     init() {
         this.levels = genLevels();
-        this.level = 17;
+        this.level = 0;
 
         this.transition = new Transition(() => {
-            this.level++;
-            this.generateLevel();
+            this.scene = "game";
+            this.transition = new Transition(() => {
+                if (this.strokes == 1) {
+                    this.holeInOnes++;
+                }
+
+                this.level++;
+                if (this.level >= this.levels.length) {
+                    this.scene = "end";
+                    return;
+                }
+
+                this.generateLevel();
+            });
         });
     }
 
@@ -69,6 +84,69 @@ export class GameManager {
         this.camera = new Camera(minx, miny, maxx, maxy);
 
         this.balls.push(this.mainb);
+    }
+
+    drawMenu() {
+        background(123, 255, 123);
+
+        push();
+        textSize(100);
+        textAlign(CENTER);
+        textStyle(BOLD);
+        fill(255, 132, 43);
+        strokeWeight(16);
+        stroke(191, 0, 0);
+        text("cool golf game", width / 2, 100);
+
+        strokeWeight(8);
+        stroke(191, 150, 0);
+        if (sqrt((mouseX - width / 2) ** 2 + (mouseY - height / 2) ** 2) < 100) {
+            fill(255, 240, 79);
+        } else {
+            fill(255, 217, 0);
+        }
+        circle(width / 2, height / 2, 200, 200);
+        fill(191, 150, 0);
+        noStroke();
+        triangle(width / 2 - 30, height / 2 - 30 - 16, width / 2 - 30, height / 2 + 30 + 16, width / 2 + 30 + 16, height / 2);
+        pop();
+
+        this.transition.draw();
+    }
+
+    drawEnd() {
+        background(123, 255, 123);
+
+        textSize(80);
+        textStyle(NORMAL);
+        textAlign(CENTER);
+        fill(39, 58, 227);
+        strokeWeight(4);
+        stroke(17, 33, 171);
+        text("You beat the game!", width / 2, 100);
+
+        textSize(30);
+        fill(237, 153, 57);
+        stroke(189, 121, 43);
+        text("Thanks for playing!\nCredits: Coder100", width / 2, 500);
+
+        strokeWeight(8);
+        stroke(191, 150, 0);
+        fill(255, 240, 79);
+        rect(width / 2 - 300, height / 2 - 100, 600, 160);//500);
+
+        fill(201, 167, 64);
+        textSize(50);
+        textStyle(BOLD);
+        textAlign(LEFT);
+        noStroke();
+        text("STATS", width / 2 - 300 + 16, height / 2 - 100 + 16 + 40);
+
+        textSize(25);
+        textStyle(NORMAL);
+        text(`Total strokes: ${this.totalStrokes}
+Hole in ones: ${this.holeInOnes}`, width / 2 - 300 + 16, height / 2 - 100 + 16 + 80);
+        // we'll add more but i just want to finish the game
     }
 
     draw() {

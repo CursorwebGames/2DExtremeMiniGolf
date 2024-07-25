@@ -20,15 +20,28 @@ window.setup = () => {
 }
 
 window.draw = () => {
-    main.draw();
+    if (main.scene == "game") {
+        main.draw();
+    } else if (main.scene == "menu") {
+        main.drawMenu();
+    } else if (main.scene == "end") {
+        main.drawEnd();
+    }
 }
 
 window.mouseClicked = () => {
-    if (main.mainb.vel.mag() != 0) return;
-    const vec = p5.Vector.sub(createVector(mousex, mousey), main.mainb.pos).div(32);
-    main.mainb.vel = vec;
-    main.strokes++;
-    main.totalStrokes++;
+    if (main.scene == "menu") {
+        if (sqrt((mouseX - width / 2) ** 2 + (mouseY - height / 2) ** 2) < 100) {
+            main.transition.begin();
+        }
+    }
+    if (main.scene == "game") {
+        if (main.mainb.vel.mag() != 0) return;
+        const vec = p5.Vector.sub(createVector(mousex, mousey), main.mainb.pos).div(32);
+        main.mainb.vel = vec;
+        main.strokes++;
+        main.totalStrokes++;
+    }
 }
 
 window.windowResized = () => {
