@@ -9,7 +9,7 @@ export class Wall {
     }
 
     draw() {
-        fill(123, 0, 255);
+        fill(217, 238, 255);
         rect(this.x, this.y, this.w, this.h);
     }
 

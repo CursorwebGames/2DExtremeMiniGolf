@@ -21,7 +21,7 @@ export class GameManager {
         this.totalStrokes = 0;
         this.holeInOnes = 0;
         this.strokes = 0;
-        this.scene = "menu";
+        this.scene = "game";
     }
 
     /**
@@ -29,24 +29,24 @@ export class GameManager {
      */
     init() {
         this.levels = genLevels();
-        this.level = 0;
+        this.level = 18;
 
+        // this.transition = new Transition(() => {
+        //     this.scene = "game";
         this.transition = new Transition(() => {
-            this.scene = "game";
-            this.transition = new Transition(() => {
-                if (this.strokes == 1) {
-                    this.holeInOnes++;
-                }
+            if (this.strokes == 1) {
+                this.holeInOnes++;
+            }
 
-                this.level++;
-                if (this.level >= this.levels.length) {
-                    this.scene = "end";
-                    return;
-                }
+            this.level++;
+            if (this.level >= this.levels.length) {
+                this.scene = "end";
+                return;
+            }
 
-                this.generateLevel();
-            });
+            this.generateLevel();
         });
+        // });
     }
 
     // defines: camera, levelBounds, mainb, hole
@@ -96,7 +96,7 @@ export class GameManager {
         fill(255, 132, 43);
         strokeWeight(16);
         stroke(191, 0, 0);
-        text("cool golf game", width / 2, 100);
+        text("G0lfm@n1a", width / 2, 100);
 
         strokeWeight(8);
         stroke(191, 150, 0);

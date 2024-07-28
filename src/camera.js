@@ -4,10 +4,10 @@ export class Camera {
         this.y = main.mainb.pos.y;
 
         // define boundaries of map, padding added
-        this.minx = minx - 50 + width / 2;
-        this.miny = miny - 50 + height / 2;
-        this.maxx = maxx + 50 - width / 2;
-        this.maxy = maxy + 50 - height / 2;
+        this.minx = minx - width / 4 + width / 2;
+        this.miny = miny - width / 4 + height / 2;
+        this.maxx = maxx + width / 4 - width / 2;
+        this.maxy = maxy + width / 4 - height / 2;
     }
 
     draw() {

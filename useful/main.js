@@ -142,3 +142,7 @@ document.querySelector(".copy-export-btn").addEventListener("click", async () =>
         document.querySelector(".copy-export-btn").textContent = "Copy";
     }, 1000);
 });
+
+window.onbeforeunload = () => {
+    return 'Are you sure you want to leave?';
+};

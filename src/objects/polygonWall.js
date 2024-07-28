@@ -6,7 +6,7 @@ export class PolygonWall {
     }
 
     draw() {
-        fill(123, 0, 255);
+        fill(217, 238, 255);
         beginShape();
         for (const [x, y] of this.points) {
             vertex(x, y);
