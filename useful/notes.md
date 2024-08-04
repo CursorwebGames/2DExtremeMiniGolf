@@ -1,6 +1,6 @@
 # Physics Notes
 Add:
-- Mobile support
+<!-- - Mobile support -->
 <!-- - One more level -->
 <!-- - Wall recolor -->
 <!-- - Center ball camera -->

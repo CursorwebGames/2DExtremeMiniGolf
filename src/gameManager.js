@@ -29,7 +29,7 @@ export class GameManager {
      */
     init() {
         this.levels = genLevels();
-        this.level = 18;
+        this.level = 0;
 
         // this.transition = new Transition(() => {
         //     this.scene = "game";

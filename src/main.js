@@ -12,8 +12,12 @@ import { GameManager } from "./gameManager";
 window.main = new GameManager();
 
 window.setup = () => {
-    createCanvas(windowWidth, windowHeight);
+    const canvas = createCanvas(windowWidth, windowHeight);
     noStroke();
+
+    canvas.elt.addEventListener("touchmove", e => {
+        e.preventDefault();
+    });
 
     main.init();
     main.generateLevel();
@@ -35,14 +39,28 @@ window.mouseClicked = () => {
             main.transition.begin();
         }
     }
+}
+
+window.mouseDragged = () => {
+    if (main.scene == "game") {
+        main.mainb.isDragging = true;
+    }
+}
+
+window.mouseReleased = () => {
     if (main.scene == "game") {
         if (main.mainb.vel.mag() != 0) return;
-        const vec = p5.Vector.sub(createVector(mousex, mousey), main.mainb.pos).div(32);
+        const vec = p5.Vector.sub(main.mainb.pos, createVector(mousex, mousey)).div(32);
         main.mainb.vel = vec;
         main.strokes++;
         main.totalStrokes++;
+
+        main.mainb.isDragging = false;
     }
 }
+
+// why?
+window.touchEnded = window.mouseReleased;
 
 window.windowResized = () => {
     resizeCanvas(windowWidth, windowHeight);
