@@ -1,9 +1,6 @@
 # Physics Notes
-Add:
-<!-- - Mobile support -->
-<!-- - One more level -->
-<!-- - Wall recolor -->
-<!-- - Center ball camera -->
+- Pulling out zooms out the camera
+
 After first release, let's work on rewriting in typescript!
 
 ## Realisms

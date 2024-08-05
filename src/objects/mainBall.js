@@ -1,4 +1,4 @@
-import { Ball } from "./ball";
+import { Ball, maxSpeed } from "./ball";
 
 export class MainBall extends Ball {
     constructor(x, y) {
@@ -15,17 +15,24 @@ export class MainBall extends Ball {
         circle(this.pos.x, this.pos.y, this.r * 2);
         if (this.isDragging) {
             this.drag();
+        } else {
+            main.camera.scale = lerp(main.camera.scale, 1, 0.1);
         }
     }
 
     drag() {
-        let dir = createVector(this.pos.x - mousex, this.pos.y - mousey);
+        if (this.inHole || this.vel.mag() != 0) {
+            return;
+        }
 
-        if (!this.inHole && this.vel.mag() == 0) {
-            for (let i = 1; i < 6; i++) {
-                const vec = createVector().lerp(dir, i / 5);
-                circle(vec.x + this.pos.x, vec.y + this.pos.y, 5);
-            }
+        let dir = createVector(this.pos.x - mousex, this.pos.y - mousey).limit(maxSpeed * 30);
+
+        // 1 / (2/3 + 1)
+        main.camera.scale = lerp(main.camera.scale, maxSpeed * 30 / (dir.mag() + maxSpeed * 30), 0.1);
+
+        for (let i = 1; i < 6; i++) {
+            const vec = createVector().lerp(dir, i / 5);
+            circle(vec.x + this.pos.x, vec.y + this.pos.y, 5);
         }
     }
 }

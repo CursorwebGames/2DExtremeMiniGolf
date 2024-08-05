@@ -1,6 +1,7 @@
 import { circPolyCol } from "../collisions";
 
 const friction = 0.016;
+export const maxSpeed = 10;
 
 export class Ball {
     constructor(x, y, r) {
@@ -28,7 +29,7 @@ export class Ball {
         this.checkBounds();
         this.pos.add(p5.Vector.div(this.vel, frac));
         this.vel.mult(1 - friction / frac);
-        this.vel.limit(10);
+        this.vel.limit(maxSpeed);
         if (this.vel.mag() > 0 && this.vel.mag() < 0.03) {
             this.prevPos = this.pos.copy();
             this.vel.setMag(0);

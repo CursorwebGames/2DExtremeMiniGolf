@@ -21,7 +21,7 @@ export class GameManager {
         this.totalStrokes = 0;
         this.holeInOnes = 0;
         this.strokes = 0;
-        this.scene = "game";
+        this.scene = "menu";
     }
 
     /**
@@ -31,22 +31,22 @@ export class GameManager {
         this.levels = genLevels();
         this.level = 0;
 
-        // this.transition = new Transition(() => {
-        //     this.scene = "game";
         this.transition = new Transition(() => {
-            if (this.strokes == 1) {
-                this.holeInOnes++;
-            }
+            this.scene = "game";
+            this.transition = new Transition(() => {
+                if (this.strokes == 1) {
+                    this.holeInOnes++;
+                }
 
-            this.level++;
-            if (this.level >= this.levels.length) {
-                this.scene = "end";
-                return;
-            }
+                this.level++;
+                if (this.level >= this.levels.length) {
+                    this.scene = "end";
+                    return;
+                }
 
-            this.generateLevel();
+                this.generateLevel();
+            });
         });
-        // });
     }
 
     // defines: camera, levelBounds, mainb, hole
@@ -155,6 +155,7 @@ Hole in ones: ${this.holeInOnes}`, width / 2 - 300 + 16, height / 2 - 100 + 16 +
         push();
         this.camera.draw();
 
+        // Bounds
         push();
         fill(94, 230, 83);
         strokeWeight(3);
@@ -207,6 +208,7 @@ Hole in ones: ${this.holeInOnes}`, width / 2 - 300 + 16, height / 2 - 100 + 16 +
 
         pop();
 
+        // HUD
         push();
         fill(255);
         stroke(1);

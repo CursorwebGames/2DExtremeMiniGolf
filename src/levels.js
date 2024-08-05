@@ -8,7 +8,7 @@ export function genLevels() {
             static: [],
             balls: [],
             bounds: [[0, 0], [200, 0], [400, 100], [400, 400], [200, 400], [200, 200], [0, 200]],
-            text: "Click to move",
+            text: "Pull back and release",
             par: 2,
         },
         {

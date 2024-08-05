@@ -33,14 +33,6 @@ window.draw = () => {
     }
 }
 
-window.mouseClicked = () => {
-    if (main.scene == "menu") {
-        if (sqrt((mouseX - width / 2) ** 2 + (mouseY - height / 2) ** 2) < 100) {
-            main.transition.begin();
-        }
-    }
-}
-
 window.mouseDragged = () => {
     if (main.scene == "game") {
         main.mainb.isDragging = true;
@@ -48,6 +40,12 @@ window.mouseDragged = () => {
 }
 
 window.mouseReleased = () => {
+    if (main.scene == "menu") {
+        if (sqrt((mouseX - width / 2) ** 2 + (mouseY - height / 2) ** 2) < 100) {
+            main.transition.begin();
+        }
+    }
+
     if (main.scene == "game") {
         if (main.mainb.vel.mag() != 0) return;
         const vec = p5.Vector.sub(main.mainb.pos, createVector(mousex, mousey)).div(32);
