@@ -100,7 +100,7 @@ export function genLevels() {
             balls: [],
             bounds: [[550, 200], [550, 750], [0, 750]],
             text: "Don't touch the water!",
-            par: 1
+            par: 2
         },
         {
             mainb: [399, 152],

@@ -33,9 +33,11 @@ window.draw = () => {
     }
 }
 
-window.mouseDragged = () => {
+// todo: into the mainb
+window.mousePressed = () => {
     if (main.scene == "game") {
-        main.mainb.isDragging = true;
+        if (main.mainb.inHole || main.mainb.vel.mag() != 0) return;
+        main.mainb.dragOrigin = createVector(mouseX, mouseY);
     }
 }
 
@@ -47,17 +49,18 @@ window.mouseReleased = () => {
     }
 
     if (main.scene == "game") {
+        const vec = main.mainb.getDir().div(30);
+        main.mainb.dragOrigin = null;
+
         if (main.mainb.vel.mag() != 0) return;
-        const vec = p5.Vector.sub(main.mainb.pos, createVector(mousex, mousey)).div(32);
         main.mainb.vel = vec;
         main.strokes++;
         main.totalStrokes++;
-
-        main.mainb.isDragging = false;
     }
 }
 
 // why?
+window.touchStarted = window.mousePressed;
 window.touchEnded = window.mouseReleased;
 
 window.windowResized = () => {
