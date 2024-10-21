@@ -13,6 +13,9 @@ After first release, let's work on rewriting in typescript!
 - Decide whether teleporting, if you can teleport back if that would be fun
 - Color design as always
 - Camera calculate to include the ball so is always center
+- Add restart?
+- Add a progress
+- Add buttons to choose level
 
 ## Optimizations
 <!-- - Implement a quadtree
