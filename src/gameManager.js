@@ -96,7 +96,7 @@ export class GameManager {
         fill(255, 132, 43);
         strokeWeight(16);
         stroke(191, 0, 0);
-        text("G0lfm@n1a", width / 2, 100);
+        text("ector Golf", width / 2, 100);
 
         strokeWeight(8);
         stroke(191, 150, 0);
