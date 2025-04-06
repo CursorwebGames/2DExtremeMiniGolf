@@ -16,7 +16,7 @@ export class MainBall extends Ball {
         if (this.dragOrigin) {
             this.drag();
         } else {
-            main.camera.scale = lerp(main.camera.scale, 1, 0.1);
+            // main.camera.scale = lerp(main.camera.scale, 1, 0.1);
         }
     }
 
