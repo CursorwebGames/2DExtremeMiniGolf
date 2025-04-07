@@ -1,7 +1,7 @@
 import { Vector } from "p5";
+import { maxSpeed } from "../config";
 
 const friction = 0.016;
-export const maxSpeed = 10;
 
 export class Ball {
     pos: Vector;
@@ -31,6 +31,9 @@ export class Ball {
         this.vel.add(f);
     }
 
+    /**
+     * @param frac CCD
+     */
     update(frac = 1) {
         this.pos.add(Vector.div(this.vel, frac) as unknown as Vector);
         this.vel.mult(1 - friction / frac);

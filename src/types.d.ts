@@ -2,12 +2,13 @@ import p5 from "p5";
 
 declare global {
     interface Window {
-        p5: typeof p5
-
+        p5: typeof p5;
+        mousex: number;
+        mousey: number;
     }
 
     // https://github.com/GoSubRoutine/Steering-Text-Paths/blob/main/typings/p5-global.d.ts
-    interface Window {
+    interface p5EventFunctions {
         registerMethod(register: P5RegTypes, callback: (this: p5) => void): void
         registerPreloadMethod(name: PropertyKey, proto: object): void
 
@@ -60,6 +61,8 @@ declare global {
         mouseClicked(this: p5, evt?: MouseEvent): boolean | void
         doubleClicked(this: p5, evt?: MouseEvent): boolean | void
     }
+
+    interface Window extends p5EventFunctions { }
 }
 
 // https://github.com/Gaweph/p5-typescript-starter/blob/master/global.d.ts

@@ -1,12 +1,16 @@
 import { Ball } from "./objects/ball";
 
-export const CCD_STEPS = 2;
 
 // todo: separation of genLevels
-export class GameManager {
-    ball: Ball;
-
+export class GameManager implements Partial<p5EventFunctions> {
     constructor() {
-        this.ball = new Ball(width / 2, height / 2);
+    }
+
+    draw(): void {
+
+    }
+
+    mousePressed(evt?: unknown): boolean | void {
+
     }
 }
