@@ -1,10 +1,19 @@
 import p5 from "p5";
 window.p5 = p5;
 
-window.setup = function setup() {
-    createCanvas(500, 500);
+window.setup = () => {
+    const canvas = createCanvas(windowWidth, windowHeight);
+    noStroke();
+
+    (canvas.elt as HTMLCanvasElement).addEventListener("touchmove", e => {
+        e.preventDefault();
+    });
 }
 
-window.draw = function draw() {
+window.draw = () => {
     background(255, 0, 0);
+}
+
+window.windowResized = () => {
+    resizeCanvas(windowWidth, windowHeight);
 }
