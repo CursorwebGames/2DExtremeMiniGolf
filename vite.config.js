@@ -2,12 +2,12 @@ import { resolve } from "path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    base: '',
+    base: "",
     build: {
         rollupOptions: {
             input: {
                 main: resolve(__dirname, "index.html"),
-                useful: resolve(__dirname, "useful/index.html"),
+                useful: resolve(__dirname, "level-editor/index.html"),
             },
             /*
             output: {
