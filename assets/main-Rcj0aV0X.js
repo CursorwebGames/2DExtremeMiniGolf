@@ -1,0 +1,1 @@
+import{p as n}from"./p5.min-h_YlYhQD.js";window.p5=n;window.setup=()=>{const w=createCanvas(windowWidth,windowHeight);noStroke(),w.elt.addEventListener("touchmove",e=>{e.preventDefault()})};window.draw=()=>{background(255,0,0)};window.windowResized=()=>{resizeCanvas(windowWidth,windowHeight)};
