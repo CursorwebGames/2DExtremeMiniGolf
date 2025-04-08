@@ -53,6 +53,8 @@ export class GameScene extends Scene {
     }
 
     mouseReleased(): void {
+        if (!this.ball.dragStart) return;
+
         const vec = this.ball.getDir().div(30);
         this.ball.dragStart = null;
 
