@@ -1,5 +1,5 @@
 import { Vector } from "p5";
-import { maxSpeed } from "../config";
+import { MAX_SPEED } from "../config";
 
 const friction = 0.016;
 
@@ -11,7 +11,7 @@ export class Ball {
     /** The position to reset back to if ball into water */
     prevPos: Vector;
 
-    constructor(x: number, y: number, r: number) {
+    constructor(x: number, y: number, r = 10) {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
         this.r = r;
@@ -37,7 +37,8 @@ export class Ball {
     update(frac = 1) {
         this.pos.add(Vector.div(this.vel, frac) as unknown as Vector);
         this.vel.mult(1 - friction / frac);
-        this.vel.limit(maxSpeed);
+        this.vel.limit(MAX_SPEED);
+
         if (this.vel.mag() > 0 && this.vel.mag() < 0.03) {
             this.prevPos = this.pos.copy();
             this.vel.setMag(0);

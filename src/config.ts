@@ -1,2 +1,2 @@
 export const CCD_STEPS = 2;
-export const maxSpeed = 10;
+export const MAX_SPEED = 10;

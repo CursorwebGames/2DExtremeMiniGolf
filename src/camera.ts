@@ -3,6 +3,7 @@ import { Ball } from "./objects/ball";
 
 export class Camera {
     pos: Vector;
+    ball: Ball;
 
     minx: number;
     miny: number;
@@ -11,8 +12,10 @@ export class Camera {
 
     scale: number;
 
-    constructor(minx: number, miny: number, maxx: number, maxy: number) {
-        this.pos = createVector(0, 0); // TODO
+    // TODO: ON RESIZE
+    constructor(ball: Ball, minx: number, miny: number, maxx: number, maxy: number) {
+        this.ball = ball;
+        this.pos = ball.pos.copy(); // TODO
 
         // define boundaries of map, padding added
         this.minx = minx - width / 4 + width / 2;
@@ -23,7 +26,7 @@ export class Camera {
         this.scale = 1;
     }
 
-    update(ball: Ball) {
+    draw() {
         /*
         equation: mainb.x - mainb.x + width / 2
         const tx = width / 2 - this.x;
@@ -43,7 +46,7 @@ export class Camera {
         window.mousex = mousePos.x;
         window.mousey = mousePos.y;
 
-        this.pos.x = constrain(lerp(this.pos.x, ball.pos.x, 0.1), this.minx, this.maxx);
-        this.pos.y = constrain(lerp(this.pos.y, ball.pos.y, 0.1), this.miny, this.maxy);
+        this.pos.x = constrain(lerp(this.pos.x, this.ball.pos.x, 0.1), this.minx, this.maxx);
+        this.pos.y = constrain(lerp(this.pos.y, this.ball.pos.y, 0.1), this.miny, this.maxy);
     }
 }

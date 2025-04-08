@@ -13,11 +13,19 @@ window.setup = () => {
     });
 
     gameManager = new GameManager();
-}
+};
 
 window.draw = () => {
-    background(255, 0, 0);
-}
+    gameManager.draw();
+};
+
+window.mousePressed = () => {
+    gameManager.sceneManager.scene.mousePressed();
+};
+
+window.mouseReleased = () => {
+    gameManager.sceneManager.scene.mouseReleased();
+};
 
 
 // why?

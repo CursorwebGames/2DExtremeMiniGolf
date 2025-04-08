@@ -1,16 +1,26 @@
-import { Ball } from "./objects/ball";
+import { SceneManager } from "./scenes/sceneManager";
 
+/**
+ * Manages the score... for now
+ */
+export class GameManager {
+    sceneManager: SceneManager;
+    strokes: number;
+    totalStrokes: number;
 
-// todo: separation of genLevels
-export class GameManager implements Partial<p5EventFunctions> {
     constructor() {
+        this.sceneManager = new SceneManager(this);
+
+        this.strokes = 0;
+        this.totalStrokes = 0;
     }
 
     draw(): void {
-
+        this.sceneManager.draw();
     }
 
-    mousePressed(evt?: unknown): boolean | void {
-
+    addStroke() {
+        this.strokes++;
+        this.totalStrokes++;
     }
 }
