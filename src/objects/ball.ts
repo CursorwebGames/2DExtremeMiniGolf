@@ -1,5 +1,6 @@
 import { Vector } from "p5";
 import { MAX_SPEED } from "../config";
+import { circPolyCol } from "../collisions";
 
 const friction = 0.016;
 
@@ -32,16 +33,30 @@ export class Ball {
     }
 
     /**
-     * @param frac CCD
+     * @param ccd CCD, this way makes it easy to debug ccd-related bugs (rare)
      */
-    update(frac = 1) {
-        this.pos.add(Vector.div(this.vel, frac) as unknown as Vector);
-        this.vel.mult(1 - friction / frac);
+    update(bounds: PointArr, ccd = 1) {
+        this.checkBounds(bounds);
+        this.pos.add(Vector.div(this.vel, ccd) as unknown as Vector);
+        this.vel.mult(1 - friction / ccd);
         this.vel.limit(MAX_SPEED);
 
         if (this.vel.mag() > 0 && this.vel.mag() < 0.03) {
             this.prevPos = this.pos.copy();
             this.vel.setMag(0);
+        }
+    }
+
+    checkBounds(bounds: PointArr) {
+        let { projPoint, edge } = circPolyCol(this.pos, this.r, bounds);
+        if (projPoint) {
+            let diff = p5.Vector.sub(this.pos, projPoint);
+            let speed = this.vel.mag();
+
+            let ang = Math.abs(this.vel.angleBetween(edge!));
+
+            this.pos.add(p5.Vector.setMag(diff, this.r - diff.mag()));
+            this.applyForce(diff.setMag(2 * Math.sin(ang) * speed));
         }
     }
 }

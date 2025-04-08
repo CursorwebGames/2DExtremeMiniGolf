@@ -1,3 +1,5 @@
+import { Vector } from "p5";
+
 export function circCircCol(vec1: p5.Vector, r1: number, vec2: p5.Vector, r2: number) {
     return vec1.dist(vec2) <= r1 + r2;
 }
@@ -44,7 +46,7 @@ export function circLineCol(circPoint: p5.Vector, r: number, startPoint: p5.Vect
 }
 
 // points: [int, int][]
-export function circPolyCol(circPoint: p5.Vector, r: number, points: [number, number][]) {
+export function circPolyCol(circPoint: p5.Vector, r: number, points: PointArr) {
     for (let i = 0; i < points.length; i++) {
         const n = (i + 1) % points.length;
 
@@ -57,10 +59,10 @@ export function circPolyCol(circPoint: p5.Vector, r: number, points: [number, nu
         }
     }
 
-    return false;
+    return {};
 }
 
-export function pointPolyCol(point: { x: number, y: number }, points: [number, number][]) {
+export function pointPolyCol(point: Vector, points: PointArr) {
     // check if the point is actually in the circle
     // as circPolyCol only checks edges
     let collide = false;

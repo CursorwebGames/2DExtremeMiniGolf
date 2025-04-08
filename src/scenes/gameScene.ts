@@ -21,6 +21,7 @@ export class GameScene extends Scene {
         push();
         this.camera.draw();
 
+        // BORDERS
         push();
         fill(94, 230, 83);
         strokeWeight(3);
@@ -32,11 +33,22 @@ export class GameScene extends Scene {
         pop();
 
         this.checkCollisions();
+
+
+        // HUD
+        push();
+        fill(255);
+        stroke(1);
+        strokeWeight(3);
+        textAlign(LEFT);
+        textSize(20);
+        text(`Stroke: ${this.gameManager.strokes}`, 10, height - 60);
+        pop();
     }
 
     checkCollisions() {
         for (let c = 0; c < CCD_STEPS; c++) {
-            this.ball.update(CCD_STEPS);
+            this.ball.update([[0, 0], [width, 0], [width, height], [height, 0]], CCD_STEPS);
 
             // for (const obj of this.staticObjs) {
             //     const res = obj.isColliding(ball);
