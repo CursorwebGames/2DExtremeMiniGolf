@@ -1,21 +1,42 @@
 import { Camera } from "../camera";
 import { CCD_STEPS } from "../config";
 import { GameManager } from "../gameManager";
+import { Level } from "../levels/levels";
+import { Hole } from "../objects/hole";
 import { MainBall } from "../objects/mainBall";
 import { Scene } from "./scene";
 
+// TODO: MAKE A LEVEL WITH MULTIPLE BALLS OR JUST GIVE UP WITH THAT IDEA
 export class GameScene extends Scene {
     camera: Camera;
     ball: MainBall;
+    hole: Hole;
+    bounds: PointArr;
+    staticObjs: {}[];
 
-    constructor(gameManager: GameManager) {
+    constructor(gameManager: GameManager, level: Level) {
         super(gameManager);
-        // TODO: MAKE A LEVEL WITH MULTIPLE BALLS OR JUST GIVE UP WITH THAT IDEA
-        this.ball = new MainBall(width / 2, height / 2);
-        this.camera = new Camera(this.ball, 0, 0, width, height);
+
+        this.ball = new MainBall(...level.ball);
+        this.hole = new Hole(...level.hole);
+
+        const bounds = level.bounds;
+        this.bounds = bounds;
+
+        this.staticObjs = level.staticObjs;
+
+        let minx = bounds[0][0], miny = bounds[0][1], maxx = bounds[0][0], maxy = bounds[0][1];
+        for (let i = 1; i < bounds.length; i++) {
+            let [x, y] = bounds[i];
+            if (x < minx) minx = x;
+            if (y < miny) miny = y;
+            if (x > maxx) maxx = x;
+            if (y > maxy) maxy = y;
+        }
+        this.camera = new Camera(this.ball, minx, miny, maxx, maxy);
     }
 
-    protected _draw(): void {
+    draw() {
         background(123, 255, 123);
 
         push();
@@ -26,14 +47,18 @@ export class GameScene extends Scene {
         fill(94, 230, 83);
         strokeWeight(3);
         stroke(255);
-        rect(0, 0, width, height);
+        beginShape();
+        for (const [x, y] of this.bounds) {
+            vertex(x, y);
+        }
+        endShape(CLOSE);
         pop();
 
+        this.hole.draw();
         this.ball.draw();
         pop();
 
         this.checkCollisions();
-
 
         // HUD
         push();
@@ -48,7 +73,7 @@ export class GameScene extends Scene {
 
     checkCollisions() {
         for (let c = 0; c < CCD_STEPS; c++) {
-            this.ball.update([[0, 0], [width, 0], [width, height], [height, 0]], CCD_STEPS);
+            this.ball.update(this.bounds, CCD_STEPS);
 
             // for (const obj of this.staticObjs) {
             //     const res = obj.isColliding(ball);
@@ -57,6 +82,10 @@ export class GameScene extends Scene {
             //     }
             // }
         }
+
+        this.hole.checkBall(this.ball, () => {
+            console.log('hit!');
+        });
     }
 
     mousePressed(): void {

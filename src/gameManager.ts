@@ -1,7 +1,7 @@
 import { SceneManager } from "./scenes/sceneManager";
 
 /**
- * Manages the score... for now
+ * Manages the score and that's it... for now
  */
 export class GameManager {
     sceneManager: SceneManager;

@@ -8,14 +8,10 @@ export abstract class Scene {
     }
 
     /**
-     * The actual draw cycle for the scene
+     * The draw cycle for the scene
      */
-    protected abstract _draw(): void;
+    abstract draw(): void;
 
     mousePressed() { }
     mouseReleased() { }
-
-    draw() {
-        this._draw();
-    }
 }

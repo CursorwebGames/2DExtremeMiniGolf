@@ -1,15 +1,13 @@
 import { Vector } from "p5";
 import { circCircCol } from "../collisions";
-import { Ball } from "./ball";
+import { MainBall } from "./mainBall";
 
 export class Hole {
     pos: Vector;
-    ballIn: boolean;
     r: number;
 
     constructor(x: number, y: number) {
         this.pos = createVector(x, y);
-        this.ballIn = false;
         this.r = 12;
     }
 
@@ -18,7 +16,17 @@ export class Hole {
         circle(this.pos.x, this.pos.y, this.r * 2);
     }
 
-    isColliding(ball: Ball) {
-        return circCircCol(ball.pos, ball.r, this.pos, this.r);
+    checkBall(ball: MainBall, callback: () => void) {
+        if (circCircCol(ball.pos, ball.r, this.pos, this.r)) {
+            if (ball.vel.mag() < 0.001 && !ball.inHole) {
+                callback();
+                ball.inHole = true;
+            }
+
+            // slow ball down
+            ball.vel.mult(0.9);
+            let dir = p5.Vector.sub(this.pos, ball.pos);
+            ball.applyForce(dir.setMag(this.pos.dist(ball.pos) * 0.1));
+        }
     }
 }

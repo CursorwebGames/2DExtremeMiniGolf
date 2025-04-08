@@ -1,4 +1,5 @@
 import { GameManager } from "../gameManager";
+import { getLevel } from "../levels/levels";
 import { GameScene } from "./gameScene";
 import { Scene } from "./scene";
 
@@ -10,7 +11,8 @@ export class SceneManager {
     gameManager: GameManager;
 
     constructor(gameManager: GameManager) {
-        this.scene = new GameScene(gameManager);
+        const level = getLevel(0);
+        this.scene = new GameScene(gameManager, level!);
         this.gameManager = gameManager;
     }
 
