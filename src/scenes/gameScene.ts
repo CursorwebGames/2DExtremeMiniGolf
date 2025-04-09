@@ -1,7 +1,7 @@
 import { Camera } from "../camera";
 import { CCD_STEPS } from "../config";
 import { GameManager } from "../gameManager";
-import { Level } from "../levels/levels";
+import { Level, levelToObject } from "../levels/levels";
 import { Hole } from "../objects/hole";
 import { MainBall } from "../objects/mainBall";
 import { Obstacle } from "../objects/obstacle";
@@ -24,8 +24,7 @@ export class GameScene extends Scene {
         const bounds = level.bounds;
         this.bounds = bounds;
 
-        this.staticObjs = [];
-        // this.staticObjs = level.staticObjs;
+        this.staticObjs = level.statics.map(obj => levelToObject(obj));
 
         let minx = bounds[0][0], miny = bounds[0][1], maxx = bounds[0][0], maxy = bounds[0][1];
         for (let i = 1; i < bounds.length; i++) {
@@ -56,6 +55,11 @@ export class GameScene extends Scene {
         endShape(CLOSE);
         pop();
 
+
+        for (const staticObj of this.staticObjs) {
+            staticObj.draw();
+        }
+
         this.hole.draw();
         this.ball.draw();
         pop();
@@ -79,6 +83,13 @@ export class GameScene extends Scene {
 
             for (const obj of this.staticObjs) {
                 // we do it this way so implementation code for collide is less repetitive
+                const res = obj.isColliding(this.ball);
+                if (res) {
+                    obj.collide(this.ball, res);
+                }
+            }
+
+            for (const obj of this.staticObjs) {
                 const res = obj.isColliding(this.ball);
                 if (res) {
                     obj.collide(this.ball, res);

@@ -2,9 +2,20 @@
     {
         "ball": [48, 45],
         "hole": [297, 310],
-        "staticObjs": [],
+        "statics": [],
         "bounds": [[0, 0], [200, 0], [400, 100], [400, 400], [200, 400], [200, 200], [0, 200]],
         "text": "Pull back and release",
+        "par": 2
+    },
+    {
+        "ball": [165, 182],
+        "hole": [989, 82],
+        "statics": [
+            ["Wall", [498, 1, 226, 299]],
+            ["Teleporter", [882, 172, 340, 181]]
+        ],
+        "bounds": [[0, 0], [1200, 0], [1200, 300], [0, 300]],
+        "text": "Teleporters teleport you places",
         "par": 2
     }
 ]

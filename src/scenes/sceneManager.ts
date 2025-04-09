@@ -11,7 +11,7 @@ export class SceneManager {
     gameManager: GameManager;
 
     constructor(gameManager: GameManager) {
-        const level = getLevel(0);
+        const level = getLevel(1);
         this.scene = new GameScene(gameManager, level!);
         this.gameManager = gameManager;
     }

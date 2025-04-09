@@ -15,6 +15,7 @@ export class Hole {
         circle(this.pos.x, this.pos.y, this.r * 2);
     }
 
+    // TODO: put this under CCD?
     checkBall(ball: MainBall, callback: () => void) {
         if (circCircCol(ball.pos, ball.r, this.pos, this.r)) {
             if (ball.vel.mag() < 0.001 && !ball.inHole) {

@@ -45,10 +45,6 @@ export class Teleporter implements Obstacle<false | 1 | -1> {
         // The previous portal
         let checkPos;
 
-        if (dest != this.hasTeleportedTo) {
-            throw Error("shouldn't they equal wt");
-        }
-
         if (dest == -1) {
             destPos = this.start.copy();
         } else {

@@ -2,10 +2,6 @@ import { circPolyCol, MaybeCircPolyColResult } from "../collisions";
 import { Ball } from "./ball";
 import { Obstacle } from "./obstacle";
 
-// hehe
-const startColor = color(61, 137, 255);
-const toColor = color(0, 73, 186);
-
 export class Water implements Obstacle<MaybeCircPolyColResult> {
     points: PointArr;
 
@@ -17,6 +13,9 @@ export class Water implements Obstacle<MaybeCircPolyColResult> {
 
     cx: number;
     cy: number;
+
+    startColor: p5.Color;
+    toColor: p5.Color;
 
     constructor(points: PointArr) {
         this.points = points;
@@ -36,6 +35,9 @@ export class Water implements Obstacle<MaybeCircPolyColResult> {
 
         this.cx = cx;
         this.cy = cy;
+
+        this.startColor = color(61, 137, 255);
+        this.toColor = color(0, 73, 186);
     }
 
     draw() {
@@ -48,7 +50,7 @@ export class Water implements Obstacle<MaybeCircPolyColResult> {
             if (i == -1) {
                 c = color(255, 247, 128);
             } else {
-                c = lerpColor(startColor, toColor, i / 4);
+                c = lerpColor(this.startColor, this.toColor, i / 4);
             }
             fill(c);
             beginShape();
