@@ -18,3 +18,5 @@ export function getLevel(idx: number) {
 
     return levels[idx];
 }
+
+export function levelToObject() { }

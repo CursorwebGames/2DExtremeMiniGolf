@@ -49,8 +49,10 @@ export type CircPolyColResult = {
     edge?: p5.Vector;
 };
 
+export type MaybeCircPolyColResult = false | CircPolyColResult;
+
 // points: [int, int][]
-export function circPolyCol(circPoint: p5.Vector, r: number, points: PointArr): CircPolyColResult | false {
+export function circPolyCol(circPoint: p5.Vector, r: number, points: PointArr): MaybeCircPolyColResult {
     for (let i = 0; i < points.length; i++) {
         const n = (i + 1) % points.length;
 

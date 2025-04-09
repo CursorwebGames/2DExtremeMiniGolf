@@ -1,11 +1,12 @@
-import { circPolyCol } from "../collisions";
+import { circPolyCol, MaybeCircPolyColResult } from "../collisions";
 import { Ball } from "./ball";
+import { Obstacle } from "./obstacle";
 
 // hehe
 const startColor = color(61, 137, 255);
 const toColor = color(0, 73, 186);
 
-export class Water {
+export class Water implements Obstacle<MaybeCircPolyColResult> {
     points: PointArr;
 
     /**

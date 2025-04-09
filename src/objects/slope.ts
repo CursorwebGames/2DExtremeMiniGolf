@@ -1,7 +1,8 @@
 import { circRectCol } from "../collisions";
 import { Ball } from "./ball";
+import { Obstacle } from "./obstacle";
 
-export class Slope {
+export class Slope implements Obstacle {
     x: number;
     y: number;
     w: number;

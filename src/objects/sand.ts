@@ -1,9 +1,10 @@
-import { circPolyCol, pointPolyCol } from "../collisions";
+import { circPolyCol, MaybeCircPolyColResult, pointPolyCol } from "../collisions";
 import { Ball } from "./ball";
+import { Obstacle } from "./obstacle";
 
 const friction = 0.05;
 
-export class Sand {
+export class Sand implements Obstacle<MaybeCircPolyColResult | boolean> {
     points: PointArr;
     constructor(points: PointArr) {
         this.points = points;

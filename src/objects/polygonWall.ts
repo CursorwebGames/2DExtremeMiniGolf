@@ -1,8 +1,8 @@
-import { circPolyCol, CircPolyColResult } from "../collisions";
+import { circPolyCol, MaybeCircPolyColResult } from "../collisions";
 import { Ball } from "./ball";
 import { Obstacle } from "./obstacle";
 
-export class PolygonWall implements Obstacle<CircPolyColResult | false> {
+export class PolygonWall implements Obstacle<MaybeCircPolyColResult> {
     points: PointArr;
 
     constructor(points: PointArr) {

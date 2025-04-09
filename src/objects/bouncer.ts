@@ -1,7 +1,8 @@
 import { circCircCol } from "../collisions";
 import { Ball } from "./ball";
+import { Obstacle } from "./obstacle";
 
-export class Bouncer {
+export class Bouncer implements Obstacle {
     pos: p5.Vector;
     r: number;
     hit: number;
