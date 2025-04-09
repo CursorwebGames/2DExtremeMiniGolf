@@ -1,4 +1,3 @@
-import { Vector } from "p5";
 import { Ball } from "./ball";
 import { MAX_SPEED } from "../config";
 
@@ -6,7 +5,7 @@ export class MainBall extends Ball {
     /** If ball is in hole, you are at rest, but can't make any more moves */
     inHole = false;
 
-    dragStart?: Vector | null;
+    dragStart?: p5.Vector | null;
 
     constructor(x: number, y: number) {
         super(x, y, 10);

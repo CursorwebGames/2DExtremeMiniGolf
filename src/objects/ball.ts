@@ -1,16 +1,15 @@
-import { Vector } from "p5";
 import { MAX_SPEED } from "../config";
-import { circPolyCol } from "../collisions";
+import { circPolyCol, CircPolyColResult } from "../collisions";
 
 const friction = 0.016;
 
 export class Ball {
-    pos: Vector;
-    vel: Vector;
+    pos: p5.Vector;
+    vel: p5.Vector;
     r: number;
 
     /** The position to reset back to if ball into water */
-    prevPos: Vector;
+    prevPos: p5.Vector;
 
     constructor(x: number, y: number, r = 10) {
         this.pos = createVector(x, y);
@@ -33,11 +32,14 @@ export class Ball {
     }
 
     /**
+     * Checks bounds and friction slows down (essentially handles ball in an empty field w/ walls)
      * @param ccd CCD, this way makes it easy to debug ccd-related bugs (rare)
      */
     update(bounds: PointArr, ccd = 1) {
         this.checkBounds(bounds);
-        this.pos.add(Vector.div(this.vel, ccd) as unknown as Vector);
+
+        // hack cuz @types/p5 is doing a bad job
+        this.pos.add(p5.Vector.div(this.vel, ccd) as unknown as p5.Vector);
         this.vel.mult(1 - friction / ccd);
         this.vel.limit(MAX_SPEED);
 
@@ -47,8 +49,10 @@ export class Ball {
         }
     }
 
-    checkBounds(bounds: PointArr) {
-        let { projPoint, edge } = circPolyCol(this.pos, this.r, bounds);
+    private checkBounds(bounds: PointArr) {
+        // let { a } = false; doesn't throw error
+        // look, if javascript supports a match feature, ofc i'd use that. But it doesn't so I have to do this.
+        let { projPoint, edge } = circPolyCol(this.pos, this.r, bounds) as CircPolyColResult;
         if (projPoint) {
             let diff = p5.Vector.sub(this.pos, projPoint);
             let speed = this.vel.mag();

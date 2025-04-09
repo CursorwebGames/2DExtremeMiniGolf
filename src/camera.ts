@@ -1,8 +1,7 @@
-import { Vector } from "p5";
 import { Ball } from "./objects/ball";
 
 export class Camera {
-    pos: Vector;
+    pos: p5.Vector;
     ball: Ball;
 
     minx: number;

@@ -4,6 +4,7 @@ import { GameManager } from "../gameManager";
 import { Level } from "../levels/levels";
 import { Hole } from "../objects/hole";
 import { MainBall } from "../objects/mainBall";
+import { Obstacle } from "../objects/obstacle";
 import { Scene } from "./scene";
 
 // TODO: MAKE A LEVEL WITH MULTIPLE BALLS OR JUST GIVE UP WITH THAT IDEA
@@ -12,7 +13,7 @@ export class GameScene extends Scene {
     ball: MainBall;
     hole: Hole;
     bounds: PointArr;
-    staticObjs: {}[];
+    staticObjs: Obstacle[];
 
     constructor(gameManager: GameManager, level: Level) {
         super(gameManager);
@@ -23,7 +24,8 @@ export class GameScene extends Scene {
         const bounds = level.bounds;
         this.bounds = bounds;
 
-        this.staticObjs = level.staticObjs;
+        this.staticObjs = [];
+        // this.staticObjs = level.staticObjs;
 
         let minx = bounds[0][0], miny = bounds[0][1], maxx = bounds[0][0], maxy = bounds[0][1];
         for (let i = 1; i < bounds.length; i++) {
@@ -75,12 +77,13 @@ export class GameScene extends Scene {
         for (let c = 0; c < CCD_STEPS; c++) {
             this.ball.update(this.bounds, CCD_STEPS);
 
-            // for (const obj of this.staticObjs) {
-            //     const res = obj.isColliding(ball);
-            //     if (res) {
-            //         obj.collide(ball, res);
-            //     }
-            // }
+            for (const obj of this.staticObjs) {
+                // we do it this way so implementation code for collide is less repetitive
+                const res = obj.isColliding(this.ball);
+                if (res) {
+                    obj.collide(this.ball, res);
+                }
+            }
         }
 
         this.hole.checkBall(this.ball, () => {

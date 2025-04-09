@@ -1,19 +1,26 @@
 import p5 from "p5";
 
 // https://github.com/Gaweph/p5-typescript-starter/blob/master/global.d.ts
-import * as p5Global from 'p5/global'
-import module = require('p5');
+import * as p5Global from "p5/global";
+import module = require("p5");
 export = module;
 export as namespace p5;
 
 
 declare global {
+    // hack cuz @types/p5 is doing a bad job
+    function beginClip(): void;
+    function endClip(): void;
+
     type PointArr = [number, number][];
 
     interface Window {
         p5: typeof p5;
         mousex: number;
         mousey: number;
+    }
+
+    interface Window extends p5EventFunctions {
     }
 
     // https://github.com/GoSubRoutine/Steering-Text-Paths/blob/main/typings/p5-global.d.ts
@@ -70,6 +77,4 @@ declare global {
         mouseClicked(this: p5, evt?: MouseEvent): boolean | void
         doubleClicked(this: p5, evt?: MouseEvent): boolean | void
     }
-
-    interface Window extends p5EventFunctions { }
 }

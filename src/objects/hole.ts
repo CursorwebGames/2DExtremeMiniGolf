@@ -1,9 +1,8 @@
-import { Vector } from "p5";
 import { circCircCol } from "../collisions";
 import { MainBall } from "./mainBall";
 
 export class Hole {
-    pos: Vector;
+    pos: p5.Vector;
     r: number;
 
     constructor(x: number, y: number) {
