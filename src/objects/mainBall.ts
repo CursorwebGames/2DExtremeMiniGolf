@@ -20,10 +20,6 @@ export class MainBall extends Ball {
     }
 
     showDrag() {
-        if (this.inHole || this.vel.mag() != 0) {
-            throw Error("assertion");
-        }
-
         let dir = this.getDir();
 
         for (let i = 1; i < 6; i++) {

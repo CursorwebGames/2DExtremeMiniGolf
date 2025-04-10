@@ -14,10 +14,11 @@ declare global {
 
     type PointArr = [number, number][];
 
+    const mousex: number;
+    const mousey: number;
+
     interface Window {
         p5: typeof p5;
-        mousex: number;
-        mousey: number;
     }
 
     interface Window extends p5EventFunctions {

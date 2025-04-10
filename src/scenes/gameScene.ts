@@ -117,7 +117,12 @@ export class GameScene extends Scene {
         }
     }
 
+    // TODO: make it so the user can still drag while ball, it just nothing happens
     mousePressed(): void {
+        const vec = p5.Vector.sub(createVector(mousex, mousey), this.ball.pos).div(32);
+        this.ball.vel = vec;
+        return;
+
         if (this.ball.inHole || this.ball.vel.mag() != 0) return;
         this.ball.dragStart = createVector(mouseX, mouseY);
     }
