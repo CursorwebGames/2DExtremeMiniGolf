@@ -1,10 +1,13 @@
 import { GameManager } from "../gameManager";
+import { SceneManager } from "./sceneManager";
 
 export abstract class Scene {
     gameManager: GameManager;
+    sceneManager: SceneManager;
 
-    constructor(gameManager: GameManager) {
+    constructor(gameManager: GameManager, sceneManager: SceneManager) {
         this.gameManager = gameManager;
+        this.sceneManager = sceneManager;
     }
 
     /**

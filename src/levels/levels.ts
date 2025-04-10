@@ -27,22 +27,22 @@ type StaticObjData = {
     [K in keyof typeof staticObjMap]: [K, ConstructorParameters<typeof staticObjMap[K]>]
 }[keyof typeof staticObjMap];
 
-export interface Level {
+export interface LevelData {
     ball: [number, number],
     hole: [number, number],
-    statics: StaticObjData[], // todo
+    obstacles: StaticObjData[], // todo
     bounds: PointArr,
     text: string,
     par: number
 }
 
-const levels = levelsJSON as unknown as Level[];
+const levels = levelsJSON as unknown as LevelData[];
+
+export function levelExists(idx: number) {
+    return idx < levels.length;
+}
 
 export function getLevel(idx: number) {
-    if (idx >= levels.length) {
-        return null;
-    }
-
     return levels[idx];
 }
 

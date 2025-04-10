@@ -1,7 +1,7 @@
 import { GameManager } from "../gameManager";
-import { getLevel } from "../levels/levels";
 import { GameScene } from "./gameScene";
 import { Scene } from "./scene";
+import { Transition } from "./transitionManager";
 
 /**
  * Manages levels, scene transitions
@@ -9,14 +9,22 @@ import { Scene } from "./scene";
 export class SceneManager {
     scene: Scene;
     gameManager: GameManager;
+    transitionManager: Transition;
 
     constructor(gameManager: GameManager) {
-        const level = getLevel(1);
-        this.scene = new GameScene(gameManager, level!);
+        this.scene = new GameScene(gameManager, this, 0);
         this.gameManager = gameManager;
+        this.transitionManager = new Transition();
     }
 
     draw() {
         this.scene.draw();
+        this.transitionManager.draw();
+    }
+
+    setScene(scene: Scene) {
+        this.transitionManager.transition(() => {
+            this.scene = scene;
+        });
     }
 }

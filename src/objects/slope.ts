@@ -12,12 +12,12 @@ export class Slope implements Obstacle {
     /**
      * @param force Should be of magnitude 1 e.g. `<0, 1>`
      */
-    constructor(x: number, y: number, w: number, h: number, force: p5.Vector) {
+    constructor(x: number, y: number, w: number, h: number, force: [number, number]) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
-        this.force = force.mult(0.35);
+        this.force = createVector(...force).mult(0.35);
     }
 
     draw() {
