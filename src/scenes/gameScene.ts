@@ -5,7 +5,6 @@ import { getLevel, levelExists, levelToObject } from "../levels/levels";
 import { Hole } from "../objects/hole";
 import { MainBall } from "../objects/mainBall";
 import { Obstacle } from "../objects/obstacle";
-import { PolygonWall } from "../objects/polygonWall";
 import { Scene } from "./scene";
 import { SceneManager } from "./sceneManager";
 
@@ -92,7 +91,6 @@ export class GameScene extends Scene {
             for (const obj of this.obstacles) {
                 const res = obj.isColliding(this.ball);
                 if (res) {
-                    if (obj instanceof PolygonWall) console.log('has collided');
                     obj.collide(this.ball, res);
                 }
             }
@@ -122,12 +120,11 @@ export class GameScene extends Scene {
 
     // TODO: make it so the user can still drag while ball, it just nothing happens
     mousePressed(): void {
-        if (this.ball.inHole || this.ball.vel.mag() != 0) return;
         this.ball.dragStart = createVector(mouseX, mouseY);
     }
 
     mouseReleased(): void {
-        if (!this.ball.dragStart) return;
+        if (!this.ball.canShoot()) return;
 
         const vec = this.ball.getDir().div(30);
         this.ball.dragStart = null;

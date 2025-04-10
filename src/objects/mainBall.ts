@@ -14,7 +14,7 @@ export class MainBall extends Ball {
     draw() {
         fill(255);
         circle(this.pos.x, this.pos.y, this.r * 2);
-        if (this.dragStart) {
+        if (this.dragStart && this.canShoot()) {
             this.showDrag();
         }
     }
@@ -31,5 +31,9 @@ export class MainBall extends Ball {
     getDir() {
         // opposite direction
         return p5.Vector.sub(this.dragStart!, createVector(mouseX, mouseY)).mult(2).limit(MAX_SPEED * 30);
+    }
+
+    canShoot() {
+        return !this.inHole && this.vel.mag() == 0;
     }
 }
