@@ -5,6 +5,7 @@ import { getLevel, levelExists, levelToObject } from "../levels/levels";
 import { Hole } from "../objects/hole";
 import { MainBall } from "../objects/mainBall";
 import { Obstacle } from "../objects/obstacle";
+import { PolygonWall } from "../objects/polygonWall";
 import { Scene } from "./scene";
 import { SceneManager } from "./sceneManager";
 
@@ -89,16 +90,9 @@ export class GameScene extends Scene {
             this.ball.update(this.bounds, CCD_STEPS);
 
             for (const obj of this.obstacles) {
-                // we do it this way so implementation code for collide is less repetitive
                 const res = obj.isColliding(this.ball);
                 if (res) {
-                    obj.collide(this.ball, res);
-                }
-            }
-
-            for (const obj of this.obstacles) {
-                const res = obj.isColliding(this.ball);
-                if (res) {
+                    if (obj instanceof PolygonWall) console.log('has collided');
                     obj.collide(this.ball, res);
                 }
             }
@@ -117,12 +111,17 @@ export class GameScene extends Scene {
         }
     }
 
+    debugMousePressed(): void {
+        const vec = createVector(6.6, 8.7);
+        // const vec = p5.Vector.sub(createVector(mousex, mousey), this.ball.pos).div(32);
+        console.log("ballPos:", this.ball.pos.toString(), "\n",
+            "Vec:", vec.toString(), "\n",
+            "\n-----\n");
+        this.ball.vel = vec;
+    }
+
     // TODO: make it so the user can still drag while ball, it just nothing happens
     mousePressed(): void {
-        const vec = p5.Vector.sub(createVector(mousex, mousey), this.ball.pos).div(32);
-        this.ball.vel = vec;
-        return;
-
         if (this.ball.inHole || this.ball.vel.mag() != 0) return;
         this.ball.dragStart = createVector(mouseX, mouseY);
     }
