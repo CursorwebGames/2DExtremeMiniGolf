@@ -118,7 +118,6 @@ export class GameScene extends Scene {
         this.ball.vel = vec;
     }
 
-    // TODO: make it so the user can still drag while ball, it just nothing happens
     mousePressed(): void {
         this.ball.dragStart = createVector(mouseX, mouseY);
     }
@@ -133,5 +132,9 @@ export class GameScene extends Scene {
         this.ball.vel = vec;
 
         this.gameManager.addStroke();
+    }
+
+    windowResized(): void {
+        this.camera.windowResized();
     }
 }

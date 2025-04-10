@@ -30,7 +30,7 @@ type StaticObjData = {
 export interface LevelData {
     ball: [number, number],
     hole: [number, number],
-    obstacles: StaticObjData[], // todo
+    obstacles: StaticObjData[],
     bounds: PointArr,
     text: string,
     par: number

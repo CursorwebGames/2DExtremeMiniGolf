@@ -11,16 +11,21 @@ export class Camera {
 
     scale: number;
 
+    /** Absolute values which are useful on resize */
+    absBounds: { minx: number; miny: number; maxx: number; maxy: number; };
+
     // TODO: ON RESIZE
     constructor(ball: Ball, minx: number, miny: number, maxx: number, maxy: number) {
         this.ball = ball;
-        this.pos = ball.pos.copy(); // TODO
+        this.pos = ball.pos.copy();
 
         // define boundaries of map, padding added
         this.minx = minx - width / 4 + width / 2;
         this.miny = miny - height / 4 + height / 2;
         this.maxx = maxx + width / 4 - width / 2;
         this.maxy = maxy + height / 4 - height / 2;
+
+        this.absBounds = { minx, miny, maxx, maxy };
 
         this.scale = 1;
     }
@@ -36,6 +41,9 @@ export class Camera {
         window.mousex = mouseX - tx;
         window.mousey = mouseY - ty;
         */
+        this.pos.x = constrain(lerp(this.pos.x, this.ball.pos.x, 0.1), this.minx, this.maxx);
+        this.pos.y = constrain(lerp(this.pos.y, this.ball.pos.y, 0.1), this.miny, this.maxy);
+
         translate(width / 2, height / 2);
         scale(this.scale);
         translate(-this.pos.x, -this.pos.y);
@@ -44,8 +52,14 @@ export class Camera {
 
         window.mousex = mousePos.x;
         window.mousey = mousePos.y;
+    }
 
-        this.pos.x = constrain(lerp(this.pos.x, this.ball.pos.x, 0.1), this.minx, this.maxx);
-        this.pos.y = constrain(lerp(this.pos.y, this.ball.pos.y, 0.1), this.miny, this.maxy);
+    windowResized() {
+        const abs = this.absBounds;
+
+        this.minx = abs.minx - width / 4 + width / 2;
+        this.miny = abs.miny - height / 4 + height / 2;
+        this.maxx = abs.maxx + width / 4 - width / 2;
+        this.maxy = abs.maxy + height / 4 - height / 2;
     }
 }

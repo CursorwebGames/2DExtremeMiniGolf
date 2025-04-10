@@ -66,7 +66,7 @@ export class Water implements Obstacle<MaybeCircPolyColResult> {
     collide(obj: Ball) {
         obj.pos = obj.prevPos.copy();
         obj.vel.setMag(0);
-        // TODO: transition
+        // TODO: transition into drowning
     }
 
     isColliding(ball: Ball) {

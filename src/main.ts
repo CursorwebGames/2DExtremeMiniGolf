@@ -34,4 +34,5 @@ window.touchEnded = window.mouseReleased;
 
 window.windowResized = () => {
     resizeCanvas(windowWidth, windowHeight);
+    gameManager.sceneManager.scene.windowResized();
 }

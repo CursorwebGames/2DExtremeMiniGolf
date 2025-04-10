@@ -19,6 +19,9 @@ declare global {
 
     interface Window {
         p5: typeof p5;
+
+        mousex: number;
+        mousey: number;
     }
 
     interface Window extends p5EventFunctions {
