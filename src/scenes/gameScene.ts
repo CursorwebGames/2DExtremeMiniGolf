@@ -75,9 +75,27 @@ export class GameScene extends Scene {
 
         this.hole.draw();
         this.ball.draw();
+
+        // DEBUGGING THING
+        let abs: Camera | Camera['absBounds'] = this.camera;
+        push();
+        noFill();
+        strokeWeight(1);
+        stroke('red');
+        rect(abs.minx, abs.miny, abs.maxx - abs.minx, abs.maxy - abs.miny);
+
+        abs = this.camera.absBounds;
+        stroke('black');
+        rect(abs.minx, abs.miny, abs.maxx - abs.minx, abs.maxy - abs.miny);
+
+        stroke('blue');
+        strokeWeight(5);
+        point(this.camera.pos.x, this.camera.pos.y);
         pop();
 
         this.checkCollisions();
+
+        pop();
 
         // HUD
         push();
@@ -94,8 +112,6 @@ export class GameScene extends Scene {
         this.camera.draw();
 
         if (this.ball.canShoot() && this.ball.dragStart) {
-            console.log(MAX_SPEED * VISUAL_SPEED - this.ball.getDir().mag());
-
             // 1 / (1 + x), x = [0, 1], [0, 1] ~ [0, MAX_SPEED * VISUAL_SPEED]
             const cameraScale = MAX_SPEED * VISUAL_SPEED / (this.ball.getDir().mag() + MAX_SPEED * VISUAL_SPEED);
             this.camera.scaleTo(cameraScale);
@@ -145,9 +161,13 @@ export class GameScene extends Scene {
     }
 
     mouseReleased(): void {
-        if (!this.ball.canShoot()) return;
+        // either ball in movement, or player hasn't made an input yet
+        if (!this.ball.canShoot() || !this.ball.dragStart) return;
 
         const vec = this.ball.getDir().div(VISUAL_SPEED);
+        // TODO: make sure this magnitude is greater than something
+        if (vec.mag() == 0) return;
+
         this.ball.vel = vec;
 
         this.ball.dragStart = null;

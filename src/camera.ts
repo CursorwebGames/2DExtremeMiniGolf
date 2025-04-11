@@ -4,10 +4,10 @@ export class Camera {
     pos: p5.Vector;
     ball: Ball;
 
-    minx: number;
-    miny: number;
-    maxx: number;
-    maxy: number;
+    minx!: number;
+    miny!: number;
+    maxx!: number;
+    maxy!: number;
 
     scale: number;
 
@@ -19,13 +19,8 @@ export class Camera {
         this.ball = ball;
         this.pos = ball.pos.copy();
 
-        // define boundaries of map, padding added
-        this.minx = minx - width / 4 + width / 2;
-        this.miny = miny - height / 4 + height / 2;
-        this.maxx = maxx + width / 4 - width / 2;
-        this.maxy = maxy + height / 4 - height / 2;
-
         this.absBounds = { minx, miny, maxx, maxy };
+        this.windowResized();
 
         // TODO: make aspect ratios constant
         this.scale = 1;
@@ -62,9 +57,12 @@ export class Camera {
     windowResized() {
         const abs = this.absBounds;
 
-        this.minx = abs.minx - width / 4 + width / 2;
-        this.miny = abs.miny - height / 4 + height / 2;
-        this.maxx = abs.maxx + width / 4 - width / 2;
-        this.maxy = abs.maxy + height / 4 - height / 2;
+        const middlex = (abs.minx + abs.maxx) / 2;
+        const middley = (abs.miny + abs.maxy) / 2;
+
+        this.minx = Math.min(abs.minx - width / 4 + width / 2, middlex);
+        this.miny = Math.min(abs.miny - height / 4 + height / 2, middley);
+        this.maxx = Math.max(abs.maxx + width / 4 - width / 2, middlex);
+        this.maxy = Math.max(abs.maxy + height / 4 - height / 2, middley);
     }
 }
