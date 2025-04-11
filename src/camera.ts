@@ -1,7 +1,8 @@
+import { ASPECT_HEIGHT } from "./config";
 import { Ball } from "./objects/ball";
 
-const PADDING_X = 240;
-const PADDING_Y = 190;
+const MARGIN_X = 200;
+const MARGIN_Y = 200;
 
 export class Camera {
     pos: p5.Vector;
@@ -13,6 +14,7 @@ export class Camera {
     maxy!: number;
 
     scale: number;
+    aspectScale!: number;
 
     /** Absolute values which are useful on resize */
     absBounds: { minx: number; miny: number; maxx: number; maxy: number; };
@@ -44,10 +46,11 @@ export class Camera {
         this.pos.y = constrain(lerp(this.pos.y, this.ball.pos.y, 0.1), this.miny, this.maxy);
 
         translate(width / 2, height / 2);
+        scale(this.aspectScale);
         scale(this.scale);
         translate(-this.pos.x, -this.pos.y);
 
-        const mousePos = createVector(mouseX, mouseY).sub(createVector(width / 2, height / 2)).div(this.scale).add(this.pos);
+        const mousePos = createVector(mouseX, mouseY).sub(createVector(width / 2, height / 2)).div(this.aspectScale).div(this.scale).add(this.pos);
 
         window.mousex = mousePos.x;
         window.mousey = mousePos.y;
@@ -63,9 +66,12 @@ export class Camera {
         const middlex = (abs.minx + abs.maxx) / 2;
         const middley = (abs.miny + abs.maxy) / 2;
 
-        this.minx = Math.min(abs.minx + PADDING_X, middlex);
-        this.miny = Math.min(abs.miny + PADDING_Y, middley);
-        this.maxx = Math.max(abs.maxx - PADDING_X, middlex);
-        this.maxy = Math.max(abs.maxy - PADDING_Y, middley);
+        this.minx = Math.min(abs.minx + MARGIN_X, middlex);
+        this.miny = Math.min(abs.miny + MARGIN_Y, middley);
+        this.maxx = Math.max(abs.maxx - MARGIN_X, middlex);
+        this.maxy = Math.max(abs.maxy - MARGIN_Y, middley);
+
+        const targetDim = Math.min(width, height) / ASPECT_HEIGHT;
+        this.aspectScale = targetDim;
     }
 }
