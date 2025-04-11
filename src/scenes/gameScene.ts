@@ -16,7 +16,7 @@ export class GameScene extends Scene {
     hole: Hole;
 
     par: number;
-    text: string;
+    guideText: string;
 
     bounds: PointArr;
     obstacles: Obstacle[];
@@ -33,7 +33,7 @@ export class GameScene extends Scene {
         this.hole = new Hole(...level.hole);
 
         this.par = level.par;
-        this.text = level.text;
+        this.guideText = level.guideText;
 
         const bounds = level.bounds;
         this.bounds = bounds;
@@ -100,8 +100,13 @@ export class GameScene extends Scene {
         // HUD
         push();
         fill(255);
-        stroke(1);
+        stroke(0);
         strokeWeight(3);
+
+        textAlign(CENTER);
+        textSize(30);
+        text(this.guideText, width / 2, 50);
+
         textAlign(LEFT);
         textSize(20);
         text(`Stroke: ${this.gameManager.strokes}\nPar: ${this.par}`, 10, height - 60);
@@ -138,9 +143,9 @@ export class GameScene extends Scene {
     nextLevel() {
         if (levelExists(this.levelIdx + 1)) {
             this.sceneManager.setScene(
-                new GameScene(this.gameManager, this.sceneManager, this.levelIdx + 1)
+                new GameScene(this.gameManager, this.sceneManager, this.levelIdx + 1),
+                () => this.gameManager.nextLevel()
             );
-            this.gameManager.nextLevel();
         } else {
             console.log('finished')
         }

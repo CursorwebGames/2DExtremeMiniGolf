@@ -4,7 +4,7 @@
         "hole": [297, 310],
         "obstacles": [],
         "bounds": [[0, 0], [200, 0], [400, 100], [400, 400], [200, 400], [200, 200], [0, 200]],
-        "text": "Pull back and release",
+        "guideText": "Pull back and release",
         "par": 2
     },
     {
@@ -15,7 +15,7 @@
             ["Teleporter", [882, 172, 340, 181]]
         ],
         "bounds": [[0, 0], [1200, 0], [1200, 300], [0, 300]],
-        "text": "Teleporters teleport you places",
+        "guideText": "Teleporters teleport you places",
         "par": 2
     },
     {
@@ -23,7 +23,7 @@
         "hole": [509, 354],
         "obstacles": [["Ice", [0, 225, 699, 56]], ["Slope", [378, 22, 104, 184, [0, 1]]]],
         "bounds": [[0, 0], [700, 0], [700, 400], [0, 400]],
-        "text": "Ice breaks when you touch it",
+        "guideText": "Ice breaks when you touch it",
         "par": 2
     },
     {
@@ -59,7 +59,7 @@
         "hole": [505, 269],
         "obstacles": [["Water", [[[546, 250], [543, 741], [56, 740]]]]],
         "bounds": [[550, 200], [550, 750], [0, 750]],
-        "text": "Don't touch the water!",
+        "guideText": "Don't touch the water!",
         "par": 2
     },
     {

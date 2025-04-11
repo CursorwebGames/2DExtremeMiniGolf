@@ -22,9 +22,13 @@ export class SceneManager {
         this.transitionManager.draw();
     }
 
-    setScene(scene: Scene) {
+    /**
+     * @param callback Extra logic (such as resetting stroke count)
+     */
+    setScene(scene: Scene, callback = () => { }) {
         this.transitionManager.transition(() => {
             this.scene = scene;
+            callback();
         });
     }
 }

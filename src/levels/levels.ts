@@ -32,7 +32,7 @@ export interface LevelData {
     hole: [number, number],
     obstacles: StaticObjData[],
     bounds: PointArr,
-    text: string,
+    guideText: string,
     par: number
 }
 
