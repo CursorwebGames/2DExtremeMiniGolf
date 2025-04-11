@@ -4,5 +4,5 @@ export const MAX_SPEED = 10;
 export const VISUAL_SPEED = 30;
 
 /** Scale up so ASPECT_WIDTH takes up as much width as possible */
-export const ASPECT_WIDTH = 500;
-export const ASPECT_HEIGHT = 500;
+export const ASPECT_WIDTH = 725;
+export const ASPECT_HEIGHT = 725;

@@ -1,5 +1,5 @@
 import { Camera } from "../camera";
-import { ASPECT_HEIGHT, ASPECT_WIDTH, CCD_STEPS, MAX_SPEED, VISUAL_SPEED } from "../config";
+import { CCD_STEPS, MAX_SPEED, VISUAL_SPEED } from "../config";
 import { GameManager } from "../gameManager";
 import { getLevel, levelExists, levelToObject } from "../levels/levels";
 import { Hole } from "../objects/hole";
@@ -23,7 +23,7 @@ export class GameScene extends Scene {
 
     levelIdx: number;
 
-    constructor(gameManager: GameManager, sceneManager: SceneManager, levelIdx = 3) {
+    constructor(gameManager: GameManager, sceneManager: SceneManager, levelIdx = 0) {
         super(gameManager, sceneManager);
 
         this.levelIdx = levelIdx;
@@ -76,38 +76,9 @@ export class GameScene extends Scene {
         this.hole.draw();
         this.ball.draw();
 
-        // DEBUGGING THING
-        let abs: Camera | Camera['absBounds'] = this.camera;
-        push();
-        noFill();
-        strokeWeight(1);
-        stroke('red');
-        rect(abs.minx, abs.miny, abs.maxx - abs.minx, abs.maxy - abs.miny);
-
-        abs = this.camera.absBounds;
-        stroke('black');
-        rect(abs.minx, abs.miny, abs.maxx - abs.minx, abs.maxy - abs.miny);
-
-        stroke('blue');
-        strokeWeight(5);
-        point(this.camera.pos.x, this.camera.pos.y);
-
-        stroke('green');
-        point(mousex, mousey);
-        pop();
-
         this.checkCollisions();
 
         pop();
-
-        push(); {
-            translate(width / 2, height / 2);
-            scale(this.camera.aspectScale);
-            stroke('white');
-            let w = ASPECT_WIDTH;
-            let h = ASPECT_HEIGHT;
-            rect(- w / 2 + 1, - h / 2 + 1, w - 2, h - 2);
-        } pop();
 
         // HUD
         push();
@@ -115,6 +86,7 @@ export class GameScene extends Scene {
         stroke(0);
         strokeWeight(3);
 
+        // TODO: fix text sizes
         textAlign(CENTER);
         textSize(30);
         text(this.guideText, width / 2, 50);
