@@ -140,6 +140,7 @@ export class GameScene extends Scene {
             this.sceneManager.setScene(
                 new GameScene(this.gameManager, this.sceneManager, this.levelIdx + 1)
             );
+            this.gameManager.nextLevel();
         } else {
             console.log('finished')
         }

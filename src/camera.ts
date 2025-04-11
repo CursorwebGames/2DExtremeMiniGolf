@@ -1,5 +1,8 @@
 import { Ball } from "./objects/ball";
 
+const PADDING_X = 240;
+const PADDING_Y = 190;
+
 export class Camera {
     pos: p5.Vector;
     ball: Ball;
@@ -60,9 +63,9 @@ export class Camera {
         const middlex = (abs.minx + abs.maxx) / 2;
         const middley = (abs.miny + abs.maxy) / 2;
 
-        this.minx = Math.min(abs.minx - width / 4 + width / 2, middlex);
-        this.miny = Math.min(abs.miny - height / 4 + height / 2, middley);
-        this.maxx = Math.max(abs.maxx + width / 4 - width / 2, middlex);
-        this.maxy = Math.max(abs.maxy + height / 4 - height / 2, middley);
+        this.minx = Math.min(abs.minx + PADDING_X, middlex);
+        this.miny = Math.min(abs.miny + PADDING_Y, middley);
+        this.maxx = Math.max(abs.maxx - PADDING_X, middlex);
+        this.maxy = Math.max(abs.maxy - PADDING_Y, middley);
     }
 }
