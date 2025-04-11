@@ -50,7 +50,7 @@ export class Ball {
     }
 
     private checkBounds(bounds: PointArr) {
-        // let { a } = false; doesn't throw error
+        // note: let { a } = false; doesn't throw error
         // look, if javascript supports a match feature, ofc i'd use that. But it doesn't so I have to do this.
         let { projPoint, edge } = circPolyCol(this.pos, this.r, bounds) as CircPolyColResult;
         if (projPoint) {

@@ -12,7 +12,7 @@ export class SceneManager {
     transitionManager: Transition;
 
     constructor(gameManager: GameManager) {
-        this.scene = new GameScene(gameManager, this, 5);
+        this.scene = new GameScene(gameManager, this);
         this.gameManager = gameManager;
         this.transitionManager = new Transition();
     }

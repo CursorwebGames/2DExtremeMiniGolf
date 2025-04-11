@@ -1,5 +1,5 @@
 import { Camera } from "../camera";
-import { CCD_STEPS } from "../config";
+import { CCD_STEPS, MAX_SPEED, VISUAL_SPEED } from "../config";
 import { GameManager } from "../gameManager";
 import { getLevel, levelExists, levelToObject } from "../levels/levels";
 import { Hole } from "../objects/hole";
@@ -15,12 +15,15 @@ export class GameScene extends Scene {
     ball: MainBall;
     hole: Hole;
 
+    par: number;
+    text: string;
+
     bounds: PointArr;
     obstacles: Obstacle[];
 
     levelIdx: number;
 
-    constructor(gameManager: GameManager, sceneManager: SceneManager, levelIdx: number) {
+    constructor(gameManager: GameManager, sceneManager: SceneManager, levelIdx = 0) {
         super(gameManager, sceneManager);
 
         this.levelIdx = levelIdx;
@@ -28,6 +31,9 @@ export class GameScene extends Scene {
 
         this.ball = new MainBall(...level.ball);
         this.hole = new Hole(...level.hole);
+
+        this.par = level.par;
+        this.text = level.text;
 
         const bounds = level.bounds;
         this.bounds = bounds;
@@ -49,7 +55,7 @@ export class GameScene extends Scene {
         background(123, 255, 123);
 
         push();
-        this.camera.draw();
+        this.drawCamera();
 
         // BORDERS
         push();
@@ -80,8 +86,22 @@ export class GameScene extends Scene {
         strokeWeight(3);
         textAlign(LEFT);
         textSize(20);
-        text(`Stroke: ${this.gameManager.strokes}`, 10, height - 60);
+        text(`Stroke: ${this.gameManager.strokes}\nPar: ${this.par}`, 10, height - 60);
         pop();
+    }
+
+    drawCamera() {
+        this.camera.draw();
+
+        if (this.ball.canShoot() && this.ball.dragStart) {
+            console.log(MAX_SPEED * VISUAL_SPEED - this.ball.getDir().mag());
+
+            // 1 / (1 + x), x = [0, 1], [0, 1] ~ [0, MAX_SPEED * VISUAL_SPEED]
+            const cameraScale = MAX_SPEED * VISUAL_SPEED / (this.ball.getDir().mag() + MAX_SPEED * VISUAL_SPEED);
+            this.camera.scaleTo(cameraScale);
+        } else {
+            this.camera.scaleTo(1);
+        }
     }
 
     checkCollisions() {
@@ -119,18 +139,18 @@ export class GameScene extends Scene {
     }
 
     mousePressed(): void {
+        if (!this.ball.canShoot()) return;
+
         this.ball.dragStart = createVector(mouseX, mouseY);
     }
 
     mouseReleased(): void {
         if (!this.ball.canShoot()) return;
 
-        const vec = this.ball.getDir().div(30);
-        this.ball.dragStart = null;
-
-        if (this.ball.vel.mag() != 0) return;
+        const vec = this.ball.getDir().div(VISUAL_SPEED);
         this.ball.vel = vec;
 
+        this.ball.dragStart = null;
         this.gameManager.addStroke();
     }
 

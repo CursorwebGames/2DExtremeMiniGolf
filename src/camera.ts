@@ -27,6 +27,7 @@ export class Camera {
 
         this.absBounds = { minx, miny, maxx, maxy };
 
+        // TODO: make aspect ratios constant
         this.scale = 1;
     }
 
@@ -52,6 +53,10 @@ export class Camera {
 
         window.mousex = mousePos.x;
         window.mousey = mousePos.y;
+    }
+
+    scaleTo(size: number) {
+        this.scale = lerp(this.scale, size, 0.1);
     }
 
     windowResized() {
