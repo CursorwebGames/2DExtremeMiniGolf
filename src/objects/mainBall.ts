@@ -12,17 +12,18 @@ export class MainBall extends Ball {
     }
 
     draw() {
-        fill(255);
-        circle(this.pos.x, this.pos.y, this.r * 2);
         if (this.dragStart && this.canShoot()) {
             this.showDrag();
         }
+
+        super.draw();
     }
 
     showDrag() {
         let dir = this.getDir();
         if (dir.mag() < MIN_INPUT_SPEED) return;
 
+        fill(0, 0.25 * 255);
         for (let i = 1; i < 6; i++) {
             const vec = createVector().lerp(dir, i / 5);
             circle(vec.x + this.pos.x, vec.y + this.pos.y, 5);

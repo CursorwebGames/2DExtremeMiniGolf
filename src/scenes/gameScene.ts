@@ -23,7 +23,7 @@ export class GameScene extends Scene {
 
     levelIdx: number;
 
-    constructor(gameManager: GameManager, sceneManager: SceneManager, levelIdx = 0) {
+    constructor(gameManager: GameManager, sceneManager: SceneManager, levelIdx = 6) {
         super(gameManager, sceneManager);
 
         this.levelIdx = levelIdx;
@@ -56,18 +56,7 @@ export class GameScene extends Scene {
 
         push();
         this.drawCamera();
-
-        // BORDERS
-        push();
-        fill(94, 230, 83);
-        strokeWeight(3);
-        stroke(255);
-        beginShape();
-        for (const [x, y] of this.bounds) {
-            vertex(x, y);
-        }
-        endShape(CLOSE);
-        pop();
+        this.drawBorders();
 
         for (const staticObj of this.obstacles) {
             staticObj.draw();
@@ -94,6 +83,29 @@ export class GameScene extends Scene {
         textAlign(LEFT);
         textSize(20);
         text(`Stroke: ${this.gameManager.strokes}\nPar: ${this.par}`, 10, height - 60);
+        pop();
+    }
+
+    drawBorders() {
+        push();
+        // the shadow and grass
+        fill(94, 230, 83);
+        strokeWeight(3);
+        stroke(0, 0.25 * 255);
+        beginShape();
+        for (const [x, y] of this.bounds) {
+            vertex(x + 1.5, y + 1.5);
+        }
+        endShape(CLOSE);
+
+        // the white border
+        noFill();
+        stroke(255);
+        beginShape();
+        for (const [x, y] of this.bounds) {
+            vertex(x, y);
+        }
+        endShape(CLOSE);
         pop();
     }
 

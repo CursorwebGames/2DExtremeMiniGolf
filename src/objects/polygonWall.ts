@@ -10,12 +10,21 @@ export class PolygonWall implements Obstacle<MaybeCircPolyColResult> {
     }
 
     draw() {
-        fill(217, 238, 255);
+        fill(0, 0.25 * 255);
+        beginShape();
+        for (const [x, y] of this.points) {
+            vertex(x + 2, y + 2);
+        }
+        endShape();
+
+        push();
+        fill(255);
         beginShape();
         for (const [x, y] of this.points) {
             vertex(x, y);
         }
         endShape();
+        pop();
     }
 
     collide(obj: Ball, { projPoint, edge }: { projPoint: p5.Vector, edge: p5.Vector }) {

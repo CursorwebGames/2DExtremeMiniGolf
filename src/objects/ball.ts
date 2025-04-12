@@ -19,8 +19,15 @@ export class Ball {
     }
 
     draw() {
-        fill(100);
+        fill(0, 0.25 * 255);
+        circle(this.pos.x + 1.5, this.pos.y + 1.5, this.r * 2);
+
+        push();
+        fill(255);
+        strokeWeight(1);
+        stroke(0, 0.25 * 255);
         circle(this.pos.x, this.pos.y, this.r * 2);
+        pop();
     }
 
     /**

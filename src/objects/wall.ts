@@ -16,7 +16,7 @@ export class Wall implements Obstacle {
     }
 
     draw() {
-        fill(217, 238, 255);
+        fill(255);
         rect(this.x, this.y, this.w, this.h);
     }
 
