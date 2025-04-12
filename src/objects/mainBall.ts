@@ -1,5 +1,5 @@
 import { Ball } from "./ball";
-import { MAX_SPEED, VISUAL_SPEED } from "../config";
+import { MAX_SPEED, MIN_INPUT_SPEED, VISUAL_SPEED } from "../config";
 
 export class MainBall extends Ball {
     /** If ball is in hole, you are at rest, but can't make any more moves */
@@ -21,6 +21,7 @@ export class MainBall extends Ball {
 
     showDrag() {
         let dir = this.getDir();
+        if (dir.mag() < MIN_INPUT_SPEED) return;
 
         for (let i = 1; i < 6; i++) {
             const vec = createVector().lerp(dir, i / 5);
@@ -28,6 +29,7 @@ export class MainBall extends Ball {
         }
     }
 
+    /** Gets the user's input, without accounting for scaling */
     getDir() {
         // opposite direction
         return p5.Vector.sub(this.dragStart!, createVector(mouseX, mouseY)).mult(2).limit(MAX_SPEED * VISUAL_SPEED);

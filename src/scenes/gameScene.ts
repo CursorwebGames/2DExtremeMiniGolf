@@ -1,5 +1,5 @@
 import { Camera } from "../camera";
-import { CCD_STEPS, MAX_SPEED, VISUAL_SPEED } from "../config";
+import { CCD_STEPS, MAX_SPEED, MIN_INPUT_SPEED, VISUAL_SPEED } from "../config";
 import { GameManager } from "../gameManager";
 import { getLevel, levelExists, levelToObject } from "../levels/levels";
 import { Hole } from "../objects/hole";
@@ -52,7 +52,7 @@ export class GameScene extends Scene {
     }
 
     draw() {
-        background(123, 255, 123);
+        background(161, 207, 161);
 
         push();
         this.drawCamera();
@@ -154,13 +154,15 @@ export class GameScene extends Scene {
         // either ball in movement, or player hasn't made an input yet
         if (!this.ball.canShoot() || !this.ball.dragStart) return;
 
-        const vec = this.ball.getDir().div(VISUAL_SPEED);
-        // TODO: make sure this magnitude is greater than something
-        if (vec.mag() == 0) return;
+        // actual input (without accounting for scaling)
+        const dir = this.ball.getDir();
+        this.ball.dragStart = null;
+
+        if (dir.mag() < MIN_INPUT_SPEED) return;
+        const vec = dir.div(VISUAL_SPEED);
 
         this.ball.vel = vec;
 
-        this.ball.dragStart = null;
         this.gameManager.addStroke();
     }
 

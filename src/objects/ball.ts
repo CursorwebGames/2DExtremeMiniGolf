@@ -1,4 +1,4 @@
-import { MAX_SPEED } from "../config";
+import { MAX_SPEED, MIN_SPEED } from "../config";
 import { circPolyCol, CircPolyColResult } from "../collisions";
 
 const friction = 0.016;
@@ -43,7 +43,8 @@ export class Ball {
         this.vel.mult(1 - friction / ccd);
         this.vel.limit(MAX_SPEED);
 
-        if (this.vel.mag() > 0 && this.vel.mag() < 0.03) {
+        // don't run this code if the ball is at rest
+        if (this.vel.mag() > 0 && this.vel.mag() < MIN_SPEED) {
             this.prevPos = this.pos.copy();
             this.vel.setMag(0);
         }
