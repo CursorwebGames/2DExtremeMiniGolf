@@ -27,7 +27,6 @@ export class Camera {
         this.absBounds = { minx, miny, maxx, maxy };
         this.windowResized();
 
-        // TODO: make aspect ratios constant
         this.scale = 1;
     }
 
