@@ -69,7 +69,7 @@ export class GameScene extends Scene {
 
         push();
         this.drawCamera();
-        this.drawBorders();
+        this.drawGround();
 
         for (const staticObj of this.obstacles) {
             staticObj.draw();
@@ -78,8 +78,9 @@ export class GameScene extends Scene {
         this.hole.draw();
         this.ball.draw();
 
-        this.checkCollisions();
+        this.drawBorders();
 
+        this.checkCollisions();
         pop();
 
         // HUD
@@ -99,7 +100,7 @@ export class GameScene extends Scene {
         pop();
     }
 
-    drawBorders() {
+    drawGround() {
         push();
         // the shadow and grass
         fill(94, 230, 83);
@@ -110,9 +111,14 @@ export class GameScene extends Scene {
             vertex(x + 1.5, y + 1.5);
         }
         endShape(CLOSE);
+        pop();
+    }
 
-        // the white border
+    /** Draw the white border (it should cover shadows, and so "connect" walls) */
+    drawBorders() {
+        push();
         noFill();
+        strokeWeight(3);
         stroke(255);
         beginShape();
         for (const [x, y] of this.bounds) {

@@ -13,7 +13,7 @@ export class PolygonWall implements Obstacle<MaybeCircPolyColResult> {
         fill(0, 0.25 * 255);
         beginShape();
         for (const [x, y] of this.points) {
-            vertex(x + 2, y + 2);
+            vertex(x + 1.5, y + 1.5);
         }
         endShape();
 
