@@ -8,6 +8,19 @@ import { Obstacle } from "../objects/obstacle";
 import { Scene } from "./scene";
 import { SceneManager } from "./sceneManager";
 
+/**
+{
+    "ball": [34, 16],
+    "hole": [350, 148],
+    "obstacles": [
+        ["Bouncer", [107, 38]],
+        ["Bouncer", [45, 86]]
+    ],
+    "bounds": [[0, 0], [300, 0], [300, 200], [0, 200]],
+    "par": 2
+},
+ */
+
 // TODO: MAKE A LEVEL WITH MULTIPLE BALLS OR JUST GIVE UP WITH THAT IDEA
 export class GameScene extends Scene {
     camera: Camera;
@@ -23,7 +36,7 @@ export class GameScene extends Scene {
 
     levelIdx: number;
 
-    constructor(gameManager: GameManager, sceneManager: SceneManager, levelIdx = 6) {
+    constructor(gameManager: GameManager, sceneManager: SceneManager, levelIdx = 3) {
         super(gameManager, sceneManager);
 
         this.levelIdx = levelIdx;
