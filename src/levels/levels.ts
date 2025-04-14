@@ -42,7 +42,9 @@ export function levelExists(idx: number) {
     return idx < levels.length;
 }
 
+/** Returns null if `idx` is `-1` */
 export function getLevel(idx: number) {
+    if (idx == -1) return null;
     return levels[idx];
 }
 

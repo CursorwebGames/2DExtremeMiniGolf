@@ -1,7 +1,7 @@
 import { Camera } from "../camera";
 import { CCD_STEPS, MAX_SPEED, MIN_INPUT_SPEED, VISUAL_SPEED } from "../config";
 import { GameManager } from "../gameManager";
-import { getLevel, levelExists, levelToObject } from "../levels/levels";
+import { getLevel, LevelData, levelExists, levelToObject } from "../levels/levels";
 import { Hole } from "../objects/hole";
 import { MainBall } from "../objects/mainBall";
 import { Obstacle } from "../objects/obstacle";
@@ -23,16 +23,16 @@ import { SceneManager } from "./sceneManager";
 
 // TODO: MAKE A LEVEL WITH MULTIPLE BALLS OR JUST GIVE UP WITH THAT IDEA
 export class GameScene extends Scene {
-    camera: Camera;
+    camera!: Camera;
 
-    ball: MainBall;
-    hole: Hole;
+    ball!: MainBall;
+    hole!: Hole;
 
-    par: number;
-    guideText: string;
+    par!: number;
+    guideText!: string;
 
-    bounds: PointArr;
-    obstacles: Obstacle[];
+    bounds!: PointArr;
+    obstacles!: Obstacle[];
 
     levelIdx: number;
 
@@ -40,7 +40,12 @@ export class GameScene extends Scene {
         super(gameManager, sceneManager);
 
         this.levelIdx = levelIdx;
-        const level = getLevel(levelIdx);
+        this.loadLevel(getLevel(levelIdx));
+    }
+
+    /** This way the editor is able to inject custom code */
+    loadLevel(level: LevelData | null) {
+        if (level == null) return;
 
         this.ball = new MainBall(...level.ball);
         this.hole = new Hole(...level.hole);
