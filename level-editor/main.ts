@@ -6,14 +6,17 @@
  * No gamemanager because this doesn't need to save game states ... it's a small subset of the game really
  */
 import p5 from "p5";
+import { EditorManager } from "./scenes/editorManager";
 window.p5 = p5;
+
+let editorManager: EditorManager;
 
 window.setup = () => {
     noStroke();
     const canvas = createCanvas(0.8 * windowWidth, windowHeight).parent(document.querySelector(".canvas-content") as HTMLDivElement);
-    canvas.mousePressed(mousePressed);
-    canvas.mouseClicked(mouseClicked);
-    canvas.mouseWheel(mouseWheel);
+    // canvas.mousePressed(mousePressed);
+    // canvas.mouseClicked(mouseClicked);
+    // canvas.mouseWheel(mouseWheel);
 
     const canvasElt = canvas.elt as HTMLCanvasElement;
     canvasElt.addEventListener("selectstart", e => e.preventDefault());
@@ -24,4 +27,22 @@ window.setup = () => {
             e.preventDefault();
         }
     });
+
+    editorManager = new EditorManager();
 };
+
+window.draw = () => {
+    editorManager.draw();
+};
+
+window.mousePressed = () => {
+    editorManager.scene.mousePressed();
+};
+
+window.mouseReleased = () => {
+    editorManager.scene.mouseReleased();
+}
+
+window.mouseDragged = () => {
+    editorManager.scene.mouseDragged();
+}

@@ -17,5 +17,7 @@ export abstract class Scene {
 
     mousePressed() { }
     mouseReleased() { }
+    mouseDragged() { }
+
     windowResized() { }
 }

@@ -1,4 +1,4 @@
-import { snap } from "./ui/snapKnot";
+import { snap } from "./-ui/snapKnot";
 
 export class EditorCamera {
     constructor() {

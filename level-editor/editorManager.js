@@ -1,11 +1,11 @@
-import { SingleUI } from "./ui/singleUI";
+import { SingleUI } from "./-ui/singleUI";
 
 import { Hole, MainBall } from "../src/objects";
 import { GameManager } from "../src/gameManager";
 import { Camera } from "../src/camera";
 import { Transition } from "../src/transition";
 import { EditorCamera } from "./editorCamera";
-import { LevelBoundsUI } from "./ui/levelBoundsUI";
+import { LevelBoundsUI } from "./-ui/levelBoundsUI";
 
 
 // todo remove unnecessary
