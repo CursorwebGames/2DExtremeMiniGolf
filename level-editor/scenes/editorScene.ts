@@ -1,9 +1,11 @@
 import { GameManager } from "../../src/gameManager";
 import { Hole } from "../../src/objects/hole";
 import { MainBall } from "../../src/objects/mainBall";
+import { Wall } from "../../src/objects/wall";
 import { Scene } from "../../src/scenes/scene";
 import { SceneManager } from "../../src/scenes/sceneManager";
 import { Knot } from "../ui/knot";
+import { RectUI } from "../ui/rectUI";
 import { SingleUI } from "../ui/singleUI";
 import { UIComponent } from "../ui/UIComponent";
 
@@ -35,7 +37,9 @@ export class EditorScene extends Scene {
         this.ball = new SingleUI(new MainBall(100, 100), this);
         this.hole = new SingleUI(new Hole(100, 100), this);
 
-        this.staticObjs = [];
+        this.staticObjs = [
+            new RectUI(new Wall(50, 50, 100, 100), this),
+        ];
     }
 
     draw() {
@@ -43,6 +47,10 @@ export class EditorScene extends Scene {
 
         this.hole.draw();
         this.ball.draw();
+
+        for (const obj of this.staticObjs) {
+            obj.draw();
+        }
         // this.levelBounds.draw();
     }
 

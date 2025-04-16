@@ -1,6 +1,6 @@
 import { Knot } from "./knot";
 
-export interface UIComponent {
-    draw(): void;
-    update(knot: Knot): void;
+export abstract class UIComponent {
+    abstract draw(): void;
+    abstract update(knot: Knot): void;
 }
