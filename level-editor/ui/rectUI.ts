@@ -7,12 +7,12 @@ import { UIComponent } from "./UIComponent";
 
 type RectUIObj = Wall | Ice | Slope;
 
-// TODO: add center knot
+// TODO: turn everything positive at the end
 export class RectUI implements UIComponent {
     obj: RectUIObj;
 
     posKnot: Knot;
-    /** Determines the dimension */
+    /** Determines the width and height */
     dimKnot: Knot;
     centerKnot: Knot;
 

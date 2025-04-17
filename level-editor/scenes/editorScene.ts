@@ -34,8 +34,8 @@ export class EditorScene extends Scene {
         // };
         this.knots = [];
 
-        this.ball = new SingleUI(new MainBall(100, 100), this);
         this.hole = new SingleUI(new Hole(100, 100), this);
+        this.ball = new SingleUI(new MainBall(100, 100), this);
 
         this.staticObjs = [
             new RectUI(new Wall(50, 50, 100, 100), this),
@@ -63,7 +63,8 @@ export class EditorScene extends Scene {
     }
 
     mousePressed() {
-        for (const knot of this.knots) {
+        for (let i = this.knots.length - 1; i >= 0; i--) {
+            const knot = this.knots[i];
             if (knot.mouseOver()) {
                 knot.startDrag();
                 return;
