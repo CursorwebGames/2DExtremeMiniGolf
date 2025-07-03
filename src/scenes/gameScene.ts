@@ -137,7 +137,7 @@ export class GameScene extends Scene {
         this.camera.draw();
 
         if (this.ball.canShoot() && this.ball.dragStart) {
-            // 1 / (1 + x), x = [0, 1], [0, 1] ~ [0, MAX_SPEED * VISUAL_SPEED]
+            // 1 / (1 + x); x = [0, 1]; [0, 1] ~ [0, MAX_SPEED * VISUAL_SPEED]
             const cameraScale = MAX_SPEED * VISUAL_SPEED / (this.ball.getDir().mag() + MAX_SPEED * VISUAL_SPEED);
             this.camera.scaleTo(cameraScale);
         } else {

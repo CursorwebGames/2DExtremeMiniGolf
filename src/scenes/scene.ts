@@ -18,6 +18,7 @@ export abstract class Scene {
     mousePressed() { }
     mouseReleased() { }
     mouseDragged() { }
+    mouseWheel(_e: WheelEvent) { }
 
     windowResized() { }
 }

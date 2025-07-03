@@ -4,6 +4,7 @@ import { MainBall } from "../../src/objects/mainBall";
 import { Wall } from "../../src/objects/wall";
 import { Scene } from "../../src/scenes/scene";
 import { SceneManager } from "../../src/scenes/sceneManager";
+import { EditorCamera } from "../editorCamera";
 import { Knot } from "../ui/knot";
 import { RectUI } from "../ui/rectUI";
 import { SingleUI } from "../ui/singleUI";
@@ -16,8 +17,12 @@ export class EditorScene extends Scene {
     ball: SingleUI;
     hole: SingleUI;
     staticObjs: UIComponent[];
+    currEditPolygon: null;
+
+    camera: EditorCamera;
 
     constructor() {
+        /* super hack: we don't have game managers or scene managers */
         super(null as unknown as GameManager, null as unknown as SceneManager);
         // this.level = {
         //     ball: [100, 100],
@@ -40,10 +45,16 @@ export class EditorScene extends Scene {
         this.staticObjs = [
             new RectUI(new Wall(50, 50, 100, 100), this),
         ];
+
+        this.currEditPolygon = null;
+        this.camera = new EditorCamera();
     }
 
     draw() {
+        this.camera.draw();
         background(161, 207, 161);
+        // this.levelBounds.draw();
+        this.camera.drawGrid();
 
         this.hole.draw();
         this.ball.draw();
@@ -51,7 +62,6 @@ export class EditorScene extends Scene {
         for (const obj of this.staticObjs) {
             obj.draw();
         }
-        // this.levelBounds.draw();
     }
 
     /** Add knots to the `SceneManager`, as well as register object owner */
@@ -63,6 +73,11 @@ export class EditorScene extends Scene {
     }
 
     mousePressed() {
+        if (mouseButton == CENTER) {
+            this.camera.beginMove();
+            return;
+        }
+
         for (let i = this.knots.length - 1; i >= 0; i--) {
             const knot = this.knots[i];
             if (knot.mouseOver()) {
@@ -84,5 +99,11 @@ export class EditorScene extends Scene {
         for (const knot of this.knots) {
             knot.endDrag();
         }
+
+        this.camera.endMove();
+    }
+
+    mouseWheel(e: WheelEvent): void {
+        this.camera.changeScale(e.deltaY);
     }
 }

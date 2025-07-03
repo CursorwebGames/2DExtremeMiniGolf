@@ -1,3 +1,8 @@
+/**
+ * Fade out to white, then transition to new scene, and finally fade back in to show the new scene.
+ * 
+ * @todo notice how this can be more of an abstract class, and we can create a true Transition
+ */
 export class Transition {
     private progress: number;
 

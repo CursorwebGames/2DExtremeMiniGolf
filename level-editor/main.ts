@@ -41,8 +41,12 @@ window.mousePressed = () => {
 
 window.mouseReleased = () => {
     editorManager.scene.mouseReleased();
-}
+};
 
 window.mouseDragged = () => {
     editorManager.scene.mouseDragged();
-}
+};
+
+window.mouseWheel = (e?: object) => {
+    editorManager.scene.mouseWheel(e as WheelEvent);
+};

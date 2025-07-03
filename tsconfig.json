@@ -23,7 +23,8 @@
         "noUncheckedSideEffectImports": true
     },
     "files": [
-        "./src/types.d.ts"
+        "./src/types.d.ts",
+        "./level-editor/types.d.ts"
     ],
     "include": [
         "src",

@@ -5,6 +5,7 @@ import { Transition } from "./transitionManager";
 
 /**
  * Manages levels, scene transitions
+ * @todo In the future, scene manager will also manage the menu
  */
 export class SceneManager {
     scene: Scene;

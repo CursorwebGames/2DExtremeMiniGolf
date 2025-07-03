@@ -32,13 +32,13 @@ export class Knot {
     }
 
     startDrag() {
-        this.dragStart = createVector(mouseX, mouseY);
+        this.dragStart = window.mousePos;
         this.startPos = this.pos.copy();
     }
 
     /** Handle knot update position, etc. */
     drag() {
-        const deltaPos = createVector(mouseX, mouseY).sub(this.dragStart!);
+        const deltaPos = p5.Vector.sub(window.mousePos, this.dragStart!);
         const pos = p5.Vector.add(this.startPos!, deltaPos);
         this.pos = pos;
         this.parent.update(this);
@@ -52,6 +52,6 @@ export class Knot {
 
     mouseOver() {
         // Twice the radius to make things easier to select
-        return this.pos.dist(createVector(mouseX, mouseY)) < this.r * 2;
+        return this.pos.dist(window.mousePos) < this.r * 2;
     }
 }

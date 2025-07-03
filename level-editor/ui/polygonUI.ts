@@ -3,11 +3,12 @@ import { Sand } from "../../src/objects/sand";
 import { Water } from "../../src/objects/water";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
+import { PolygonComponent } from "./PolygonComponent";
 import { UIComponent } from "./UIComponent";
 
 type PolygonUIObj = PolygonWall | Water | Sand;
 
-export class PolygonUI implements UIComponent {
+export class PolygonUI implements UIComponent, PolygonComponent {
     obj: PolygonUIObj;
 
     constructor(obj: PolygonUIObj, editor: EditorScene) {
