@@ -1,14 +1,19 @@
 import { GameManager } from "../../src/gameManager";
 import { Hole } from "../../src/objects/hole";
 import { MainBall } from "../../src/objects/mainBall";
+import { PolygonWall } from "../../src/objects/polygonWall";
 import { Wall } from "../../src/objects/wall";
 import { Scene } from "../../src/scenes/scene";
 import { SceneManager } from "../../src/scenes/sceneManager";
+
 import { EditorCamera } from "../editorCamera";
+
 import { Knot } from "../ui/knot";
+import { PolygonUI } from "../ui/polygonUI";
 import { RectUI } from "../ui/rectUI";
 import { SingleUI } from "../ui/singleUI";
 import { UIComponent } from "../ui/UIComponent";
+
 
 export class EditorScene extends Scene {
     // level: LevelData;
@@ -43,7 +48,12 @@ export class EditorScene extends Scene {
         this.ball = new SingleUI(new MainBall(100, 100), this);
 
         this.staticObjs = [
-            new RectUI(new Wall(50, 50, 100, 100), this),
+            // new RectUI(new Wall(50, 50, 100, 100), this),
+            new PolygonUI(new PolygonWall([
+                [30, 30],
+                [100, 70],
+                [80, 150]
+            ]), this)
         ];
 
         this.currEditPolygon = null;
@@ -64,7 +74,10 @@ export class EditorScene extends Scene {
         }
     }
 
-    /** Add knots to the `SceneManager`, as well as register object owner */
+    /**
+     * Add knots to the `SceneManager`, as well as register object owner
+     * The knot owner is needed so it can propagate updates as needed
+     */
     registerKnots(parent: UIComponent, ...knots: Knot[]) {
         for (const knot of knots) {
             knot.parent = parent;

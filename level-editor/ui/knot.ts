@@ -39,9 +39,10 @@ export class Knot {
     /** Handle knot update position, etc. */
     drag() {
         const deltaPos = p5.Vector.sub(window.mousePos, this.dragStart!);
-        const pos = p5.Vector.add(this.startPos!, deltaPos);
-        this.pos = pos;
-        this.parent.update(this);
+        const prevPos = this.pos.copy();
+        const newPos = p5.Vector.add(this.startPos!, deltaPos);
+        this.pos = newPos;
+        this.parent.update(this, p5.Vector.sub(newPos, prevPos));
     }
 
     /** Cleanup function for drag (reset variables) */

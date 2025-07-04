@@ -20,11 +20,12 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
-        "noUncheckedSideEffectImports": true
+        "noUncheckedSideEffectImports": true,
+        /* export = */
+        "allowSyntheticDefaultImports": true
     },
     "files": [
         "./src/types.d.ts",
-        "./level-editor/types.d.ts"
     ],
     "include": [
         "src",

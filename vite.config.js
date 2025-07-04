@@ -7,7 +7,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 main: resolve(__dirname, "index.html"),
-                useful: resolve(__dirname, "level-editor/index.html"),
+                levelEditor: resolve(__dirname, "level-editor/index.html"),
             },
             /*
             output: {
