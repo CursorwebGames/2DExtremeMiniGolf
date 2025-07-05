@@ -14,9 +14,9 @@ let editorManager: EditorManager;
 window.setup = () => {
     noStroke();
     const canvas = createCanvas(0.8 * windowWidth, windowHeight).parent(document.querySelector(".canvas-content") as HTMLDivElement);
-    // canvas.mousePressed(mousePressed);
-    // canvas.mouseClicked(mouseClicked);
-    // canvas.mouseWheel(mouseWheel);
+    canvas.mousePressed(mousePressed);
+    canvas.mouseReleased(mouseReleased);
+    canvas.mouseWheel(mouseWheel);
 
     const canvasElt = canvas.elt as HTMLCanvasElement;
     canvasElt.addEventListener("selectstart", e => e.preventDefault());
@@ -35,11 +35,11 @@ window.draw = () => {
     editorManager.draw();
 };
 
-window.mousePressed = () => {
+function mousePressed() {
     editorManager.scene.mousePressed();
 };
 
-window.mouseReleased = () => {
+function mouseReleased() {
     editorManager.scene.mouseReleased();
 };
 
@@ -48,7 +48,7 @@ window.mouseDragged = () => {
 };
 
 // hack cuz @types/p5 uses object | WheelEvent fsr
-window.mouseWheel = (e?: object) => {
+function mouseWheel(e?: object) {
     editorManager.scene.mouseWheel(e as WheelEvent);
 };
 
