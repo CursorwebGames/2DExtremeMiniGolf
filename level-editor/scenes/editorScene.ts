@@ -2,15 +2,14 @@ import { GameManager } from "../../src/gameManager";
 import { Hole } from "../../src/objects/hole";
 import { MainBall } from "../../src/objects/mainBall";
 import { PolygonWall } from "../../src/objects/polygonWall";
-import { Wall } from "../../src/objects/wall";
 import { Scene } from "../../src/scenes/scene";
 import { SceneManager } from "../../src/scenes/sceneManager";
 
 import { EditorCamera } from "../editorCamera";
 
 import { Knot } from "../ui/knot";
+import { PolygonComponent } from "../ui/PolygonComponent";
 import { PolygonUI } from "../ui/polygonUI";
-import { RectUI } from "../ui/rectUI";
 import { SingleUI } from "../ui/singleUI";
 import { UIComponent } from "../ui/UIComponent";
 
@@ -22,7 +21,7 @@ export class EditorScene extends Scene {
     ball: SingleUI;
     hole: SingleUI;
     staticObjs: UIComponent[];
-    currEditPolygon: null;
+    currEditPolygon: PolygonComponent | null;
 
     camera: EditorCamera;
 
@@ -50,19 +49,21 @@ export class EditorScene extends Scene {
         this.staticObjs = [
             // new RectUI(new Wall(50, 50, 100, 100), this),
             new PolygonUI(new PolygonWall([
-                [30, 30],
-                [100, 70],
-                [80, 150]
+                [130, 130],
+                [200, 170],
+                [180, 250]
             ]), this)
         ];
 
-        this.currEditPolygon = null;
+        this.currEditPolygon = this.staticObjs[0] as PolygonUI;
         this.camera = new EditorCamera();
     }
 
     draw() {
-        this.camera.draw();
         background(161, 207, 161);
+
+        push();
+        this.camera.draw();
         // this.levelBounds.draw();
         this.camera.drawGrid();
 
@@ -71,6 +72,14 @@ export class EditorScene extends Scene {
 
         for (const obj of this.staticObjs) {
             obj.draw();
+        }
+        pop();
+
+        if (this.currEditPolygon) {
+            fill(0);
+            textAlign(CENTER);
+            textSize(20);
+            text("Left click to add vertex, Right click to remove vertex\nEsc to finish", width / 2, 30);
         }
     }
 
@@ -85,18 +94,37 @@ export class EditorScene extends Scene {
         }
     }
 
+    deregisterKnot(knot: Knot) {
+        const i = this.knots.indexOf(knot);
+        this.knots.splice(i, 1);
+    }
+
     mousePressed() {
         if (mouseButton == CENTER) {
             this.camera.beginMove();
             return;
         }
 
-        for (let i = this.knots.length - 1; i >= 0; i--) {
-            const knot = this.knots[i];
-            if (knot.mouseOver()) {
-                knot.startDrag();
-                return;
+        if (mouseButton == LEFT) {
+            for (let i = this.knots.length - 1; i >= 0; i--) {
+                const knot = this.knots[i];
+                if (knot.mouseOver()) {
+                    knot.startDrag();
+                    return;
+                }
             }
+        }
+
+        if (!this.currEditPolygon) {
+            return;
+        }
+
+        let poly = this.currEditPolygon;
+
+        if (mouseButton == LEFT) {
+            poly.addPoint(window.mousePos.x, window.mousePos.y);
+        } else if (mouseButton == RIGHT) {
+            poly.removePoint();
         }
     }
 
@@ -104,6 +132,7 @@ export class EditorScene extends Scene {
         for (const knot of this.knots) {
             if (knot.dragStart) {
                 knot.drag();
+                break;
             }
         }
     }
@@ -118,5 +147,11 @@ export class EditorScene extends Scene {
 
     mouseWheel(e: WheelEvent): void {
         this.camera.changeScale(e.deltaY);
+    }
+
+    keyPressed() {
+        if (this.currEditPolygon && key == "Escape") {
+            this.currEditPolygon = null;
+        }
     }
 }

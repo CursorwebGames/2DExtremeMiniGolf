@@ -43,7 +43,6 @@ export class PolygonUI implements UIComponent, PolygonComponent {
     }
 
     update(knot: Knot, dpos: p5.Vector): void {
-        // return;
         if (knot == this.centerKnot) {
             for (const knot of this.vknots) {
                 knot.pos.add(dpos);
@@ -52,9 +51,17 @@ export class PolygonUI implements UIComponent, PolygonComponent {
             this.calcCenter();
         }
 
+        this.updatePolygon(false);
+    }
+
+    private updatePolygon(calcCenter: boolean) {
+        if (calcCenter) {
+            this.calcCenter();
+        }
+
         if (this.obj instanceof Water) {
             const cx = this.centerKnot.pos.x;
-            const cy = this.centerKnot.pos.y
+            const cy = this.centerKnot.pos.y;
             this.obj.cx = cx;
             this.obj.cy = cy;
 
@@ -66,7 +73,61 @@ export class PolygonUI implements UIComponent, PolygonComponent {
         }
 
         this.obj.points = this.convertKnots();
-        // throw new Error("Method not implemented.");
+    }
+
+    addPoint(x: number, y: number): void {
+        const knot = new Knot(x, y);
+
+        const knots = this.vknots;
+
+        // you need 3 knots to make a triangle and a center
+        if (knots.length < 2) {
+            knots.push(knot);
+        } else {
+            let minDist = Infinity;
+            let idx = 0;
+
+            const pos = knot.pos;
+            for (let i = 0; i < knots.length; i++) {
+                const left = knots[i].pos;
+                const right = knots[(i + 1) % knots.length].pos;
+
+                // project the point onto each edge of the polygon
+                const pointVec = p5.Vector.sub(pos, left);
+                const lineVec = p5.Vector.sub(right, left);
+
+                const projPoint = lineVec.setMag(pointVec.dot(lineVec) / lineVec.mag()).add(left);
+                const dist = projPoint.dist(pos);
+
+                if (projPoint.dist(left) + projPoint.dist(right) >= left.dist(right) + 5) {
+                    continue;
+                }
+
+                // the point to insert is between the edge that is closest to the point
+                // which is calculated based on projection and actual
+                if (dist < minDist) {
+                    idx = i + 1;
+                    minDist = dist;
+                }
+            }
+
+            knots.splice(idx, 0, knot);
+        }
+
+        this.editor.registerKnots(this, knot);
+        this.updatePolygon(true);
+    }
+
+    removePoint(): void {
+        for (let i = this.vknots.length - 1; i >= 0; i--) {
+            const knot = this.vknots[i];
+            if (knot.mouseOver()) {
+                this.vknots.splice(i, 1);
+                this.editor.deregisterKnot(knot);
+                this.updatePolygon(true);
+                break;
+            }
+        }
     }
 
     private convertKnots(): PointArr {

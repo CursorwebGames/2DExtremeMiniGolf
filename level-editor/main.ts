@@ -47,6 +47,11 @@ window.mouseDragged = () => {
     editorManager.scene.mouseDragged();
 };
 
+// hack cuz @types/p5 uses object | WheelEvent fsr
 window.mouseWheel = (e?: object) => {
     editorManager.scene.mouseWheel(e as WheelEvent);
 };
+
+window.keyPressed = () => {
+    editorManager.scene.keyPressed();
+}
