@@ -8,6 +8,7 @@ import { SceneManager } from "../../src/scenes/sceneManager";
 import { EditorCamera } from "../editorCamera";
 
 import { Knot } from "../ui/knot";
+import { LevelBoundsUI } from "../ui/levelBoundsUI";
 import { PolygonComponent } from "../ui/PolygonComponent";
 import { PolygonUI } from "../ui/polygonUI";
 import { SingleUI } from "../ui/singleUI";
@@ -24,6 +25,7 @@ export class EditorScene extends Scene {
     currEditPolygon: PolygonComponent | null;
 
     camera: EditorCamera;
+    levelBounds: LevelBoundsUI;
 
     constructor() {
         /* super hack: we don't have game managers or scene managers */
@@ -55,8 +57,10 @@ export class EditorScene extends Scene {
             ]), this)
         ];
 
-        this.currEditPolygon = this.staticObjs[0] as PolygonUI;
         this.camera = new EditorCamera();
+        this.levelBounds = new LevelBoundsUI(this);
+
+        this.currEditPolygon = this.levelBounds;
     }
 
     draw() {
@@ -64,7 +68,7 @@ export class EditorScene extends Scene {
 
         push();
         this.camera.draw();
-        // this.levelBounds.draw();
+        this.levelBounds.draw();
         this.camera.drawGrid();
 
         this.hole.draw();

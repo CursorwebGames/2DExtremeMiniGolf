@@ -1,6 +1,7 @@
 import { GameManager } from "../gameManager";
 import { SceneManager } from "./sceneManager";
 
+// todo: do you even need to specify the constructor?
 export abstract class Scene {
     gameManager: GameManager;
     sceneManager: SceneManager;
