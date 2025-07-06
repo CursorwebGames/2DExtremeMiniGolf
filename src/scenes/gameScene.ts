@@ -36,8 +36,13 @@ export class GameScene extends Scene {
 
     levelIdx: number;
 
+    gameManager: GameManager;
+    sceneManager: SceneManager;
+
     constructor(gameManager: GameManager, sceneManager: SceneManager, levelIdx = 0) {
-        super(gameManager, sceneManager);
+        super();
+        this.gameManager = gameManager;
+        this.sceneManager = sceneManager;
 
         this.levelIdx = levelIdx;
         this.loadLevel(getLevel(levelIdx));

@@ -1,9 +1,7 @@
-import { GameManager } from "../../src/gameManager";
 import { Hole } from "../../src/objects/hole";
 import { MainBall } from "../../src/objects/mainBall";
 import { PolygonWall } from "../../src/objects/polygonWall";
 import { Scene } from "../../src/scenes/scene";
-import { SceneManager } from "../../src/scenes/sceneManager";
 
 import { EditorCamera } from "../editorCamera";
 
@@ -28,8 +26,7 @@ export class EditorScene extends Scene {
     levelBounds: LevelBoundsUI;
 
     constructor() {
-        /* super hack: we don't have game managers or scene managers */
-        super(null as unknown as GameManager, null as unknown as SceneManager);
+        super();
         // this.level = {
         //     ball: [100, 100],
         //     hole: [50, 50],
