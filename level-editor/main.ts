@@ -6,7 +6,7 @@
  * No gamemanager because this doesn't need to save game states ... it's a small subset of the game really
  */
 import p5 from "p5";
-import { EditorManager } from "./scenes/editorManager";
+import { EditorManager } from "./editorManager";
 window.p5 = p5;
 
 let editorManager: EditorManager;
@@ -37,11 +37,11 @@ window.draw = () => {
 
 function mousePressed() {
     editorManager.scene.mousePressed();
-};
+}
 
 function mouseReleased() {
     editorManager.scene.mouseReleased();
-};
+}
 
 window.mouseDragged = () => {
     editorManager.scene.mouseDragged();
@@ -50,8 +50,8 @@ window.mouseDragged = () => {
 // hack cuz @types/p5 uses object | WheelEvent fsr
 function mouseWheel(e?: object) {
     editorManager.scene.mouseWheel(e as WheelEvent);
-};
+}
 
 window.keyPressed = () => {
     editorManager.scene.keyPressed();
-}
+};

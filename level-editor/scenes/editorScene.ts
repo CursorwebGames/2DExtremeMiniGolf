@@ -5,12 +5,14 @@ import { Scene } from "../../src/scenes/scene";
 
 import { EditorCamera } from "../editorCamera";
 
-import { Knot } from "../ui/knot";
-import { LevelBoundsUI } from "../ui/levelBoundsUI";
-import { PolygonComponent } from "../ui/PolygonComponent";
-import { PolygonUI } from "../ui/polygonUI";
-import { SingleUI } from "../ui/singleUI";
-import { UIComponent } from "../ui/UIComponent";
+import { Knot } from "../canvas-ui/knot";
+import { LevelBoundsUI } from "../canvas-ui/levelBoundsUI";
+import { PolygonComponent } from "../canvas-ui/PolygonComponent";
+import { PolygonUI } from "../canvas-ui/polygonUI";
+import { SingleUI } from "../canvas-ui/singleUI";
+import { UIComponent } from "../canvas-ui/UIComponent";
+import { TeleporterUI } from "../canvas-ui/teleporterUI";
+import { Teleporter } from "../../src/objects/teleporter";
 
 
 export class EditorScene extends Scene {
@@ -42,22 +44,25 @@ export class EditorScene extends Scene {
         // };
         this.knots = [];
 
+        /* careful the order! Will affect how knots are added */
+        this.levelBounds = new LevelBoundsUI(this);
+
         this.hole = new SingleUI(new Hole(100, 100), this);
         this.ball = new SingleUI(new MainBall(100, 100), this);
 
         this.staticObjs = [
             // new RectUI(new Wall(50, 50, 100, 100), this),
-            new PolygonUI(new PolygonWall([
-                [130, 130],
-                [200, 170],
-                [180, 250]
-            ]), this)
+            // new PolygonUI(new PolygonWall([
+            //     [130, 130],
+            //     [200, 170],
+            //     [180, 250]
+            // ]), this),
+            new TeleporterUI(new Teleporter(0, 0, 30, 30), this),
         ];
 
         this.camera = new EditorCamera();
-        this.levelBounds = new LevelBoundsUI(this);
 
-        this.currEditPolygon = this.levelBounds;
+        this.currEditPolygon = null;
     }
 
     draw() {
