@@ -1,16 +1,16 @@
 import { Scene } from "../src/scenes/scene";
-import { HTMLUIManager } from "./dom-ui/htmlUIManager";
+import { HTMLManager } from "./html/htmlManager";
 import { EditorScene } from "./scenes/editorScene";
 
 export class EditorManager {
     scene: Scene;
-    htmlUI: HTMLUIManager;
+    htmlManager: HTMLManager;
 
     constructor() {
         this.scene = new EditorScene();
 
-        this.htmlUI = new HTMLUIManager(this);
-        this.htmlUI.init();
+        this.htmlManager = new HTMLManager(this);
+        this.htmlManager.init();
     }
 
     draw() {

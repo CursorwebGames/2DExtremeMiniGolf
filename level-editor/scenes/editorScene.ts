@@ -1,18 +1,14 @@
 import { Hole } from "../../src/objects/hole";
 import { MainBall } from "../../src/objects/mainBall";
-import { PolygonWall } from "../../src/objects/polygonWall";
 import { Scene } from "../../src/scenes/scene";
 
 import { EditorCamera } from "../editorCamera";
 
-import { Knot } from "../canvas-ui/knot";
-import { LevelBoundsUI } from "../canvas-ui/levelBoundsUI";
-import { PolygonComponent } from "../canvas-ui/PolygonComponent";
-import { PolygonUI } from "../canvas-ui/polygonUI";
-import { SingleUI } from "../canvas-ui/singleUI";
-import { UIComponent } from "../canvas-ui/UIComponent";
-import { TeleporterUI } from "../canvas-ui/teleporterUI";
-import { Teleporter } from "../../src/objects/teleporter";
+import { Knot } from "../ui/knot";
+import { LevelBoundsUI } from "../ui/levelBoundsUI";
+import { PolygonComponent } from "../ui/PolygonComponent";
+import { SingleUI } from "../ui/singleUI";
+import { UIComponent } from "../ui/UIComponent";
 
 
 export class EditorScene extends Scene {
@@ -21,7 +17,7 @@ export class EditorScene extends Scene {
 
     ball: SingleUI;
     hole: SingleUI;
-    staticObjs: UIComponent[];
+    staticUIs: UIComponent[];
     currEditPolygon: PolygonComponent | null;
 
     camera: EditorCamera;
@@ -50,15 +46,7 @@ export class EditorScene extends Scene {
         this.hole = new SingleUI(new Hole(100, 100), this);
         this.ball = new SingleUI(new MainBall(100, 100), this);
 
-        this.staticObjs = [
-            // new RectUI(new Wall(50, 50, 100, 100), this),
-            // new PolygonUI(new PolygonWall([
-            //     [130, 130],
-            //     [200, 170],
-            //     [180, 250]
-            // ]), this),
-            new TeleporterUI(new Teleporter(0, 0, 30, 30), this),
-        ];
+        this.staticUIs = [];
 
         this.camera = new EditorCamera();
 
@@ -76,7 +64,7 @@ export class EditorScene extends Scene {
         this.hole.draw();
         this.ball.draw();
 
-        for (const obj of this.staticObjs) {
+        for (const obj of this.staticUIs) {
             obj.draw();
         }
         pop();
@@ -103,6 +91,19 @@ export class EditorScene extends Scene {
     deregisterKnot(knot: Knot) {
         const i = this.knots.indexOf(knot);
         this.knots.splice(i, 1);
+    }
+
+    removeUI(ui: UIComponent) {
+        const idx = this.staticUIs.indexOf(ui);
+
+        // todo: create a cleanup function
+        for (const knot of this.knots) {
+            if (knot.parent == ui) {
+                this.deregisterKnot(knot);
+            }
+        }
+
+        this.staticUIs.splice(idx, 1);
     }
 
     mousePressed() {

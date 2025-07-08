@@ -1,5 +1,10 @@
 import { Knot } from "./knot";
 
+/**
+ * UI   == canvas ui
+ * HTML == html
+ * obj  == gameObject
+ */
 export interface UIComponent {
     /**
      * `draw()` will have to also draw the knots
