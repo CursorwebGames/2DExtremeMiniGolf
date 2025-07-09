@@ -1,5 +1,6 @@
 import { levelExists } from "../levels/levels";
 import { GameScene } from "./gameScene";
+import { MenuScene } from "./menuScene";
 import { Scene } from "./scene";
 import { Transition } from "./transitionManager";
 
@@ -12,7 +13,7 @@ export class SceneManager {
     stats: StatsManager;
 
     constructor() {
-        this.scene = new GameScene(this);
+        this.scene = new MenuScene(this);
         this.transitionManager = new Transition();
         this.stats = new StatsManager();
     }
@@ -22,14 +23,18 @@ export class SceneManager {
         this.transitionManager.draw();
     }
 
+    setScene(scene: Scene) {
+        this.transitionManager.transition(() => {
+            this.scene = scene;
+        });
+    }
+
     nextLevel(strokes: number, nextLevelIdx: number) {
         if (levelExists(nextLevelIdx)) {
-            this.transitionManager.transition(() => {
-                this.stats.recordLevelStats(strokes);
+            this.stats.recordLevelStats(strokes);
 
-                const scene = new GameScene(this, nextLevelIdx);
-                this.scene = scene;
-            });
+            const scene = new GameScene(this, nextLevelIdx);
+            this.setScene(scene);
         } else {
             console.log('finished');
         }
