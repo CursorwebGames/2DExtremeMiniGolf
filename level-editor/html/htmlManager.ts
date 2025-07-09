@@ -5,18 +5,33 @@ import { createHTML, objTemplates } from "./objTemplates";
 
 export class HTMLManager {
     editorManager: EditorManager;
+
     objPalette: HTMLDivElement;
     objList: HTMLDivElement;
+
     playBtn: HTMLButtonElement;
+    exportBtn: HTMLButtonElement;
+    exportTextarea: HTMLTextAreaElement;
 
     constructor(editor: EditorManager) {
         this.editorManager = editor;
+
         this.objPalette = document.querySelector(".object-palette")!;
         this.objList = document.querySelector(".objects-list")!;
+
         this.playBtn = document.querySelector(".play-btn")!;
+        this.exportBtn = document.querySelector(".export-btn")!;
+        this.exportTextarea = document.querySelector(".export-text")!;
     }
 
     init() {
+        this.createObjPalette();
+
+        this.playBtn.addEventListener("click", () => this.toPlayMode());
+        this.exportBtn.addEventListener("click", () => this.exportLevel());
+    }
+
+    private createObjPalette() {
         for (const template of objTemplates) {
             const btn = document.createElement("button");
             btn.textContent = template.name;
@@ -36,11 +51,15 @@ export class HTMLManager {
 
             this.objPalette.append(btn);
         }
-
-        this.playBtn.addEventListener("click", this.onPlayClick);
     }
 
-    onPlayClick = () => {
+    private toPlayMode() {
         this.editorManager.togglePlayMode();
-    };
+    }
+
+    private exportLevel() {
+        const scene = this.editorManager.editorScene;
+        const data = scene.getLevelData();
+        this.exportTextarea.value = JSON.stringify(data);
+    }
 }

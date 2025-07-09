@@ -153,7 +153,7 @@ export class EditorScene extends Scene {
         const level: LevelData = {
             ball: [this.ball.knot.pos.x, this.ball.knot.pos.y],
             hole: [this.hole.knot.pos.x, this.hole.knot.pos.y],
-            bounds: this.levelBounds.toJSON() as any,
+            bounds: this.levelBounds.toJSON(),
             obstacles: this.staticUIs.map(ui => ui.toJSON()),
             par: 0
         }

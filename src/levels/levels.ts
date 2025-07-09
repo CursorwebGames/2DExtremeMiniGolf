@@ -63,6 +63,6 @@ export function levelToObject(obj: StaticObjData) {
     const [className, params] = obj;
 
     // TODO: ask stack overflow for help
-    const Cls = staticObjMap[className] as new (...params: any[]) => Obstacle;
+    const Cls = staticObjMap[className] as new (...p: typeof params) => Obstacle;
     return new Cls(...params);
 }

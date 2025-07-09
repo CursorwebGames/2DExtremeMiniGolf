@@ -12,13 +12,13 @@ export class EditorManager {
      * We want to permanently hold a reference to `editorScene`
      * so we can still use it after playtesting
      */
-    editorScene: Scene;
+    editorScene: EditorScene;
 
     transitionManager: Transition;
 
     constructor() {
-        this.scene = new EditorScene();
-        this.editorScene = this.scene;
+        this.editorScene = new EditorScene();
+        this.scene = this.editorScene;
 
         this.htmlManager = new HTMLManager(this);
         this.htmlManager.init();
