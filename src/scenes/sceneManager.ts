@@ -1,21 +1,20 @@
-import { GameManager } from "../gameManager";
+import { levelExists } from "../levels/levels";
 import { GameScene } from "./gameScene";
 import { Scene } from "./scene";
 import { Transition } from "./transitionManager";
 
 /**
- * Manages levels, scene transitions
- * @todo In the future, scene manager will also manage the menu
+ * Manages levels, scene transitions, statistics
  */
 export class SceneManager {
     scene: Scene;
-    gameManager: GameManager;
     transitionManager: Transition;
+    stats: StatsManager;
 
-    constructor(gameManager: GameManager) {
-        this.scene = new GameScene(gameManager, this);
-        this.gameManager = gameManager;
+    constructor() {
+        this.scene = new GameScene(this);
         this.transitionManager = new Transition();
+        this.stats = new StatsManager();
     }
 
     draw() {
@@ -23,13 +22,34 @@ export class SceneManager {
         this.transitionManager.draw();
     }
 
-    /**
-     * @param callback Extra logic (such as resetting stroke count)
-     */
-    setScene(scene: Scene, callback = () => { }) {
-        this.transitionManager.transition(() => {
-            this.scene = scene;
-            callback();
-        });
+    nextLevel(strokes: number, nextLevelIdx: number) {
+        if (levelExists(nextLevelIdx)) {
+            this.transitionManager.transition(() => {
+                this.stats.recordLevelStats(strokes);
+
+                const scene = new GameScene(this, nextLevelIdx);
+                this.scene = scene;
+            });
+        } else {
+            console.log('finished');
+        }
+    }
+}
+
+class StatsManager {
+    holeInOnes: number;
+    totalStrokes: number;
+
+    constructor() {
+        this.holeInOnes = 0;
+        this.totalStrokes = 0;
+    }
+
+    recordLevelStats(strokes: number) {
+        if (strokes == 1) {
+            this.holeInOnes++;
+        }
+
+        this.totalStrokes += strokes;
     }
 }

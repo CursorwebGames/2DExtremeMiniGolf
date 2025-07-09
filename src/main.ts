@@ -1,8 +1,8 @@
 import p5 from "p5";
-import { GameManager } from "./gameManager";
+import { SceneManager } from "./scenes/sceneManager";
 window.p5 = p5;
 
-let gameManager: GameManager;
+let sceneManager: SceneManager;
 
 window.setup = () => {
     const canvas = createCanvas(windowWidth, windowHeight);
@@ -12,19 +12,19 @@ window.setup = () => {
         e.preventDefault();
     });
 
-    gameManager = new GameManager();
+    sceneManager = new SceneManager();
 };
 
 window.draw = () => {
-    gameManager.draw();
+    sceneManager.draw();
 };
 
 window.mousePressed = () => {
-    gameManager.sceneManager.scene.mousePressed();
+    sceneManager.scene.mousePressed();
 };
 
 window.mouseReleased = () => {
-    gameManager.sceneManager.scene.mouseReleased();
+    sceneManager.scene.mouseReleased();
 };
 
 
@@ -34,5 +34,5 @@ window.touchEnded = window.mouseReleased;
 
 window.windowResized = () => {
     resizeCanvas(windowWidth, windowHeight);
-    gameManager.sceneManager.scene.windowResized();
+    sceneManager.scene.windowResized();
 }

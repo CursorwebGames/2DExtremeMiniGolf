@@ -1,7 +1,6 @@
 import { Camera } from "../camera";
 import { CCD_STEPS, MAX_SPEED, MIN_INPUT_SPEED, VISUAL_SPEED } from "../config";
-import { GameManager } from "../gameManager";
-import { getLevel, LevelData, levelExists, levelToObject } from "../levels/levels";
+import { getLevel, LevelData, levelToObject } from "../levels/levels";
 import { Hole } from "../objects/hole";
 import { MainBall } from "../objects/mainBall";
 import { Obstacle } from "../objects/obstacle";
@@ -35,16 +34,17 @@ export class GameScene extends Scene {
     obstacles!: Obstacle[];
 
     levelIdx: number;
+    strokes: number;
 
-    gameManager: GameManager;
     sceneManager: SceneManager;
 
-    constructor(gameManager: GameManager, sceneManager: SceneManager, levelIdx = 0) {
+    constructor(sceneManager: SceneManager, levelIdx = 0) {
         super();
-        this.gameManager = gameManager;
         this.sceneManager = sceneManager;
 
         this.levelIdx = levelIdx;
+        this.strokes = 0;
+
         this.loadLevel(getLevel(levelIdx));
     }
 
@@ -106,7 +106,7 @@ export class GameScene extends Scene {
 
         textAlign(LEFT);
         textSize(20);
-        // text(`Stroke: ${this.gameManager.strokes}\nPar: ${this.par}`, 10, height - 60);
+        text(`Stroke: ${this.strokes}\nPar: ${this.par}`, 10, height - 60);
         pop();
     }
 
@@ -166,14 +166,7 @@ export class GameScene extends Scene {
     }
 
     nextLevel() {
-        if (levelExists(this.levelIdx + 1)) {
-            this.sceneManager.setScene(
-                new GameScene(this.gameManager, this.sceneManager, this.levelIdx + 1),
-                () => this.gameManager.nextLevel()
-            );
-        } else {
-            console.log('finished')
-        }
+        this.sceneManager.nextLevel(this.strokes, this.levelIdx + 1);
     }
 
     debugMousePressed(): void {
@@ -204,7 +197,7 @@ export class GameScene extends Scene {
 
         this.ball.vel = vec;
 
-        this.gameManager.addStroke();
+        this.strokes++;
     }
 
     windowResized(): void {
