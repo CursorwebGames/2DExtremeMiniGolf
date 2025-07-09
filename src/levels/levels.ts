@@ -9,8 +9,12 @@ import { Teleporter } from "../objects/teleporter";
 import { Water } from "../objects/water";
 import { Obstacle } from "../objects/obstacle";
 
-/** Maps String to Class */
-const staticObjMap = {
+/**
+ * Maps String to Class
+ * `[Bouncer] => mangled class object`
+ */
+// *clever* abuse of syntax: Bouncer (as the key) is the string, but Bouncer (as the value) is a class!
+export const staticObjMap = {
     Bouncer,
     Ice,
     PolygonWall,
@@ -19,20 +23,27 @@ const staticObjMap = {
     Teleporter,
     Wall,
     Water
-};
+} as const;
 
-
-type StaticObjData = {
-    // ["Bouncer", [x: int, y: int]]
-    [K in keyof typeof staticObjMap]: [K, ConstructorParameters<typeof staticObjMap[K]>]
-}[keyof typeof staticObjMap];
+/**
+ * Creates an "array"-like constructor call, e.g.
+ * ```js
+ * ["Bouncer", [5, 6]],
+ * ["PolygonWall", [[10, 20], [30, 40]]]
+ * ```
+ */
+export type StaticObjData = [keyof typeof staticObjMap, (number | PointArr | [number, number])[]]
+// export type StaticObjData = {
+//     // ["Bouncer", [x: int, y: int]]
+//     [K in keyof typeof staticObjMap]: [K, ConstructorParameters<typeof staticObjMap[K]>]
+// }[keyof typeof staticObjMap];
 
 export interface LevelData {
     ball: [number, number],
     hole: [number, number],
     obstacles: StaticObjData[],
     bounds: PointArr,
-    guideText: string,
+    guideText?: string,
     par: number
 }
 
@@ -52,6 +63,6 @@ export function levelToObject(obj: StaticObjData) {
     const [className, params] = obj;
 
     // TODO: ask stack overflow for help
-    const cls = staticObjMap[className] as new (...params: any[]) => Obstacle;
-    return new cls(...params);
+    const Cls = staticObjMap[className] as new (...params: any[]) => Obstacle;
+    return new Cls(...params);
 }

@@ -56,7 +56,7 @@ export class GameScene extends Scene {
         this.hole = new Hole(...level.hole);
 
         this.par = level.par;
-        this.guideText = level.guideText;
+        this.guideText = level.guideText || "";
 
         const bounds = level.bounds;
         this.bounds = bounds;
@@ -106,7 +106,7 @@ export class GameScene extends Scene {
 
         textAlign(LEFT);
         textSize(20);
-        text(`Stroke: ${this.gameManager.strokes}\nPar: ${this.par}`, 10, height - 60);
+        // text(`Stroke: ${this.gameManager.strokes}\nPar: ${this.par}`, 10, height - 60);
         pop();
     }
 

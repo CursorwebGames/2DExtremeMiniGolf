@@ -1,4 +1,5 @@
 import { Knot } from "./knot";
+import { StaticObjData } from "../../src/levels/levels";
 
 /**
  * UI   == canvas ui
@@ -12,4 +13,8 @@ export interface UIComponent {
      */
     draw(): void;
     update(knot: Knot, dpos: p5.Vector): void;
+}
+
+export interface UISerializable extends UIComponent {
+    toJSON(): StaticObjData;
 }

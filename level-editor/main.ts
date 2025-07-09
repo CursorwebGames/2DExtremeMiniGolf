@@ -55,3 +55,7 @@ function mouseWheel(e?: object) {
 window.keyPressed = () => {
     editorManager.scene.keyPressed();
 };
+
+// window.onbeforeunload = () => {
+//     return "Are you sure you want to leave?";
+// };

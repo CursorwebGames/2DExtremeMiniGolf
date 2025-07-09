@@ -1,14 +1,16 @@
+import { StaticObjData } from "../../src/levels/levels";
 import { PolygonWall } from "../../src/objects/polygonWall";
 import { Sand } from "../../src/objects/sand";
 import { Water } from "../../src/objects/water";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
+import { nameMap } from "./nameMap";
 import { PolygonComponent } from "./PolygonComponent";
-import { UIComponent } from "./UIComponent";
+import { UISerializable } from "./UIComponent";
 
 type PolygonUIObj = PolygonWall | Water | Sand;
 
-export class PolygonUI extends PolygonComponent implements UIComponent {
+export class PolygonUI extends PolygonComponent implements UISerializable {
     obj: PolygonUIObj;
     /** Knot registration */
     editor: EditorScene;
@@ -87,5 +89,11 @@ export class PolygonUI extends PolygonComponent implements UIComponent {
         cy /= this.vknots.length;
 
         this.centerKnot.pos = createVector(cx, cy);
+    }
+
+    toJSON(): StaticObjData {
+        const name = nameMap[this.obj.constructor.name];
+        const points = this.convertKnots();
+        return [name, [points]];
     }
 }

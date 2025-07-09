@@ -1,3 +1,4 @@
+import { LevelData } from "../../src/levels/levels";
 import { Hole } from "../../src/objects/hole";
 import { MainBall } from "../../src/objects/mainBall";
 import { Scene } from "../../src/scenes/scene";
@@ -8,16 +9,15 @@ import { Knot } from "../ui/knot";
 import { LevelBoundsUI } from "../ui/levelBoundsUI";
 import { PolygonComponent } from "../ui/PolygonComponent";
 import { SingleUI } from "../ui/singleUI";
-import { UIComponent } from "../ui/UIComponent";
+import { UIComponent, UISerializable } from "../ui/UIComponent";
 
 
 export class EditorScene extends Scene {
-    // level: LevelData;
     knots: Knot[];
 
     ball: SingleUI;
     hole: SingleUI;
-    staticUIs: UIComponent[];
+    staticUIs: UISerializable[];
     currEditPolygon: PolygonComponent | null;
 
     camera: EditorCamera;
@@ -25,25 +25,12 @@ export class EditorScene extends Scene {
 
     constructor() {
         super();
-        // this.level = {
-        //     ball: [100, 100],
-        //     hole: [50, 50],
-        //     bounds: [
-        //         [0, 0],
-        //         [width, 0],
-        //         [width, height],
-        //         [0, height]
-        //     ],
-        //     obstacles: [],
-        //     guideText: "",
-        //     par: 0
-        // };
         this.knots = [];
 
         /* careful the order! Will affect how knots are added */
         this.levelBounds = new LevelBoundsUI(this);
 
-        this.hole = new SingleUI(new Hole(100, 100), this);
+        this.hole = new SingleUI(new Hole(width - 100, height - 100), this);
         this.ball = new SingleUI(new MainBall(100, 100), this);
 
         this.staticUIs = [];
@@ -93,7 +80,7 @@ export class EditorScene extends Scene {
         this.knots.splice(i, 1);
     }
 
-    removeUI(ui: UIComponent) {
+    removeUI(ui: UISerializable) {
         const idx = this.staticUIs.indexOf(ui);
 
         // todo: create a cleanup function
@@ -160,5 +147,17 @@ export class EditorScene extends Scene {
         if (this.currEditPolygon && key == "Escape") {
             this.currEditPolygon = null;
         }
+    }
+
+    getLevelData(): LevelData {
+        const level: LevelData = {
+            ball: [this.ball.knot.pos.x, this.ball.knot.pos.y],
+            hole: [this.hole.knot.pos.x, this.hole.knot.pos.y],
+            bounds: this.levelBounds.toJSON() as any,
+            obstacles: this.staticUIs.map(ui => ui.toJSON()),
+            par: 0
+        }
+
+        return level;
     }
 }

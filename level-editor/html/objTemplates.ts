@@ -12,7 +12,7 @@ import { PolygonUI } from "../ui/polygonUI";
 import { RectUI } from "../ui/rectUI";
 import { SingleUI } from "../ui/singleUI";
 import { TeleporterUI } from "../ui/teleporterUI";
-import { UIComponent } from "../ui/UIComponent";
+import { UIComponent, UISerializable } from "../ui/UIComponent";
 
 type CreateHTML = (ui: UIComponent, name: string, editor: EditorScene) => HTMLDivElement;
 
@@ -22,7 +22,7 @@ interface ObjTemplate {
     /**
      * Logic for UI to be added to the canvas
      */
-    createUI: (x: number, y: number, e: EditorScene) => UIComponent,
+    createUI: (x: number, y: number, e: EditorScene) => UISerializable,
 
     /**
      * Custom (override) logic for html to be added to the object list
@@ -82,7 +82,7 @@ export const objTemplates: ObjTemplate[] = [
 ];
 
 // todo: think about play scene, disabling these buttons
-export function createHTML(ui: UIComponent, name: string, editor: EditorScene) {
+export function createHTML(ui: UISerializable, name: string, editor: EditorScene) {
     const el = document.createElement("div");
 
     const nameInput = document.createElement("input");
@@ -113,7 +113,7 @@ export function createSlopeHTML(ui: RectUI, name: string, editor: EditorScene) {
     return el;
 }
 
-export function createPolygonHTML(ui: PolygonComponent, name: string, editor: EditorScene) {
+export function createPolygonHTML(ui: PolygonComponent & UISerializable, name: string, editor: EditorScene) {
     const el = createHTML(ui, name, editor);
 
     const editBtn = document.createElement("button");

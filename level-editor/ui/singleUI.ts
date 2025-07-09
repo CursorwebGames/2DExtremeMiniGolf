@@ -1,13 +1,15 @@
+import { StaticObjData } from "../../src/levels/levels";
 import { Ball } from "../../src/objects/ball";
 import { Bouncer } from "../../src/objects/bouncer";
 import { Hole } from "../../src/objects/hole";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
-import { UIComponent } from "./UIComponent";
+import { nameMap } from "./nameMap";
+import { UIComponent, UISerializable } from "./UIComponent";
 
 type SingleUIObj = Ball | Hole | Bouncer;
 
-export class SingleUI implements UIComponent {
+export class SingleUI implements UIComponent, UISerializable {
     obj: SingleUIObj;
     knot: Knot;
 
@@ -24,5 +26,12 @@ export class SingleUI implements UIComponent {
 
     update(knot: Knot): void {
         this.obj.pos = knot.pos.copy();
+    }
+
+    toJSON(): StaticObjData {
+        const name = nameMap[this.obj.constructor.name];
+        const pos = this.knot.pos;
+
+        return [name, [pos.x, pos.y]];
     }
 }

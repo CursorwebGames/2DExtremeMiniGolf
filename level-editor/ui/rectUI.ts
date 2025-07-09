@@ -1,14 +1,16 @@
+import { StaticObjData } from "../../src/levels/levels";
 import { Ice } from "../../src/objects/ice";
 import { Slope } from "../../src/objects/slope";
 import { Wall } from "../../src/objects/wall";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
-import { UIComponent } from "./UIComponent";
+import { nameMap } from "./nameMap";
+import { UIComponent, UISerializable } from "./UIComponent";
 
 type RectUIObj = Wall | Ice | Slope;
 
 // TODO: turn everything positive at the end
-export class RectUI implements UIComponent {
+export class RectUI implements UIComponent, UISerializable {
     obj: RectUIObj;
 
     posKnot: Knot;
@@ -52,5 +54,15 @@ export class RectUI implements UIComponent {
         this.obj.w = size.x;
         this.obj.h = size.y;
         this.centerKnot.pos = createVector(this.obj.x + this.obj.w / 2, this.obj.y + this.obj.h / 2);
+    }
+
+    toJSON(): StaticObjData {
+        const name = nameMap[this.obj.constructor.name];
+        const pos = this.posKnot.pos;
+
+        const width = this.dimKnot.pos.x - pos.x;
+        const height = this.dimKnot.pos.y - pos.y;
+
+        return [name, [pos.x, pos.y, width, height]];
     }
 }

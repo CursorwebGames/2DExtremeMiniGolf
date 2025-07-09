@@ -9,13 +9,11 @@ export default defineConfig({
                 main: resolve(__dirname, "index.html"),
                 levelEditor: resolve(__dirname, "level-editor/index.html"),
             },
-            /*
             output: {
                 manualChunks: {
                     p5: ["p5"]
                 }
             }
-            */
         },
     },
 });

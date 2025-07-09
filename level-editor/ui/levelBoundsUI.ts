@@ -13,8 +13,21 @@ export class LevelBoundsUI extends PolygonComponent implements UIComponent {
     }
 
     draw() {
+        // the shadow and grass
         push();
         fill(94, 230, 83);
+        strokeWeight(3);
+        stroke(0, 0.25 * 255);
+        beginShape();
+        for (const knot of this.vknots) {
+            vertex(knot.pos.x + 1.5, knot.pos.y + 1.5);
+        }
+        endShape(CLOSE);
+        pop();
+
+        // the white wall
+        push();
+        noFill();
         strokeWeight(3);
         stroke(255);
         beginShape();
@@ -32,4 +45,8 @@ export class LevelBoundsUI extends PolygonComponent implements UIComponent {
     // No need for an update function, knots' positions are directly used
     update() { }
     protected updatePolygon() { }
+
+    toJSON() {
+        return this.convertKnots();
+    }
 }

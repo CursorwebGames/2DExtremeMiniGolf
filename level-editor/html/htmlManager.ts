@@ -7,11 +7,13 @@ export class HTMLManager {
     editorManager: EditorManager;
     objPalette: HTMLDivElement;
     objList: HTMLDivElement;
+    playBtn: HTMLButtonElement;
 
     constructor(editor: EditorManager) {
         this.editorManager = editor;
         this.objPalette = document.querySelector(".object-palette")!;
         this.objList = document.querySelector(".objects-list")!;
+        this.playBtn = document.querySelector(".play-btn")!;
     }
 
     init() {
@@ -34,5 +36,11 @@ export class HTMLManager {
 
             this.objPalette.append(btn);
         }
+
+        this.playBtn.addEventListener("click", this.onPlayClick);
     }
+
+    onPlayClick = () => {
+        this.editorManager.togglePlayMode();
+    };
 }
