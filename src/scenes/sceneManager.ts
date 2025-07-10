@@ -1,4 +1,5 @@
 import { levelExists } from "../levels/levels";
+import { EndScene } from "./endScene";
 import { GameScene } from "./gameScene";
 import { MenuScene } from "./menuScene";
 import { Scene } from "./scene";
@@ -30,13 +31,13 @@ export class SceneManager {
     }
 
     nextLevel(strokes: number, nextLevelIdx: number) {
+        this.stats.recordLevelStats(strokes);
         if (levelExists(nextLevelIdx)) {
-            this.stats.recordLevelStats(strokes);
-
             const scene = new GameScene(this, nextLevelIdx);
             this.setScene(scene);
         } else {
-            console.log('finished');
+            const scene = new EndScene(this);
+            this.setScene(scene);
         }
     }
 }
