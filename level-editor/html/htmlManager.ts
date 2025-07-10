@@ -75,7 +75,22 @@ export class HTMLManager {
     private exportLevel() {
         const scene = this.editorManager.editorScene;
         const data = scene.getLevelData();
-        this.exportTextarea.value = JSON.stringify(data);
+
+        let out = `{
+    "ball": ${this.formatJSON(data.ball)},
+    "hole": ${this.formatJSON(data.hole)},
+    "obstacles": ${this.formatJSON(data.obstacles)},
+    "bounds": ${this.formatJSON(data.bounds)},
+    "par": 0
+},`;
+
+        this.exportTextarea.value = out;
+    }
+
+    private formatJSON(json: object) {
+        return JSON.stringify(json)
+            .replace(/:/g, ": ")
+            .replace(/,/g, ", ");
     }
 
     private async copyExport() {
