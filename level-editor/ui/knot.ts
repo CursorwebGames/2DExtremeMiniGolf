@@ -12,6 +12,7 @@ export class Knot {
 
     constructor(x: number, y: number) {
         this.pos = createVector(x, y);
+        this.checkSnapping();
         this.r = 4;
 
         this.dragStart = null;
@@ -41,8 +42,11 @@ export class Knot {
         const deltaPos = p5.Vector.sub(window.mousePos, this.dragStart!);
         const prevPos = this.pos.copy();
         const newPos = p5.Vector.add(this.startPos!, deltaPos);
+
         this.pos = newPos;
-        this.parent.update(this, p5.Vector.sub(newPos, prevPos));
+        this.checkSnapping();
+
+        this.parent.update(this, p5.Vector.sub(this.pos, prevPos));
     }
 
     /** Cleanup function for drag (reset variables) */
@@ -54,5 +58,20 @@ export class Knot {
     mouseOver() {
         // Twice the radius to make things easier to select
         return this.pos.dist(window.mousePos) < this.r * 2;
+    }
+
+    private checkSnapping() {
+        if (keyIsPressed) {
+            if (key == "Shift") {
+                this.pos = this.snap(this.pos);
+            }
+            if (key == "Control") {
+                this.pos = this.snap(this.pos, 25);
+            }
+        }
+    }
+
+    private snap(v: p5.Vector, n = 50) {
+        return createVector(round(v.x / n) * n, round(v.y / n) * n);
     }
 }

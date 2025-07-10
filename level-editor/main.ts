@@ -56,6 +56,6 @@ window.keyPressed = () => {
     editorManager.scene.keyPressed();
 };
 
-// window.onbeforeunload = () => {
-//     return "Are you sure you want to leave?";
-// };
+window.onbeforeunload = () => {
+    return "Are you sure you want to leave?";
+};

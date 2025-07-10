@@ -10,8 +10,12 @@ export class HTMLManager {
     objList: HTMLDivElement;
 
     playBtn: HTMLButtonElement;
+
+    editBoundsBtn: HTMLButtonElement;
+
     exportBtn: HTMLButtonElement;
     exportTextarea: HTMLTextAreaElement;
+    copyExportBtn: HTMLButtonElement;
 
     constructor(editor: EditorManager) {
         this.editorManager = editor;
@@ -20,15 +24,30 @@ export class HTMLManager {
         this.objList = document.querySelector(".objects-list")!;
 
         this.playBtn = document.querySelector(".play-btn")!;
+
+        this.editBoundsBtn = document.querySelector(".edit-bound-btn")!;
+
         this.exportBtn = document.querySelector(".export-btn")!;
         this.exportTextarea = document.querySelector(".export-text")!;
+        this.copyExportBtn = document.querySelector(".copy-export-btn")!;
     }
 
     init() {
         this.createObjPalette();
 
-        this.playBtn.addEventListener("click", () => this.toPlayMode());
+        this.playBtn.addEventListener("click", () => {
+            this.editorManager.togglePlayMode();
+        });
+
+        this.editBoundsBtn.addEventListener("click", () => {
+            const scene = this.editorManager.scene;
+            if (scene instanceof EditorScene) {
+                scene.currEditPolygon = scene.levelBounds;
+            }
+        });
+
         this.exportBtn.addEventListener("click", () => this.exportLevel());
+        this.copyExportBtn.addEventListener("click", async () => await this.copyExport());
     }
 
     private createObjPalette() {
@@ -53,13 +72,20 @@ export class HTMLManager {
         }
     }
 
-    private toPlayMode() {
-        this.editorManager.togglePlayMode();
-    }
-
     private exportLevel() {
         const scene = this.editorManager.editorScene;
         const data = scene.getLevelData();
         this.exportTextarea.value = JSON.stringify(data);
+    }
+
+    private async copyExport() {
+        const text = this.exportTextarea.value;
+        await navigator.clipboard.writeText(text);
+
+        this.copyExportBtn.textContent = "Copied!";
+
+        setTimeout(() => {
+            this.copyExportBtn.textContent = "Copy";
+        }, 1000);
     }
 }
