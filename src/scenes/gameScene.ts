@@ -99,7 +99,6 @@ export class GameScene extends Scene {
         stroke(0);
         strokeWeight(3);
 
-        // TODO: fix text sizes
         textAlign(CENTER);
         textSize(30);
         text(this.guideText, width / 2, 50);

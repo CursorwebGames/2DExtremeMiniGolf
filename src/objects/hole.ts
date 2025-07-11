@@ -30,7 +30,6 @@ export class Hole {
             ball.vel.mult(0.9);
             let dir = p5.Vector.sub(this.pos, ball.pos);
 
-            // TODO: OPTIMIZE? can't you just mult
             ball.applyForce(dir.setMag(this.pos.dist(ball.pos) * 0.1));
         }
     }

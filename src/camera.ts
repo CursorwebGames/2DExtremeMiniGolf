@@ -19,7 +19,6 @@ export class Camera {
     /** Absolute values which are useful on resize */
     absBounds: { minx: number; miny: number; maxx: number; maxy: number; };
 
-    // TODO: ON RESIZE
     constructor(ball: Ball, minx: number, miny: number, maxx: number, maxy: number) {
         this.ball = ball;
         this.pos = ball.pos.copy();
