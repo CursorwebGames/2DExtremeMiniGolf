@@ -4,6 +4,7 @@ import { Ball } from "./objects/ball";
 const MARGIN_X = 200;
 const MARGIN_Y = 200;
 
+// todo: fix the camera on phone, maybe make width more visible or something
 export class Camera {
     pos: p5.Vector;
     ball: Ball;
