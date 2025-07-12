@@ -15,13 +15,15 @@ export class TeleporterUI implements UIComponent, UISerializable {
         this.obj = obj;
         this.startKnot = new Knot(obj.start.x, obj.start.y);
         this.endKnot = new Knot(obj.end.x, obj.end.y);
-        editor.registerKnots(this, this.startKnot, this.endKnot);
+
+        // startKnot is second so it can be "on top"
+        editor.registerKnots(this, this.endKnot, this.startKnot);
     }
 
     draw(): void {
         this.obj.draw();
-        this.startKnot.draw();
         this.endKnot.draw();
+        this.startKnot.draw();
     }
 
     update(knot: Knot): void {
@@ -34,6 +36,6 @@ export class TeleporterUI implements UIComponent, UISerializable {
         const start = this.startKnot.pos;
         const end = this.endKnot.pos;
 
-        return [name, [start.x, start.y, end.x, end.y]];
+        return [name, [end.x, end.y, start.x, start.y]];
     }
 }
