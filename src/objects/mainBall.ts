@@ -7,8 +7,11 @@ export class MainBall extends Ball {
 
     dragStart?: p5.Vector | null;
 
+    idleTick: number;
+
     constructor(x: number, y: number) {
         super(x, y, 10);
+        this.idleTick = 0;
     }
 
     draw() {
@@ -17,6 +20,27 @@ export class MainBall extends Ball {
         }
 
         super.draw();
+
+        if (this.dragStart) {
+            this.idleTick = 0;
+        }
+
+        if (!this.dragStart && this.vel.mag() == 0) {
+            this.idleTick += 0.2;
+            const tick = this.idleTick;
+
+            // wait for another 10 ticks
+            if (this.idleTick > 25) {
+                this.idleTick = 0;
+            }
+
+            if (this.idleTick < 15) {
+                noFill();
+                stroke(255, sin(((tick - 1) / 15) * PI) * 128);
+                strokeWeight(1 + 0.5 * sin((tick / 7.5 - 0.5) * PI));
+                circle(this.pos.x, this.pos.y, this.r + 20 + tick);
+            }
+        }
     }
 
     showDrag() {
