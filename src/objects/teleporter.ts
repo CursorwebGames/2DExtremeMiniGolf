@@ -37,7 +37,6 @@ export class Teleporter implements Obstacle<null | "end" | "start"> {
 
         this.hasTeleportedTo = null;
 
-        // todo: i hate this implementation
         this.portalTick = [0, -GAP, -2 * GAP];
     }
 

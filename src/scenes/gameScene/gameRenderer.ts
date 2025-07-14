@@ -1,27 +1,14 @@
-import { Camera } from "../camera";
-import { CCD_STEPS, MAX_SPEED, MIN_INPUT_SPEED, VISUAL_SPEED } from "../config";
-import { getLevel, LevelData, levelToObject } from "../levels/levels";
-import { Hole } from "../objects/hole";
-import { MainBall } from "../objects/mainBall";
-import { Obstacle } from "../objects/obstacle";
-import { Scene } from "./scene";
-import { SceneManager } from "./sceneManager";
+import { GameScene } from ".";
+import { Camera } from "../../camera";
+import { CCD_STEPS, MAX_SPEED, MIN_INPUT_SPEED, VISUAL_SPEED } from "../../config";
+import { LevelData, levelToObject } from "../../levels/levels";
+import { Hole } from "../../objects/hole";
+import { MainBall } from "../../objects/mainBall";
+import { Obstacle } from "../../objects/obstacle";
 
-/**
-{
-    "ball": [34, 16],
-    "hole": [350, 148],
-    "obstacles": [
-        ["Bouncer", [107, 38]],
-        ["Bouncer", [45, 86]]
-    ],
-    "bounds": [[0, 0], [300, 0], [300, 200], [0, 200]],
-    "par": 2
-},
- */
+export class GameRenderer {
+    gameScene: GameScene;
 
-// TODO: MAKE A LEVEL WITH MULTIPLE BALLS OR JUST GIVE UP WITH THAT IDEA
-export class GameScene extends Scene {
     camera!: Camera;
 
     ball!: MainBall;
@@ -30,26 +17,14 @@ export class GameScene extends Scene {
     par!: number;
     guideText!: string;
 
+    strokes: number;
+
     bounds!: PointArr;
     obstacles!: Obstacle[];
 
-    levelIdx: number;
-    strokes: number;
-
-    isPaused: boolean;
-
-    sceneManager: SceneManager;
-
-    constructor(sceneManager: SceneManager, levelIdx = 0) {
-        super();
-        this.sceneManager = sceneManager;
-
-        this.levelIdx = levelIdx;
+    constructor(gameScene: GameScene) {
+        this.gameScene = gameScene;
         this.strokes = 0;
-
-        this.isPaused = false;
-
-        this.loadLevel(getLevel(levelIdx));
     }
 
     /** This method lets the editor inject custom code */
@@ -95,8 +70,6 @@ export class GameScene extends Scene {
         this.drawBorders();
 
         this.checkCollisions();
-
-
         // CAMERA DEBUGGING THING
         // let abs: Camera | Camera['absBounds'] = this.camera;
         // push();
@@ -123,30 +96,12 @@ export class GameScene extends Scene {
         //     let w = ASPECT_WIDTH;
         //     let h = ASPECT_HEIGHT;
         //     rect(- w / 2 + 1, - h / 2 + 1, w - 2, h - 2);
-        // } pop();
+        // } pop(); 
 
-        // HUD
-        push();
-        fill(255);
-        stroke(0);
-        strokeWeight(3);
-
-        // todo: on small screens, text size is not scaled properly
-        textAlign(CENTER);
-        textSize(30);
-        text(this.guideText, 0, 50, width);
-
-        textAlign(LEFT);
-        textSize(20);
-        text(`Stroke: ${this.strokes}\nPar: ${this.par}`, 10, height - 60);
-        pop();
-
-        if (this.isPaused) {
-            this.drawPauseOverlay();
-        }
+        this.drawHUD();
     }
 
-    drawGround() {
+    private drawGround() {
         push();
         // the shadow and grass
         fill(94, 230, 83);
@@ -161,7 +116,7 @@ export class GameScene extends Scene {
     }
 
     /** Draw the white border (it should cover shadows, and so "connect" walls) */
-    drawBorders() {
+    private drawBorders() {
         push();
         noFill();
         strokeWeight(3);
@@ -174,7 +129,7 @@ export class GameScene extends Scene {
         pop();
     }
 
-    drawCamera() {
+    private drawCamera() {
         this.camera.draw();
 
         if (this.ball.canShoot() && this.ball.dragStart) {
@@ -186,15 +141,24 @@ export class GameScene extends Scene {
         }
     }
 
-    drawPauseOverlay() {
+    private drawHUD() {
         push();
-        noStroke();
-        fill(0, 0, 0, 150);
-        rect(0, 0, width, height);
+        fill(255);
+        stroke(0);
+        strokeWeight(3);
+
+        // todo: on small screens, text size is not scaled properly
+        textAlign(CENTER);
+        textSize(30);
+        text(this.guideText, 0, 25, width);
+
+        textAlign(LEFT);
+        textSize(20);
+        text(`Stroke: ${this.strokes}\nPar: ${this.par}`, 10, height - 60);
         pop();
     }
 
-    checkCollisions() {
+    private checkCollisions() {
         for (let c = 0; c < CCD_STEPS; c++) {
             this.ball.update(this.bounds, CCD_STEPS);
 
@@ -206,11 +170,7 @@ export class GameScene extends Scene {
             }
         }
 
-        this.hole.checkBall(this.ball, () => this.nextLevel());
-    }
-
-    nextLevel() {
-        this.sceneManager.nextLevel(this.strokes, this.levelIdx + 1);
+        this.hole.checkBall(this.ball, () => this.gameScene.nextLevel());
     }
 
     debugMousePressed(): void {
@@ -223,14 +183,12 @@ export class GameScene extends Scene {
     }
 
     mousePressed(): void {
-        if (this.isPaused) return;
         if (!this.ball.canShoot()) return;
 
         this.ball.dragStart = createVector(mouseX, mouseY);
     }
 
     mouseReleased(): void {
-        if (this.isPaused) return;
         // either ball in movement, or player hasn't made an input yet
         if (!this.ball.canShoot() || !this.ball.dragStart) return;
 

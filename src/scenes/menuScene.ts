@@ -3,7 +3,7 @@ import { Scene } from "./scene";
 import { SceneManager } from "./sceneManager";
 
 export class MenuScene extends Scene {
-    sceneManager: SceneManager
+    sceneManager: SceneManager;
 
     constructor(sceneManager: SceneManager) {
         super();

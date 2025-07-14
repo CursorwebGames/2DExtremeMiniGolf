@@ -27,6 +27,10 @@ window.mouseReleased = () => {
     sceneManager.scene.mouseReleased();
 };
 
+window.keyPressed = () => {
+    sceneManager.scene.keyPressed();
+};
+
 
 // why?
 window.touchStarted = window.mousePressed;
