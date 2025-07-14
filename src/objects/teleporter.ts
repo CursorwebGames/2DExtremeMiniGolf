@@ -15,6 +15,8 @@ export class Teleporter implements Obstacle<null | "end" | "start"> {
      */
     hasTeleportedTo: null | "end" | "start";
 
+    portalTick: number[];
+
     /**
      * When ball touches the start portal, we teleport them to the end portal, and we set end portal as the checker: the person it can't go into
      * Start = orange
@@ -30,6 +32,7 @@ export class Teleporter implements Obstacle<null | "end" | "start"> {
         // which portal it should be touching
         // at the end
         this.hasTeleportedTo = null;
+        this.portalTick = [0, -10, -20];
     }
 
     draw() {
@@ -50,10 +53,17 @@ export class Teleporter implements Obstacle<null | "end" | "start"> {
         stroke(219, 141, 15);
         circle(this.start.x, this.start.y, this.r * 2);
 
+        // 2: stroke weight, 5: gap
+        const diam = this.r * 2 - 2 + 5;
+
         for (let i = 0; i < 3; i++) {
-            const r = constrain((frameCount / 3 - 10 * i) % (this.r * 2), 0, this.r * 2);
+            this.portalTick[i] += 0.3;
+            this.portalTick[i] %= diam;
+            let tick = max(this.portalTick[i], 0);
+
+            const r = tick;
             if (r > 0) {
-                strokeWeight(1 * (1 - r / (this.r * 2)));
+                strokeWeight(1 - r / diam);
                 stroke(219, 141, 15);
                 circle(this.start.x, this.start.y, r);
                 stroke(123, 123, 255);

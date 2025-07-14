@@ -27,14 +27,11 @@ export class MainBall extends Ball {
 
         if (!this.dragStart && this.vel.mag() == 0) {
             this.idleTick += 0.2;
+            // wait for another 25 - 15 = 10 ticks
+            this.idleTick %= 25;
+
             const tick = this.idleTick;
-
-            // wait for another 10 ticks
-            if (this.idleTick > 25) {
-                this.idleTick = 0;
-            }
-
-            if (this.idleTick < 15) {
+            if (tick < 15) {
                 noFill();
                 stroke(255, sin(((tick - 1) / 15) * PI) * 128);
                 strokeWeight(1 + 0.5 * sin((tick / 7.5 - 0.5) * PI));
