@@ -2,12 +2,18 @@ import { circCircCol } from "../collisions";
 import { Ball } from "./ball";
 import { Obstacle } from "./obstacle";
 
+const PORTAL_SPEED = 0.3;
+const GAP = 10;
+
 export class Teleporter implements Obstacle<null | "end" | "start"> {
     start: p5.Vector;
     end: p5.Vector;
     r: number;
 
     /**
+     * Stores which portal the ball should have teleported to,
+     * and thus should be touching at the end of the sequence
+     * 
      * Possible values:
      * * `null` - hasn't teleported anywhere recently
      * * `end` - teleported to end
@@ -29,10 +35,10 @@ export class Teleporter implements Obstacle<null | "end" | "start"> {
         this.end = createVector(ex, ey);
         this.r = 14;
 
-        // which portal it should be touching
-        // at the end
         this.hasTeleportedTo = null;
-        this.portalTick = [0, -10, -20];
+
+        // todo: i hate this implementation
+        this.portalTick = [0, -GAP, -2 * GAP];
     }
 
     draw() {
@@ -53,11 +59,11 @@ export class Teleporter implements Obstacle<null | "end" | "start"> {
         stroke(219, 141, 15);
         circle(this.start.x, this.start.y, this.r * 2);
 
-        // 2: stroke weight, 5: gap
-        const diam = this.r * 2 - 2 + 5;
+        // 2: stroke weight
+        const diam = this.r * 2 - 2 + GAP / 2;
 
         for (let i = 0; i < 3; i++) {
-            this.portalTick[i] += 0.3;
+            this.portalTick[i] += PORTAL_SPEED;
             this.portalTick[i] %= diam;
             let tick = max(this.portalTick[i], 0);
 
