@@ -28,8 +28,8 @@ export class SingleUI implements UIComponent, UISerializable {
         this.obj.pos = knot.pos.copy();
     }
 
-    toJSON(): StaticObjData {
-        const name = nameMap[this.obj.constructor.name];
+    toJSON(ctor = this.obj.constructor.name): StaticObjData {
+        const name = nameMap[ctor];
         const pos = this.knot.pos;
 
         return [name, [pos.x, pos.y]];

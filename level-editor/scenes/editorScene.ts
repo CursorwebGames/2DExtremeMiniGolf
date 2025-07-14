@@ -7,6 +7,7 @@ import { EditorCamera } from "../editorCamera";
 
 import { Knot } from "../ui/knot";
 import { LevelBoundsUI } from "../ui/levelBoundsUI";
+import { MainBallUI } from "../ui/mainBallUI";
 import { PolygonComponent } from "../ui/PolygonComponent";
 import { SingleUI } from "../ui/singleUI";
 import { UIComponent, UISerializable } from "../ui/UIComponent";
@@ -31,7 +32,7 @@ export class EditorScene extends Scene {
         this.levelBounds = new LevelBoundsUI(this);
 
         this.hole = new SingleUI(new Hole(width - 100, height - 100), this);
-        this.ball = new SingleUI(new MainBall(100, 100), this);
+        this.ball = new MainBallUI(new MainBall(100, 100), this);
 
         this.staticUIs = [];
 
