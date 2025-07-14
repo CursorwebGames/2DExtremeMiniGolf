@@ -157,7 +157,7 @@ export class EditorScene extends Scene {
             bounds: this.levelBounds.toJSON(),
             obstacles: this.staticUIs.map(ui => ui.toJSON()),
             par: 0
-        }
+        };
 
         return level;
     }

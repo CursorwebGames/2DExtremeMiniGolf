@@ -36,6 +36,8 @@ export class GameScene extends Scene {
     levelIdx: number;
     strokes: number;
 
+    isPaused: boolean;
+
     sceneManager: SceneManager;
 
     constructor(sceneManager: SceneManager, levelIdx = 0) {
@@ -45,10 +47,12 @@ export class GameScene extends Scene {
         this.levelIdx = levelIdx;
         this.strokes = 0;
 
+        this.isPaused = false;
+
         this.loadLevel(getLevel(levelIdx));
     }
 
-    /** This way the editor is able to inject custom code */
+    /** This method lets the editor inject custom code */
     loadLevel(level: LevelData | null) {
         if (level == null) return;
 
@@ -91,7 +95,35 @@ export class GameScene extends Scene {
         this.drawBorders();
 
         this.checkCollisions();
+
+
+        // CAMERA DEBUGGING THING
+        // let abs: Camera | Camera['absBounds'] = this.camera;
+        // push();
+        // noFill();
+        // strokeWeight(1);
+        // stroke('red');
+        // rect(abs.minx, abs.miny, abs.maxx - abs.minx, abs.maxy - abs.miny);
+
+        // abs = this.camera.absBounds;
+        // stroke('black');
+        // rect(abs.minx, abs.miny, abs.maxx - abs.minx, abs.maxy - abs.miny);
+
+        // stroke('blue');
+        // strokeWeight(5);
+        // point(this.camera.pos.x, this.camera.pos.y);
+        // pop();
+
         pop();
+
+        // push(); {
+        //     translate(width / 2, height / 2);
+        //     scale(this.camera.aspectScale);
+        //     stroke('white');
+        //     let w = ASPECT_WIDTH;
+        //     let h = ASPECT_HEIGHT;
+        //     rect(- w / 2 + 1, - h / 2 + 1, w - 2, h - 2);
+        // } pop();
 
         // HUD
         push();
@@ -102,12 +134,16 @@ export class GameScene extends Scene {
         // todo: on small screens, text size is not scaled properly
         textAlign(CENTER);
         textSize(30);
-        text(this.guideText, width / 2, 50);
+        text(this.guideText, 0, 50, width);
 
         textAlign(LEFT);
         textSize(20);
         text(`Stroke: ${this.strokes}\nPar: ${this.par}`, 10, height - 60);
         pop();
+
+        if (this.isPaused) {
+            this.drawPauseOverlay();
+        }
     }
 
     drawGround() {
@@ -150,6 +186,14 @@ export class GameScene extends Scene {
         }
     }
 
+    drawPauseOverlay() {
+        push();
+        noStroke();
+        fill(0, 0, 0, 150);
+        rect(0, 0, width, height);
+        pop();
+    }
+
     checkCollisions() {
         for (let c = 0; c < CCD_STEPS; c++) {
             this.ball.update(this.bounds, CCD_STEPS);
@@ -179,12 +223,14 @@ export class GameScene extends Scene {
     }
 
     mousePressed(): void {
+        if (this.isPaused) return;
         if (!this.ball.canShoot()) return;
 
         this.ball.dragStart = createVector(mouseX, mouseY);
     }
 
     mouseReleased(): void {
+        if (this.isPaused) return;
         // either ball in movement, or player hasn't made an input yet
         if (!this.ball.canShoot() || !this.ball.dragStart) return;
 
