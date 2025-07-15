@@ -22,7 +22,9 @@ export class PauseMenu {
         this.pauseBtnArea = new BtnRectArea(width - 30 - 10 - 2, 10 - 2, 30 + 4, 30 + 4);
         this.optionBtns = [
             new MenuBtn("Resume", width / 2 - 100, height / 2, 200, 50, () => {
-                this.isPaused = false;
+            }),
+            new MenuBtn("Restart", width / 2 - 100, height / 2 + 100, 200, 50, () => {
+                this.gameScene.restartLevel();
             })
         ];
     }
@@ -90,7 +92,6 @@ export class PauseMenu {
             for (const btn of this.optionBtns) {
                 if (btn.mouseOver()) {
                     btn.onClick();
-                    return;
                 }
             }
             this.isPaused = false;

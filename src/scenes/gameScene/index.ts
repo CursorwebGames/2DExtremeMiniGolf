@@ -23,6 +23,8 @@ export class GameScene extends Scene {
     gameRenderer: GameRenderer;
     pauseMenu: PauseMenu;
 
+    retries: number;
+
     levelIdx: number;
 
     constructor(sceneManager: SceneManager, levelIdx = 0) {
@@ -30,6 +32,8 @@ export class GameScene extends Scene {
         this.sceneManager = sceneManager;
         this.gameRenderer = new GameRenderer(() => this.nextLevel());
         this.pauseMenu = new PauseMenu(this);
+
+        this.retries = 0;
 
         this.levelIdx = levelIdx;
 
@@ -46,9 +50,18 @@ export class GameScene extends Scene {
         this.pauseMenu.draw();
     }
 
-
     nextLevel() {
-        this.sceneManager.nextLevel(this.gameRenderer.strokes, this.levelIdx + 1);
+        this.sceneManager.nextLevel({
+            strokes: this.gameRenderer.strokes,
+            retries: this.retries
+        }, this.levelIdx + 1);
+    }
+
+    restartLevel() {
+        this.gameRenderer = new GameRenderer(() => this.nextLevel());
+        this.loadLevel(getLevel(this.levelIdx));
+
+        this.retries++;
     }
 
     mousePressed(): void {

@@ -1,6 +1,7 @@
 import { levelExists } from "../levels/levels";
 import { EndScene } from "./endScene";
 import { GameScene } from "./gameScene";
+import { MenuScene } from "./menuScene";
 import { Scene } from "./scene";
 import { Transition } from "./transitionManager";
 
@@ -13,7 +14,7 @@ export class SceneManager {
     stats: StatsManager;
 
     constructor() {
-        this.scene = new GameScene(this, 0)//new MenuScene(this);
+        this.scene = new MenuScene(this);
         this.transitionManager = new Transition();
         this.stats = new StatsManager();
     }
@@ -29,8 +30,8 @@ export class SceneManager {
         });
     }
 
-    nextLevel(strokes: number, nextLevelIdx: number) {
-        this.stats.recordLevelStats(strokes);
+    nextLevel(levelStats: LevelStats, nextLevelIdx: number) {
+        this.stats.recordLevelStats(levelStats);
         if (levelExists(nextLevelIdx)) {
             const scene = new GameScene(this, nextLevelIdx);
             this.setScene(scene);
@@ -41,20 +42,32 @@ export class SceneManager {
     }
 }
 
+
+/**
+ * Statistics given to StatsManager at the completion of each level
+ */
+export interface LevelStats {
+    strokes: number;
+    retries: number;
+}
+
 class StatsManager {
     holeInOnes: number;
     totalStrokes: number;
+    retries: number;
 
     constructor() {
         this.holeInOnes = 0;
         this.totalStrokes = 0;
+        this.retries = 0;
     }
 
-    recordLevelStats(strokes: number) {
+    recordLevelStats({ strokes, retries }: LevelStats) {
         if (strokes == 1) {
             this.holeInOnes++;
         }
 
+        this.retries += retries;
         this.totalStrokes += strokes;
     }
 }
