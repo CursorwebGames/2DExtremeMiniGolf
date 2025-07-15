@@ -21,8 +21,8 @@ export class PauseMenu {
     private drawPauseUI() {
         push();
         // fill(255, 0, 0);
-        // rect(width - 40, 10, 30, 30);
-        if (pointRectCol(mouseX, mouseY, width - 40, 10, 30, 30)) {
+        // rect(width - 40 - 2, 10 - 2, 30 + 4, 30 + 4);
+        if (pointRectCol(mouseX, mouseY, width - 40 - 2, 10 - 2, 30 + 4, 30 + 4)) {
             fill(180);
         } else {
             fill(255);
@@ -46,6 +46,8 @@ export class PauseMenu {
         stroke(100);
         textAlign(CENTER);
         text("PAUSED", width / 2, 100);
+
+        text(`level: ${this.gameScene.levelIdx}`, width / 2, height / 2);
         pop();
     }
 
@@ -62,9 +64,11 @@ export class PauseMenu {
 
     mousePressed() {
         if (!this.isPaused) {
-            if (pointRectCol(mouseX, mouseY, width - 40, 10, 30, 30)) {
+            if (pointRectCol(mouseX, mouseY, width - 40 - 2, 10 - 2, 30 + 4, 30 + 4)) {
                 this.isPaused = true;
             }
+        } else {
+            this.isPaused = false;
         }
     }
 }
