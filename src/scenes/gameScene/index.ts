@@ -69,6 +69,7 @@ export class GameScene extends Scene {
     }
 
     windowResized(): void {
+        this.pauseMenu.windowResized();
         this.gameRenderer.windowResized();
     }
 }

@@ -1,13 +1,30 @@
 import { GameScene } from ".";
-import { pointRectCol } from "../../collisions";
+import { BtnRectArea } from "../../buttons/btnArea";
+import { Button } from "../../buttons/button";
+import { MenuBtn } from "../../buttons/menuBtn";
 
 export class PauseMenu {
     gameScene: GameScene;
     isPaused: boolean;
 
+    pauseBtnArea!: BtnRectArea;
+    optionBtns!: Button[];
+
     constructor(gameScene: GameScene) {
         this.gameScene = gameScene;
         this.isPaused = false;
+
+        this.initBtns();
+    }
+
+    initBtns() {
+        // strokeWeight = 4, width = 30, gap = 10
+        this.pauseBtnArea = new BtnRectArea(width - 30 - 10 - 2, 10 - 2, 30 + 4, 30 + 4);
+        this.optionBtns = [
+            new MenuBtn("Resume", width / 2 - 100, height / 2, 200, 50, () => {
+                this.isPaused = false;
+            })
+        ];
     }
 
     draw() {
@@ -20,9 +37,7 @@ export class PauseMenu {
 
     private drawPauseUI() {
         push();
-        // fill(255, 0, 0);
-        // rect(width - 40 - 2, 10 - 2, 30 + 4, 30 + 4);
-        if (pointRectCol(mouseX, mouseY, width - 40 - 2, 10 - 2, 30 + 4, 30 + 4)) {
+        if (this.pauseBtnArea.mouseOver()) {
             fill(180);
         } else {
             fill(255);
@@ -48,6 +63,10 @@ export class PauseMenu {
         text("PAUSED", width / 2, 100);
 
         text(`level: ${this.gameScene.levelIdx}`, width / 2, height / 2);
+
+        for (const btn of this.optionBtns) {
+            btn.draw();
+        }
         pop();
     }
 
@@ -64,11 +83,21 @@ export class PauseMenu {
 
     mousePressed() {
         if (!this.isPaused) {
-            if (pointRectCol(mouseX, mouseY, width - 40 - 2, 10 - 2, 30 + 4, 30 + 4)) {
+            if (this.pauseBtnArea.mouseOver()) {
                 this.isPaused = true;
             }
         } else {
+            for (const btn of this.optionBtns) {
+                if (btn.mouseOver()) {
+                    btn.onClick();
+                    return;
+                }
+            }
             this.isPaused = false;
         }
+    }
+
+    windowResized() {
+        this.initBtns();
     }
 }
