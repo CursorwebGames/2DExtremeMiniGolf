@@ -1,4 +1,3 @@
-import { GameScene } from ".";
 import { Camera } from "../../camera";
 import { CCD_STEPS, MAX_SPEED, MIN_INPUT_SPEED, VISUAL_SPEED } from "../../config";
 import { LevelData, levelToObject } from "../../levels/levels";
@@ -7,7 +6,7 @@ import { MainBall } from "../../objects/mainBall";
 import { Obstacle } from "../../objects/obstacle";
 
 export class GameRenderer {
-    gameScene: GameScene;
+    nextLevel: () => void;
 
     camera!: Camera;
 
@@ -22,8 +21,8 @@ export class GameRenderer {
     bounds!: PointArr;
     obstacles!: Obstacle[];
 
-    constructor(gameScene: GameScene) {
-        this.gameScene = gameScene;
+    constructor(nextLevel: () => void) {
+        this.nextLevel = nextLevel;
         this.strokes = 0;
     }
 
@@ -150,7 +149,7 @@ export class GameRenderer {
         // todo: on small screens, text size is not scaled properly
         textAlign(CENTER);
         textSize(30);
-        text(this.guideText, 0, 25, width);
+        text(this.guideText, 0, 50, width);
 
         textAlign(LEFT);
         textSize(20);
@@ -170,7 +169,7 @@ export class GameRenderer {
             }
         }
 
-        this.hole.checkBall(this.ball, () => this.gameScene.nextLevel());
+        this.hole.checkBall(this.ball, () => this.nextLevel());
     }
 
     debugMousePressed(): void {

@@ -23,19 +23,15 @@ export class GameScene extends Scene {
     gameRenderer: GameRenderer;
     pauseMenu: PauseMenu;
 
-    isPaused: boolean;
-
     levelIdx: number;
 
     constructor(sceneManager: SceneManager, levelIdx = 0) {
         super();
         this.sceneManager = sceneManager;
-        this.gameRenderer = new GameRenderer(this);
+        this.gameRenderer = new GameRenderer(() => this.nextLevel());
         this.pauseMenu = new PauseMenu(this);
 
         this.levelIdx = levelIdx;
-
-        this.isPaused = !false;
 
         this.loadLevel(getLevel(levelIdx));
     }
@@ -47,10 +43,7 @@ export class GameScene extends Scene {
 
     draw() {
         this.gameRenderer.draw();
-
-        if (this.isPaused) {
-            this.pauseMenu.draw();
-        }
+        this.pauseMenu.draw();
     }
 
 
@@ -59,28 +52,20 @@ export class GameScene extends Scene {
     }
 
     mousePressed(): void {
-        if (this.isPaused) {
-        } else {
+        this.pauseMenu.mousePressed();
+        if (!this.pauseMenu.isPaused) {
             this.gameRenderer.mousePressed();
         }
     }
 
     mouseReleased(): void {
-        if (this.isPaused) {
-        } else {
+        if (!this.pauseMenu.isPaused) {
             this.gameRenderer.mouseReleased();
         }
     }
 
     keyPressed(): void {
-        if (key == "Escape") {
-            this.isPaused = !this.isPaused;
-
-            // todo: pause updating
-            if (this.isPaused) {
-                this.gameRenderer.ball.dragStart = null;
-            }
-        }
+        this.pauseMenu.keyPressed();
     }
 
     windowResized(): void {

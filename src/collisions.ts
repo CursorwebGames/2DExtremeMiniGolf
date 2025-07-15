@@ -43,15 +43,21 @@ export function circLineCol(circPoint: p5.Vector, r: number, startPoint: p5.Vect
     }
 }
 
-/** All objects are optional because `let { projPoint } = false;` means `projPoint` is `undefined` */
+/** All properties are optional because `let { projPoint } = false;` means `projPoint` is `undefined` */
 export type CircPolyColResult = {
+    /**
+     * Where on the edge of the polygon the center of the circle collided with
+     */
     projPoint?: p5.Vector;
+
+    /**
+     * The specific edge of the polygon that the circle collided with
+     */
     edge?: p5.Vector;
 };
 
 export type MaybeCircPolyColResult = false | CircPolyColResult;
 
-// points: [int, int][]
 export function circPolyCol(circPoint: p5.Vector, r: number, points: PointArr): MaybeCircPolyColResult {
     for (let i = 0; i < points.length; i++) {
         const n = (i + 1) % points.length;
@@ -68,9 +74,11 @@ export function circPolyCol(circPoint: p5.Vector, r: number, points: PointArr): 
     return false;
 }
 
+/** 
+ * check if the point is actually in the polygon
+ * as circPolyCol only checks edges
+ */
 export function pointPolyCol(point: p5.Vector, points: PointArr) {
-    // check if the point is actually in the circle
-    // as circPolyCol only checks edges
     let collide = false;
 
     const px = point.x;
@@ -91,4 +99,8 @@ export function pointPolyCol(point: p5.Vector, points: PointArr) {
     }
 
     return collide;
+}
+
+export function pointRectCol(px: number, py: number, x: number, y: number, w: number, h: number) {
+    return px >= x && py >= y && px <= x + w && py <= y + h;
 }
