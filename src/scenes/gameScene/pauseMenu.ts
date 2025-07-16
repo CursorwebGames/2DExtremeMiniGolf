@@ -3,6 +3,8 @@ import { BtnRectArea } from "../../buttons/btnArea";
 import { Button } from "../../buttons/button";
 import { MenuBtn } from "../../buttons/menuBtn";
 
+let frate = 0;
+
 export class PauseMenu {
     gameScene: GameScene;
     isPaused: boolean;
@@ -21,15 +23,21 @@ export class PauseMenu {
         // strokeWeight = 4, width = 30, gap = 10
         this.pauseBtnArea = new BtnRectArea(width - 30 - 10 - 2, 10 - 2, 30 + 4, 30 + 4);
         this.optionBtns = [
-            new MenuBtn("Resume", width / 2 - 100, height / 2, 200, 50, () => {
+            new MenuBtn("Resume", width / 2, height / 4 + 50, () => {
             }),
-            new MenuBtn("Restart", width / 2 - 100, height / 2 + 100, 200, 50, () => {
+            new MenuBtn("Restart", width / 2, height / 4 + 140, () => {
                 this.gameScene.restartLevel();
             })
         ];
     }
 
     draw() {
+        fill(255);
+        textSize(50);
+        if (frameCount % 5 == 0) {
+            frate = frameRate();
+        }
+        text(frate.toFixed(), 0, 50);
         if (this.isPaused) {
             this.drawPauseOverlay();
         } else {
@@ -46,8 +54,8 @@ export class PauseMenu {
         }
         strokeWeight(4);
         stroke(0);
-        rect(width - 40, 10, 10, 30);
-        rect(width - 20, 10, 10, 30);
+        rect(width - 30, 10, 10, 20);
+        rect(width - 20, 10, 10, 20);
         pop();
     }
 
@@ -64,7 +72,8 @@ export class PauseMenu {
         textAlign(CENTER);
         text("PAUSED", width / 2, 100);
 
-        text(`level: ${this.gameScene.levelIdx}`, width / 2, height / 2);
+        textSize(30);
+        text(`level: ${this.gameScene.levelIdx}`, width / 2, height / 2 - 200);
 
         for (const btn of this.optionBtns) {
             btn.draw();

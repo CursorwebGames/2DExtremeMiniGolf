@@ -12,10 +12,14 @@ export class MenuBtn implements Button {
 
     onClick: () => void;
 
-    constructor(text: string, x: number, y: number, w: number, h: number, onClick: () => void) {
+    constructor(text: string, x: number, y: number, onClick: () => void) {
         this.text = text;
-        this.x = x;
-        this.y = y;
+
+        const h = 70;
+        const w = 500;
+
+        this.x = x - w / 2;
+        this.y = y - h / 2;
         this.w = w;
         this.h = h;
         this.onClick = onClick;
@@ -26,6 +30,8 @@ export class MenuBtn implements Button {
     }
 
     draw(): void {
+        strokeWeight(4);
+        stroke(70);
         if (this.mouseOver()) {
             fill(0, 0, 0, 200);
         } else {
