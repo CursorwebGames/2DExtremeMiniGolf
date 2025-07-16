@@ -23,7 +23,7 @@ export const nameToObj = {
     Teleporter,
     Wall,
     Water
-} as const;
+};
 
 /**
  * Creates an "array"-like constructor call, e.g.

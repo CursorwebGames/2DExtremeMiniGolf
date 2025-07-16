@@ -4,7 +4,7 @@ import { Slope } from "../../src/objects/slope";
 import { Wall } from "../../src/objects/wall";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
-import { objToName } from "./UINameMap";
+import { objToName } from "./objToName";
 import { UIComponent, UISerializable } from "./UIComponent";
 
 type RectUIObj = Wall | Ice | Slope;

@@ -4,7 +4,7 @@ import { Bouncer } from "../../src/objects/bouncer";
 import { Hole } from "../../src/objects/hole";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
-import { objToName } from "./UINameMap";
+import { objToName } from "./objToName";
 import { UIComponent, UISerializable } from "./UIComponent";
 
 type SingleUIObj = Ball | Hole | Bouncer;

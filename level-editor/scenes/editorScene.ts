@@ -5,7 +5,6 @@ import { Obstacle } from "../../src/objects/obstacle";
 import { Scene } from "../../src/scenes/scene";
 
 import { EditorCamera } from "../editorCamera";
-import { nameToUI } from "../html/objTemplates";
 
 import { Knot } from "../ui/knot";
 import { LevelBoundsUI } from "../ui/levelBoundsUI";
@@ -13,6 +12,7 @@ import { MainBallUI } from "../ui/mainBallUI";
 import { PolygonComponent } from "../ui/PolygonComponent";
 import { SingleUI } from "../ui/singleUI";
 import { UIComponent, UISerializable } from "../ui/UIComponent";
+import { nameToUI } from "../ui/nameToUI";
 
 
 export class EditorScene extends Scene {
@@ -43,10 +43,10 @@ export class EditorScene extends Scene {
         this.currEditPolygon = null;
     }
 
-    // todo: questionable memory safety
     importLevel(level: LevelData) {
         // we will provide our own knots
         this.knots = [];
+        this.obstacleUIs = [];
 
         this.hole = new SingleUI(new Hole(...level.hole), this);
         this.ball = new MainBallUI(new MainBall(...level.ball), this);
@@ -55,7 +55,7 @@ export class EditorScene extends Scene {
             const clsUI = nameToUI[name];
             const clsObj = nameToObj[name] as new (...p: typeof args) => Obstacle;
 
-            const obstacleUI = new clsUI(new clsObj(...args));
+            const obstacleUI = new clsUI(new clsObj(...args), this);
 
             this.obstacleUIs.push(obstacleUI);
         }

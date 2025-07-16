@@ -3,7 +3,9 @@ import { StaticObjData } from "../../src/levels/levels";
 
 /**
  * UI   == canvas ui
+ * 
  * HTML == html
+ * 
  * obj  == gameObject
  */
 export interface UIComponent {

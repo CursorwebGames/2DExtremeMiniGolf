@@ -4,7 +4,7 @@ import { Sand } from "../../src/objects/sand";
 import { Water } from "../../src/objects/water";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
-import { objToName } from "./UINameMap";
+import { objToName } from "./objToName";
 import { PolygonComponent } from "./PolygonComponent";
 import { UISerializable } from "./UIComponent";
 

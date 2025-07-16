@@ -2,7 +2,7 @@ import { StaticObjData } from "../../src/levels/levels";
 import { Teleporter } from "../../src/objects/teleporter";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
-import { objToName } from "./UINameMap";
+import { objToName } from "./objToName";
 import { UIComponent, UISerializable } from "./UIComponent";
 
 export class TeleporterUI implements UIComponent, UISerializable {
