@@ -1,3 +1,4 @@
+import { getLevel } from "../../src/levels/levels";
 import { EditorManager } from "../editorManager";
 import { EditorScene } from "../scenes/editorScene";
 import { createHTML, objTemplates } from "./objTemplates";
@@ -17,6 +18,9 @@ export class HTMLManager {
     exportTextarea: HTMLTextAreaElement;
     copyExportBtn: HTMLButtonElement;
 
+    importIdxInput: HTMLInputElement;
+    importLevelBtn: HTMLButtonElement;
+
     constructor(editor: EditorManager) {
         this.editorManager = editor;
 
@@ -30,6 +34,9 @@ export class HTMLManager {
         this.exportBtn = document.querySelector(".export-btn")!;
         this.exportTextarea = document.querySelector(".export-text")!;
         this.copyExportBtn = document.querySelector(".copy-export-btn")!;
+
+        this.importIdxInput = document.querySelector(".import-idx")!;
+        this.importLevelBtn = document.querySelector(".import-level")!;
     }
 
     init() {
@@ -48,6 +55,8 @@ export class HTMLManager {
 
         this.exportBtn.addEventListener("click", () => this.exportLevel());
         this.copyExportBtn.addEventListener("click", async () => await this.copyExport());
+
+        this.importLevelBtn.addEventListener("click", () => this.importLevel());
     }
 
     private createObjPalette() {
@@ -61,7 +70,7 @@ export class HTMLManager {
                 if (!(editorScene instanceof EditorScene)) return;
 
                 const ui = template.createUI(editorScene.camera.pos.x, editorScene.camera.pos.y, editorScene);
-                editorScene.staticUIs.push(ui);
+                editorScene.obstacleUIs.push(ui);
 
                 const create = template.createHTML || createHTML;
                 const el = create(ui, template.name, editorScene);
@@ -85,6 +94,21 @@ export class HTMLManager {
 },`;
 
         this.exportTextarea.value = out;
+    }
+
+    private importLevel() {
+        const levelIdx = Number(this.importIdxInput.value);
+        const level = getLevel(levelIdx);
+
+        // guarantee that we are in editorScene
+        if (!(this.editorManager.scene instanceof EditorScene)) {
+            this.editorManager.togglePlayMode();
+        }
+
+        const scene = this.editorManager.scene as EditorScene;
+        if (level) {
+            scene.importLevel(level);
+        }
     }
 
     private formatJSON(json: object) {

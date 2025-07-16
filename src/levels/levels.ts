@@ -14,7 +14,7 @@ import { Obstacle } from "../objects/obstacle";
  * `[Bouncer] => mangled class object`
  */
 // *clever* abuse of syntax: Bouncer (as the key) is the string, but Bouncer (as the value) is a class!
-export const staticObjMap = {
+export const nameToObj = {
     Bouncer,
     Ice,
     PolygonWall,
@@ -32,11 +32,7 @@ export const staticObjMap = {
  * ["PolygonWall", [[10, 20], [30, 40]]]
  * ```
  */
-export type StaticObjData = [keyof typeof staticObjMap, (number | PointArr | [number, number])[]]
-// export type StaticObjData = {
-//     // ["Bouncer", [x: int, y: int]]
-//     [K in keyof typeof staticObjMap]: [K, ConstructorParameters<typeof staticObjMap[K]>]
-// }[keyof typeof staticObjMap];
+export type StaticObjData = [keyof typeof nameToObj, (number | PointArr | [number, number])[]];
 
 export interface LevelData {
     ball: [number, number],
@@ -63,6 +59,6 @@ export function levelToObject(obj: StaticObjData) {
     const [className, params] = obj;
 
     // TODO: ask stack overflow for help
-    const Cls = staticObjMap[className] as new (...p: typeof params) => Obstacle;
+    const Cls = nameToObj[className] as new (...p: typeof params) => Obstacle;
     return new Cls(...params);
 }

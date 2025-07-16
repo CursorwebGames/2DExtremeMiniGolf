@@ -3,13 +3,16 @@ import { PolygonComponent } from "./PolygonComponent";
 import { UIComponent } from "./UIComponent";
 
 export class LevelBoundsUI extends PolygonComponent implements UIComponent {
-    constructor(editor: EditorScene) {
-        super(editor, [
-            [0, 0],
-            [width, 0],
-            [width, height],
-            [0, height]
-        ]);
+    constructor(editor: EditorScene, bounds?: PointArr) {
+        if (!bounds) {
+            bounds = [
+                [0, 0],
+                [width, 0],
+                [width, height],
+                [0, height]
+            ];
+        }
+        super(editor, bounds);
     }
 
     draw() {

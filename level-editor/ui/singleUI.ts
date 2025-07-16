@@ -4,7 +4,7 @@ import { Bouncer } from "../../src/objects/bouncer";
 import { Hole } from "../../src/objects/hole";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
-import { nameMap } from "./nameMap";
+import { objToName } from "./UINameMap";
 import { UIComponent, UISerializable } from "./UIComponent";
 
 type SingleUIObj = Ball | Hole | Bouncer;
@@ -29,7 +29,7 @@ export class SingleUI implements UIComponent, UISerializable {
     }
 
     toJSON(ctor = this.obj.constructor.name): StaticObjData {
-        const name = nameMap[ctor];
+        const name = objToName[ctor];
         const pos = this.knot.pos;
 
         return [name, [pos.x, pos.y]];

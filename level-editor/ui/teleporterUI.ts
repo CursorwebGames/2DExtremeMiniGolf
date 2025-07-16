@@ -2,7 +2,7 @@ import { StaticObjData } from "../../src/levels/levels";
 import { Teleporter } from "../../src/objects/teleporter";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
-import { nameMap } from "./nameMap";
+import { objToName } from "./UINameMap";
 import { UIComponent, UISerializable } from "./UIComponent";
 
 export class TeleporterUI implements UIComponent, UISerializable {
@@ -32,7 +32,7 @@ export class TeleporterUI implements UIComponent, UISerializable {
     }
 
     toJSON(): StaticObjData {
-        const name = nameMap[this.obj.constructor.name];
+        const name = objToName[this.obj.constructor.name];
         const start = this.startKnot.pos;
         const end = this.endKnot.pos;
 

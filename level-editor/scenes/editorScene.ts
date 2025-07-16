@@ -1,9 +1,11 @@
-import { LevelData } from "../../src/levels/levels";
+import { LevelData, nameToObj } from "../../src/levels/levels";
 import { Hole } from "../../src/objects/hole";
 import { MainBall } from "../../src/objects/mainBall";
+import { Obstacle } from "../../src/objects/obstacle";
 import { Scene } from "../../src/scenes/scene";
 
 import { EditorCamera } from "../editorCamera";
+import { nameToUI } from "../html/objTemplates";
 
 import { Knot } from "../ui/knot";
 import { LevelBoundsUI } from "../ui/levelBoundsUI";
@@ -18,7 +20,7 @@ export class EditorScene extends Scene {
 
     ball: SingleUI;
     hole: SingleUI;
-    staticUIs: UISerializable[];
+    obstacleUIs: UISerializable[];
     currEditPolygon: PolygonComponent | null;
 
     camera: EditorCamera;
@@ -34,11 +36,32 @@ export class EditorScene extends Scene {
         this.hole = new SingleUI(new Hole(width - 100, height - 100), this);
         this.ball = new MainBallUI(new MainBall(100, 100), this);
 
-        this.staticUIs = [];
+        this.obstacleUIs = [];
 
         this.camera = new EditorCamera();
 
         this.currEditPolygon = null;
+    }
+
+    // todo: questionable memory safety
+    importLevel(level: LevelData) {
+        // we will provide our own knots
+        this.knots = [];
+
+        this.hole = new SingleUI(new Hole(...level.hole), this);
+        this.ball = new MainBallUI(new MainBall(...level.ball), this);
+
+        for (const [name, args] of level.obstacles) {
+            const clsUI = nameToUI[name];
+            const clsObj = nameToObj[name] as new (...p: typeof args) => Obstacle;
+
+            const obstacleUI = new clsUI(new clsObj(...args));
+
+            this.obstacleUIs.push(obstacleUI);
+        }
+
+        this.levelBounds = new LevelBoundsUI(this, level.bounds);
+        console.log(this.knots);
     }
 
     draw() {
@@ -52,7 +75,7 @@ export class EditorScene extends Scene {
         this.hole.draw();
         this.ball.draw();
 
-        for (const obj of this.staticUIs) {
+        for (const obj of this.obstacleUIs) {
             obj.draw();
         }
         pop();
@@ -82,7 +105,7 @@ export class EditorScene extends Scene {
     }
 
     removeUI(ui: UISerializable) {
-        const idx = this.staticUIs.indexOf(ui);
+        const idx = this.obstacleUIs.indexOf(ui);
 
         // todo: create a cleanup function
         for (const knot of this.knots) {
@@ -91,7 +114,7 @@ export class EditorScene extends Scene {
             }
         }
 
-        this.staticUIs.splice(idx, 1);
+        this.obstacleUIs.splice(idx, 1);
     }
 
     mousePressed() {
@@ -155,7 +178,7 @@ export class EditorScene extends Scene {
             ball: [this.ball.knot.pos.x, this.ball.knot.pos.y],
             hole: [this.hole.knot.pos.x, this.hole.knot.pos.y],
             bounds: this.levelBounds.toJSON(),
-            obstacles: this.staticUIs.map(ui => ui.toJSON()),
+            obstacles: this.obstacleUIs.map(ui => ui.toJSON()),
             par: 0
         };
 

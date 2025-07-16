@@ -4,7 +4,7 @@ import { Slope } from "../../src/objects/slope";
 import { Wall } from "../../src/objects/wall";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
-import { nameMap } from "./nameMap";
+import { objToName } from "./UINameMap";
 import { UIComponent, UISerializable } from "./UIComponent";
 
 type RectUIObj = Wall | Ice | Slope;
@@ -57,7 +57,7 @@ export class RectUI implements UIComponent, UISerializable {
     }
 
     toJSON(): StaticObjData {
-        const name = nameMap[this.obj.constructor.name];
+        const name = objToName[this.obj.constructor.name];
         const pos = this.posKnot.pos;
 
         const width = this.dimKnot.pos.x - pos.x;

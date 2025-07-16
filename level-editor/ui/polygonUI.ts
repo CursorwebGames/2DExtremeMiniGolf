@@ -4,7 +4,7 @@ import { Sand } from "../../src/objects/sand";
 import { Water } from "../../src/objects/water";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
-import { nameMap } from "./nameMap";
+import { objToName } from "./UINameMap";
 import { PolygonComponent } from "./PolygonComponent";
 import { UISerializable } from "./UIComponent";
 
@@ -92,7 +92,7 @@ export class PolygonUI extends PolygonComponent implements UISerializable {
     }
 
     toJSON(): StaticObjData {
-        const name = nameMap[this.obj.constructor.name];
+        const name = objToName[this.obj.constructor.name];
         const points = this.convertKnots();
         return [name, [points]];
     }
