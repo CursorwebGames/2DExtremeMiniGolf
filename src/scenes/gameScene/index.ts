@@ -1,4 +1,4 @@
-import { getLevel, LevelData } from "../../levels/levels";
+import { getLevel } from "../../levels/levels";
 import { Scene } from "../scene";
 import { SceneManager } from "../sceneManager";
 import { GameRenderer } from "./gameRenderer";
@@ -30,19 +30,12 @@ export class GameScene extends Scene {
     constructor(sceneManager: SceneManager, levelIdx = 0) {
         super();
         this.sceneManager = sceneManager;
-        this.gameRenderer = new GameRenderer(() => this.nextLevel());
+        this.gameRenderer = new GameRenderer(getLevel(levelIdx), () => this.nextLevel());
         this.pauseMenu = new PauseMenu(this);
 
         this.retries = 0;
 
         this.levelIdx = levelIdx;
-
-        this.loadLevel(getLevel(levelIdx));
-    }
-
-    /** This method lets the editor inject custom code */
-    loadLevel(level: LevelData | null) {
-        this.gameRenderer.loadLevel(level);
     }
 
     draw() {
@@ -58,9 +51,7 @@ export class GameScene extends Scene {
     }
 
     restartLevel() {
-        this.gameRenderer = new GameRenderer(() => this.nextLevel());
-        this.loadLevel(getLevel(this.levelIdx));
-
+        this.gameRenderer = new GameRenderer(getLevel(this.levelIdx), () => this.nextLevel());
         this.retries++;
     }
 

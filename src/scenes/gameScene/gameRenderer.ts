@@ -8,27 +8,22 @@ import { Obstacle } from "../../objects/obstacle";
 export class GameRenderer {
     nextLevel: () => void;
 
-    camera!: Camera;
+    camera: Camera;
 
-    ball!: MainBall;
-    hole!: Hole;
+    ball: MainBall;
+    hole: Hole;
 
-    par!: number;
-    guideText!: string;
+    par: number;
+    guideText: string;
 
     strokes: number;
 
-    bounds!: PointArr;
-    obstacles!: Obstacle[];
+    bounds: PointArr;
+    obstacles: Obstacle[];
 
-    constructor(nextLevel: () => void) {
+    constructor(level: LevelData, nextLevel: () => void) {
         this.nextLevel = nextLevel;
         this.strokes = 0;
-    }
-
-    /** This method lets the editor inject custom code */
-    loadLevel(level: LevelData | null) {
-        if (level == null) return;
 
         this.ball = new MainBall(...level.ball);
         this.hole = new Hole(...level.hole);

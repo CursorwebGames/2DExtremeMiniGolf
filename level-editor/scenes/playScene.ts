@@ -1,15 +1,20 @@
 import { LevelData } from "../../src/levels/levels";
-import { GameScene } from "../../src/scenes/gameScene";
-import { SceneManager } from "../../src/scenes/sceneManager";
+import { GameRenderer } from "../../src/scenes/gameScene/gameRenderer";
+import { Scene } from "../../src/scenes/scene";
 import { EditorManager } from "../editorManager";
 
-export class PlayScene extends GameScene {
+export class PlayScene extends Scene {
     editorManager: EditorManager;
+    gameRenderer: GameRenderer;
 
     constructor(level: LevelData, editorManager: EditorManager) {
-        super(null as unknown as SceneManager, 0);
-        this.loadLevel(level);
+        super();
+        this.gameRenderer = new GameRenderer(level, () => this.nextLevel());
         this.editorManager = editorManager;
+    }
+
+    draw(): void {
+        throw new Error("Method not implemented.");
     }
 
     nextLevel(): void {
