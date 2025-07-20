@@ -55,24 +55,24 @@ export class GameScene extends Scene {
         this.retries++;
     }
 
-    mousePressed(): void {
+    mousePressed() {
         this.pauseMenu.mousePressed();
         if (!this.pauseMenu.isPaused) {
             this.gameRenderer.mousePressed();
         }
     }
 
-    mouseReleased(): void {
+    mouseReleased() {
         if (!this.pauseMenu.isPaused) {
             this.gameRenderer.mouseReleased();
         }
     }
 
-    keyPressed(): void {
+    keyPressed() {
         this.pauseMenu.keyPressed();
     }
 
-    windowResized(): void {
+    windowResized() {
         this.pauseMenu.windowResized();
         this.gameRenderer.windowResized();
     }

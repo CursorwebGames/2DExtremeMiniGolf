@@ -14,10 +14,18 @@ export class PlayScene extends Scene {
     }
 
     draw(): void {
-        throw new Error("Method not implemented.");
+        this.gameRenderer.draw();
     }
 
     nextLevel(): void {
         this.editorManager.completedPlayMode();
+    }
+
+    mousePressed() {
+        this.gameRenderer.mousePressed();
+    }
+
+    mouseReleased() {
+        this.gameRenderer.mouseReleased();
     }
 }

@@ -64,11 +64,16 @@ export class Knot {
         if (keyIsPressed) {
             if (key == "Shift") {
                 this.pos = this.snap(this.pos);
+                return;
             }
+
             if (key == "Control") {
                 this.pos = this.snap(this.pos, 25);
+                return;
             }
         }
+
+        this.pos = createVector(round(this.pos.x), round(this.pos.y));
     }
 
     private snap(v: p5.Vector, n = 50) {
