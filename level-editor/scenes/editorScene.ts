@@ -50,7 +50,6 @@ export class EditorScene extends Scene {
         this.ball = new MainBallUI(new MainBall(...level.ball), this);
 
         this.levelBounds = new LevelBoundsUI(this, level.bounds);
-        console.log(this.knots);
     }
 
     draw() {

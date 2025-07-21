@@ -18,7 +18,7 @@ export class LevelBoundsUI extends PolygonComponent implements UIComponent {
     draw() {
         // the shadow and grass
         push();
-        fill(94, 230, 83);
+        fill(55, 204, 43);
         strokeWeight(3);
         stroke(0, 0.25 * 255);
         beginShape();

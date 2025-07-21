@@ -63,6 +63,11 @@ export class RectUI implements UIComponent, UISerializable {
         const width = this.dimKnot.pos.x - pos.x;
         const height = this.dimKnot.pos.y - pos.y;
 
-        return [name, [pos.x, pos.y, width, height]];
+        // todo: actually fix slope
+        if (this.obj instanceof Slope) {
+            return [name, [pos.x, pos.y, width, height, [this.obj.force.x, this.obj.force.y]]];
+        } else {
+            return [name, [pos.x, pos.y, width, height]];
+        }
     }
 }
