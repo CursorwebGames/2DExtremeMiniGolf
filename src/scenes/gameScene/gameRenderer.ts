@@ -98,7 +98,7 @@ export class GameRenderer {
     private drawGround() {
         push();
         // the shadow and grass
-        fill(94, 230, 83);
+        fill(55, 204, 43);
         strokeWeight(3);
         stroke(0, 0.25 * 255);
         beginShape();

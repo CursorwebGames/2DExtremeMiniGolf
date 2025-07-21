@@ -45,17 +45,17 @@ export class Teleporter implements Obstacle<null | "end" | "start"> {
 
         noFill();
         strokeWeight(8);
-        stroke(123, 123, 255, 0.4 * 255);
+        stroke(48, 18, 102, 0.4 * 255);
         circle(this.end.x, this.end.y, this.r * 2 + 8);
         strokeWeight(4);
-        stroke(123, 123, 255);
+        stroke(48, 18, 102);
         circle(this.end.x, this.end.y, this.r * 2);
 
         strokeWeight(8);
-        stroke(219, 141, 15, 0.4 * 255);
+        stroke(192, 216, 224, 0.4 * 255);
         circle(this.start.x, this.start.y, this.r * 2 + 8);
         strokeWeight(4);
-        stroke(219, 141, 15);
+        stroke(192, 216, 224);
         circle(this.start.x, this.start.y, this.r * 2);
 
         // 2: stroke weight
@@ -69,9 +69,9 @@ export class Teleporter implements Obstacle<null | "end" | "start"> {
             const r = tick;
             if (r > 0) {
                 strokeWeight(1 - r / diam);
-                stroke(219, 141, 15);
+                stroke(192, 216, 224);
                 circle(this.start.x, this.start.y, r);
-                stroke(123, 123, 255);
+                stroke(48, 18, 102);
                 circle(this.end.x, this.end.y, r);
             }
         }
