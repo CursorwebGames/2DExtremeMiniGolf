@@ -44,6 +44,7 @@ export class EditorScene extends Scene {
      * Loads `hole`, `ball`, and `levelBounds`
      */
     importLevel(level: LevelData) {
+        // remove knots for hole and ball and level bounds
         this.knots = [];
 
         this.hole = new SingleUI(new Hole(...level.hole), this);

@@ -118,8 +118,9 @@ export class HTMLManager {
         }
 
         const scene = this.editorManager.scene as EditorScene;
-        if (level) {
-            for (const item of this.objListItems) {
+        if (level) { // level could be undefined
+            for (let i = this.objListItems.length - 1; i >= 0; i--) {
+                const item = this.objListItems[i];
                 item.remove();
             }
 

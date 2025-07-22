@@ -96,7 +96,9 @@ export class PolygonItem extends ObjListItem {
 
     constructor(ui: PolygonUI, name: string, htmlManager: HTMLManager) {
         super(ui, name, htmlManager);
-        (this.scene as EditorScene).currEditPolygon = ui;
+        if (ui.vknots.length == 0) {
+            (this.scene as EditorScene).currEditPolygon = ui;
+        }
     }
 
     createCont(name: string): HTMLDivElement {
