@@ -1,6 +1,12 @@
-import { Ball } from "../ball";
+import { MainBall } from "../mainBall";
 
 export abstract class BallEffect {
+    ball: MainBall;
+
+    constructor(ball: MainBall) {
+        this.ball = ball;
+    }
+
     abstract id: string;
-    abstract draw(ball: Ball): void;
+    abstract draw(): void;
 }

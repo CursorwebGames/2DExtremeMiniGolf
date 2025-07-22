@@ -1,5 +1,5 @@
 import { Camera } from "../../camera";
-import { CCD_STEPS, MAX_SPEED, MIN_INPUT_SPEED, VISUAL_SPEED } from "../../config";
+import { CCD_STEPS, MAX_SPEED, VISUAL_SPEED } from "../../config";
 import { LevelData, levelToObject } from "../../levels/levels";
 import { Hole } from "../../objects/hole";
 import { MainBall } from "../../objects/mainBall";
@@ -183,18 +183,7 @@ export class GameRenderer {
     }
 
     mouseReleased(): void {
-        // either ball in movement, or player hasn't made an input yet
-        if (!this.ball.canShoot() || !this.ball.dragStart) return;
-
-        // actual input (without accounting for scaling)
-        const dir = this.ball.getDir();
-        this.ball.dragStart = null;
-
-        if (dir.mag() < MIN_INPUT_SPEED) return;
-        const vec = dir.div(VISUAL_SPEED);
-
-        this.ball.vel = vec;
-
+        this.ball.shoot();
         this.strokes++;
     }
 

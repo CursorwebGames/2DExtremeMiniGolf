@@ -1,5 +1,6 @@
 import { Ball } from "./ball";
 import { MAX_SPEED, MIN_INPUT_SPEED, VISUAL_SPEED } from "../config";
+import { BallEffect } from "./ballEffects/ballEffect";
 
 const PULSE_DURATION = 15;
 const PAUSE_DURATION = 10;
@@ -13,9 +14,21 @@ export class MainBall extends Ball {
 
     idleTick: number;
 
+    /**
+     * The position to reset back to if ball into water:
+     * where it started the stroke
+     */
+    strokeStartPos: p5.Vector;
+
+    effect: BallEffect | null;
+
     constructor(x: number, y: number) {
         super(x, y, 10);
+
+        this.strokeStartPos = this.pos.copy();
         this.idleTick = 0;
+
+        this.effect = null;
     }
 
     draw() {
@@ -23,28 +36,55 @@ export class MainBall extends Ball {
             this.showDrag();
         }
 
-        super.draw();
+        if (!this.effect) {
+            super.draw();
+        } else {
+            this.effect.draw();
+        }
 
+        // reset idle animation
         if (this.dragStart) {
             this.idleTick = 0;
         }
 
+        // user is not dragging, and ball is at rest
         if (!this.dragStart && this.vel.mag() == 0) {
-            this.idleTick += PULSE_SPEED;
-            this.idleTick %= PULSE_DURATION + PAUSE_DURATION;
-
-            const tick = this.idleTick;
-            if (tick < 15) {
-                noFill();
-
-                // sin function starts at a value less than 0 (stay transparent longer)
-                stroke(255, sin(((tick - 1) / PULSE_DURATION) * PI) * 128);
-
-                // sin function goes: -1 -> 1 -> 1; tick = [0, 15]
-                strokeWeight(1 + 0.5 * sin((tick / (PULSE_DURATION / 2) - 0.5) * PI));
-                circle(this.pos.x, this.pos.y, this.r + 20 + tick);
-            }
+            this.drawIdle();
         }
+    }
+
+    private drawIdle() {
+        this.idleTick += PULSE_SPEED;
+        this.idleTick %= PULSE_DURATION + PAUSE_DURATION;
+
+        const tick = this.idleTick;
+        if (tick < 15) {
+            noFill();
+
+            // sin function starts at a value less than 0 (stay transparent longer)
+            stroke(255, sin(((tick - 1) / PULSE_DURATION) * PI) * 128);
+
+            // sin function goes: -1 -> 1 -> 1; tick = [0, 15]
+            strokeWeight(1 + 0.5 * sin((tick / (PULSE_DURATION / 2) - 0.5) * PI));
+            circle(this.pos.x, this.pos.y, this.r + 20 + tick);
+        }
+    }
+
+    shoot() {
+        // either ball in movement, or player hasn't made an input yet
+        if (!this.canShoot() || !this.dragStart) return;
+
+        const dir = this.getDir();
+        this.dragStart = null;
+
+        // if user input is too small, cancel the input
+        if (dir.mag() < MIN_INPUT_SPEED) return;
+
+        this.strokeStartPos = this.pos.copy();
+
+        // convert from visual speed (longer) to actual speed
+        const vel = dir.div(VISUAL_SPEED);
+        this.applyForce(vel);
     }
 
     showDrag() {
@@ -58,7 +98,10 @@ export class MainBall extends Ball {
         }
     }
 
-    /** Gets the user's input, without accounting for scaling */
+    /**
+     * Gets the user's input in screen coordinates, won't scale to actual velocities.
+     * As a reminder, the visual indicator is significantly longer than the actual velocity.
+     */
     getDir() {
         // opposite direction
         return p5.Vector.sub(this.dragStart!, createVector(mouseX, mouseY)).mult(2).limit(MAX_SPEED * VISUAL_SPEED);

@@ -1,6 +1,5 @@
 import { MAX_SPEED, MIN_SPEED } from "../config";
 import { circPolyCol, CircPolyColResult } from "../collisions";
-import { BallEffect } from "./ballEffects/ballEffect";
 
 const friction = 0.016;
 
@@ -9,32 +8,13 @@ export class Ball {
     vel: p5.Vector;
     r: number;
 
-    /** The position to reset back to if ball into water */
-    prevPos: p5.Vector;
-
-    effects: Map<string, BallEffect>;
-
     constructor(x: number, y: number, r = 10) {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
         this.r = r;
-        this.prevPos = this.pos.copy();
-
-        this.effects = new Map();
-        window.ball = this;
     }
 
     draw() {
-        if (this.effects.size == 0) {
-            this.drawBall();
-        } else {
-            for (const effect of this.effects.values()) {
-                effect.draw(this);
-            }
-        }
-    }
-
-    drawBall() {
         fill(0, 0.25 * 255);
         circle(this.pos.x + 1.5, this.pos.y + 1.5, this.r * 2);
 
@@ -44,14 +24,6 @@ export class Ball {
         stroke(0, 0.25 * 255);
         circle(this.pos.x, this.pos.y, this.r * 2);
         pop();
-    }
-
-    addEffect(effect: BallEffect) {
-        this.effects.set(effect.id, effect);
-    }
-
-    removeEffect(id: string) {
-        this.effects.delete(id);
     }
 
     /**
@@ -74,13 +46,13 @@ export class Ball {
         this.vel.mult(1 - friction / ccd);
         this.vel.limit(MAX_SPEED);
 
-        // don't run this code if the ball is at rest
+        // if vel is small enough, truncate to 0
         if (this.vel.mag() > 0 && this.vel.mag() < MIN_SPEED) {
-            this.prevPos = this.pos.copy();
             this.vel.setMag(0);
         }
     }
 
+    // todo: should i move checkbounds to its own bounds class?
     private checkBounds(bounds: PointArr) {
         // note: let { a } = false; doesn't throw error
         // look, if javascript supports a match feature, ofc i'd use that. But it doesn't so I have to do this.

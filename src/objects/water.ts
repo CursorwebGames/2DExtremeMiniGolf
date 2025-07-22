@@ -1,8 +1,7 @@
 import { circPolyCol, MaybeCircPolyColResult, pointPolyCol } from "../collisions";
-import { MIN_SPEED } from "../config";
 import { Ball } from "./ball";
-import { DrownEffect } from "./ballEffects/drownEffect";
-import { WakeEffect } from "./ballEffects/wakeEffect";
+import { SinkEffect } from "./ballEffects/sinkEffect";
+import { MainBall } from "./mainBall";
 import { Obstacle } from "./obstacle";
 
 const friction = 0.03;
@@ -74,22 +73,15 @@ export class Water implements Obstacle<MaybeCircPolyColResult | boolean> {
     }
 
     collide(ball: Ball) {
-        if (!this.hasCollided) {
-            ball.addEffect(new DrownEffect());
-            ball.addEffect(new WakeEffect(ball));
-            this.hasCollided = true;
-        }
+        // const center = createVector(this.cx, this.cy);
+        // const dir = p5.Vector.sub(center, ball.pos);
+        // ball.applyForce(dir);
         ball.vel.mult(1 - friction);
 
-        if (ball.vel.mag() < MIN_SPEED) {
-            this.hasCollided = false;
-            ball.removeEffect("drown");
-            ball.removeEffect("wake");
-            ball.pos = ball.prevPos.copy();
+        // todo: for regular balls not mainball
+        if (ball instanceof MainBall && !ball.effect) {
+            ball.effect = new SinkEffect(ball);
         }
-        // obj.pos = obj.prevPos.copy();
-        // obj.vel.setMag(0);
-        // TODO: transition into drowning
     }
 
     isColliding(ball: Ball) {
