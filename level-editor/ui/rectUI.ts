@@ -1,6 +1,6 @@
 import { StaticObjData } from "../../src/levels/levels";
 import { Ice } from "../../src/objects/ice";
-import { Slope } from "../../src/objects/slope";
+import { Slope, SLOPE_STRENGTH } from "../../src/objects/slope";
 import { Wall } from "../../src/objects/wall";
 import { EditorScene } from "../scenes/editorScene";
 import { Knot } from "./knot";
@@ -65,7 +65,9 @@ export class RectUI implements UIComponent, UISerializable {
 
         // todo: actually fix slope
         if (this.obj instanceof Slope) {
-            return [name, [pos.x, pos.y, width, height, [this.obj.force.x, this.obj.force.y]]];
+            // hack cuz @types/p5 is doing a bad job
+            const force = p5.Vector.div(this.obj.force, SLOPE_STRENGTH) as unknown as p5.Vector;
+            return [name, [pos.x, pos.y, width, height, [force.x, force.y]]];
         } else {
             return [name, [pos.x, pos.y, width, height]];
         }

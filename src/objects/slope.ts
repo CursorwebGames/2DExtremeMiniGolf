@@ -2,6 +2,8 @@ import { circRectCol } from "../collisions";
 import { Ball } from "./ball";
 import { Obstacle } from "./obstacle";
 
+export const SLOPE_STRENGTH = 0.35;
+
 // how many rectangles to draw
 const gradientDetail = 10;
 
@@ -21,7 +23,7 @@ export class Slope implements Obstacle {
         this.y = y;
         this.w = w;
         this.h = h;
-        this.force = createVector(...force).mult(0.35);
+        this.force = createVector(...force).mult(SLOPE_STRENGTH);
 
         this.colors = [];
         const white = color(100, 0.1 * 255);
@@ -36,7 +38,6 @@ export class Slope implements Obstacle {
 
         push();
         noFill();
-        // fill(255, 0, 0)
         strokeWeight(0.1);
         stroke(0);
         rect(this.x, this.y, this.w, this.h);
