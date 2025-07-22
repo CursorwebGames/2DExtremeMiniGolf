@@ -1,7 +1,7 @@
 import { levelExists } from "../levels/levels";
 import { EndScene } from "./endScene";
 import { GameScene } from "./gameScene";
-import { MenuScene } from "./menuScene";
+// import { MenuScene } from "./menuScene";
 import { Scene } from "./scene";
 import { Transition } from "./transitionManager";
 
@@ -14,7 +14,7 @@ export class SceneManager {
     stats: StatsManager;
 
     constructor() {
-        this.scene = new MenuScene(this);
+        this.scene = new GameScene(this, 7)///new MenuScene(this);
         this.transitionManager = new Transition();
         this.stats = new StatsManager();
     }

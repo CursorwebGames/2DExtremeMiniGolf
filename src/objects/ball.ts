@@ -1,5 +1,6 @@
 import { MAX_SPEED, MIN_SPEED } from "../config";
 import { circPolyCol, CircPolyColResult } from "../collisions";
+import { BallEffect } from "./ballEffects/ballEffect";
 
 const friction = 0.016;
 
@@ -11,14 +12,29 @@ export class Ball {
     /** The position to reset back to if ball into water */
     prevPos: p5.Vector;
 
+    effects: Map<string, BallEffect>;
+
     constructor(x: number, y: number, r = 10) {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
         this.r = r;
         this.prevPos = this.pos.copy();
+
+        this.effects = new Map();
+        window.ball = this;
     }
 
     draw() {
+        if (this.effects.size == 0) {
+            this.drawBall();
+        } else {
+            for (const effect of this.effects.values()) {
+                effect.draw(this);
+            }
+        }
+    }
+
+    drawBall() {
         fill(0, 0.25 * 255);
         circle(this.pos.x + 1.5, this.pos.y + 1.5, this.r * 2);
 
@@ -28,6 +44,14 @@ export class Ball {
         stroke(0, 0.25 * 255);
         circle(this.pos.x, this.pos.y, this.r * 2);
         pop();
+    }
+
+    addEffect(effect: BallEffect) {
+        this.effects.set(effect.id, effect);
+    }
+
+    removeEffect(id: string) {
+        this.effects.delete(id);
     }
 
     /**

@@ -1,8 +1,13 @@
-import { circPolyCol, MaybeCircPolyColResult } from "../collisions";
+import { circPolyCol, MaybeCircPolyColResult, pointPolyCol } from "../collisions";
+import { MIN_SPEED } from "../config";
 import { Ball } from "./ball";
+import { DrownEffect } from "./ballEffects/drownEffect";
+import { WakeEffect } from "./ballEffects/wakeEffect";
 import { Obstacle } from "./obstacle";
 
-export class Water implements Obstacle<MaybeCircPolyColResult> {
+const friction = 0.03;
+
+export class Water implements Obstacle<MaybeCircPolyColResult | boolean> {
     points: PointArr;
 
     /**
@@ -16,6 +21,8 @@ export class Water implements Obstacle<MaybeCircPolyColResult> {
 
     startColor: p5.Color;
     toColor: p5.Color;
+
+    hasCollided: boolean;
 
     constructor(points: PointArr) {
         this.points = points;
@@ -38,10 +45,13 @@ export class Water implements Obstacle<MaybeCircPolyColResult> {
 
         this.startColor = color(61, 137, 255);
         this.toColor = color(0, 73, 186);
+
+        this.hasCollided = false;
     }
 
     draw() {
         fill(40, 150, 255);
+
         push();
         translate(this.cx, this.cy);
         scale(1);
@@ -63,13 +73,26 @@ export class Water implements Obstacle<MaybeCircPolyColResult> {
         pop();
     }
 
-    collide(obj: Ball) {
-        obj.pos = obj.prevPos.copy();
-        obj.vel.setMag(0);
+    collide(ball: Ball) {
+        if (!this.hasCollided) {
+            ball.addEffect(new DrownEffect());
+            ball.addEffect(new WakeEffect(ball));
+            this.hasCollided = true;
+        }
+        ball.vel.mult(1 - friction);
+
+        if (ball.vel.mag() < MIN_SPEED) {
+            this.hasCollided = false;
+            ball.removeEffect("drown");
+            ball.removeEffect("wake");
+            ball.pos = ball.prevPos.copy();
+        }
+        // obj.pos = obj.prevPos.copy();
+        // obj.vel.setMag(0);
         // TODO: transition into drowning
     }
 
     isColliding(ball: Ball) {
-        return circPolyCol(ball.pos, ball.r, this.points);
+        return circPolyCol(ball.pos, ball.r, this.points) || pointPolyCol(ball.pos, this.points);
     }
 }
