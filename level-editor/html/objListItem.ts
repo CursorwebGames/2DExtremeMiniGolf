@@ -1,5 +1,5 @@
 import { Slope } from "../../src/objects/slope";
-import { Scene } from "../../src/scenes/scene";
+import { EditorManager } from "../editorManager";
 import { EditorScene } from "../scenes/editorScene";
 import { PolygonUI } from "../ui/polygonUI";
 import { RectUI } from "../ui/rectUI";
@@ -15,19 +15,19 @@ import { HTMLManager } from "./htmlManager";
  */
 export class ObjListItem {
     ui: UISerializable;
-    scene: Scene;
+    editorManager: EditorManager;
 
     html: HTMLDivElement;
     htmlManager: HTMLManager;
 
     /**
-     * **NOTE**: make sure the current scene is `EditorScene`!
+     * **NOTE**: make sure the current scene is `EditorScene` when instantiated!
      */
     constructor(ui: UISerializable, name: string, htmlManager: HTMLManager) {
         this.ui = ui;
         this.htmlManager = htmlManager;
         const scene = htmlManager.editorManager.scene as EditorScene;
-        this.scene = scene;
+        this.editorManager = htmlManager.editorManager;
 
         // html
         this.html = this.createCont(name);
@@ -35,6 +35,14 @@ export class ObjListItem {
 
         // ui
         scene.obstacleUIs.push(ui);
+    }
+
+    /**
+     * Computed value because scene can change
+     * (and we don't want to hold a specific ref)
+     */
+    get scene() {
+        return this.editorManager.scene;
     }
 
     createCont(name: string) {

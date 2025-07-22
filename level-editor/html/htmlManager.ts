@@ -131,7 +131,6 @@ export class HTMLManager {
                 const { itemName, ItemClass } = objToItem[name];
 
                 const obstacleUI = new UIClass(new ObjClass(...args), scene);
-                console.log(obstacleUI);
 
                 this.objListItems.push(new ItemClass(obstacleUI, itemName, this));
             }
