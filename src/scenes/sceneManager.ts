@@ -14,7 +14,7 @@ export class SceneManager {
     stats: StatsManager;
 
     constructor() {
-        this.scene = new GameScene(this, 7)///new MenuScene(this);
+        this.scene = new GameScene(this, 13)///new MenuScene(this);
         this.transitionManager = new Transition();
         this.stats = new StatsManager();
     }

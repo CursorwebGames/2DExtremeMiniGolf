@@ -70,21 +70,26 @@ export class MainBall extends Ball {
         }
     }
 
+    /**
+     * @returns true if successfully made a stroke
+     */
     shoot() {
         // either ball in movement, or player hasn't made an input yet
-        if (!this.canShoot() || !this.dragStart) return;
+        if (!this.canShoot() || !this.dragStart) return false;
 
         const dir = this.getDir();
         this.dragStart = null;
 
         // if user input is too small, cancel the input
-        if (dir.mag() < MIN_INPUT_SPEED) return;
+        if (dir.mag() < MIN_INPUT_SPEED) return false;
 
         this.strokeStartPos = this.pos.copy();
 
         // convert from visual speed (longer) to actual speed
         const vel = dir.div(VISUAL_SPEED);
         this.applyForce(vel);
+
+        return true;
     }
 
     showDrag() {

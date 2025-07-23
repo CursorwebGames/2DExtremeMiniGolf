@@ -4,14 +4,17 @@ import { MainBall } from "../mainBall";
 import { BallEffect } from "./ballEffect";
 
 const maxBubbleSize = 20;
+const bubbleFreq = 5;
 
 export class SinkEffect extends BallEffect {
     id = "sink";
     trail: { x: number, y: number, tick: number }[];
+    trailTick: number;
 
     constructor(ball: MainBall) {
         super(ball);
         this.trail = [];
+        this.trailTick = 0;
     }
 
     draw() {
@@ -30,7 +33,9 @@ export class SinkEffect extends BallEffect {
         circle(0, 0, ball.r * 2);
         pop();
 
-        if (frameCount % 5 == 0 && this.ball.vel.mag() > 1) {
+        this.trailTick++;
+        if (this.trailTick == bubbleFreq && this.ball.vel.mag() > 1) {
+            this.trailTick = 0;
             this.trail.push({ ...ball.pos, tick: 0 });
         }
 

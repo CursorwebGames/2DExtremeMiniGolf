@@ -183,8 +183,9 @@ export class GameRenderer {
     }
 
     mouseReleased(): void {
-        this.ball.shoot();
-        this.strokes++;
+        if (this.ball.shoot()) {
+            this.strokes++;
+        }
     }
 
     windowResized(): void {
