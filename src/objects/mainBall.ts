@@ -2,9 +2,9 @@ import { Ball } from "./ball";
 import { MAX_SPEED, MIN_INPUT_SPEED, VISUAL_SPEED } from "../config";
 import { BallEffect } from "./ballEffects/ballEffect";
 
-const PULSE_DURATION = 15;
-const PAUSE_DURATION = 10;
-const PULSE_SPEED = 0.2;
+const pulseDuration = 15;
+const pauseDuration = 10;
+const pulseSpeed = 0.2;
 
 export class MainBall extends Ball {
     /** If ball is in hole, you are at rest, but can't make any more moves */
@@ -32,40 +32,40 @@ export class MainBall extends Ball {
     }
 
     draw() {
-        if (this.dragStart && this.canShoot()) {
-            this.showDrag();
-        }
-
         if (!this.effect) {
+            if (this.dragStart && this.canShoot()) {
+                this.showDrag();
+            }
+
             super.draw();
+
+            // reset idle animation
+            if (this.dragStart) {
+                this.idleTick = 0;
+            }
+
+            // user is not dragging, and ball is at rest
+            if (!this.dragStart && this.vel.mag() == 0) {
+                this.drawIdle();
+            }
         } else {
             this.effect.draw();
-        }
-
-        // reset idle animation
-        if (this.dragStart) {
-            this.idleTick = 0;
-        }
-
-        // user is not dragging, and ball is at rest
-        if (!this.dragStart && this.vel.mag() == 0) {
-            this.drawIdle();
         }
     }
 
     private drawIdle() {
-        this.idleTick += PULSE_SPEED;
-        this.idleTick %= PULSE_DURATION + PAUSE_DURATION;
+        this.idleTick += pulseSpeed;
+        this.idleTick %= pulseDuration + pauseDuration;
 
         const tick = this.idleTick;
         if (tick < 15) {
             noFill();
 
             // sin function starts at a value less than 0 (stay transparent longer)
-            stroke(255, sin(((tick - 1) / PULSE_DURATION) * PI) * 128);
+            stroke(255, sin(((tick - 1) / pulseDuration) * PI) * 128);
 
             // sin function goes: -1 -> 1 -> 1; tick = [0, 15]
-            strokeWeight(1 + 0.5 * sin((tick / (PULSE_DURATION / 2) - 0.5) * PI));
+            strokeWeight(1 + 0.5 * sin((tick / (pulseDuration / 2) - 0.5) * PI));
             circle(this.pos.x, this.pos.y, this.r + 20 + tick);
         }
     }
