@@ -20,6 +20,7 @@ export class MainBall extends Ball {
      */
     strokeStartPos: p5.Vector;
 
+    // todo: methods like addEffect and removeEffect
     effect: BallEffect | null;
 
     constructor(x: number, y: number) {

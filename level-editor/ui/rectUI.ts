@@ -63,7 +63,6 @@ export class RectUI implements UIComponent, UISerializable {
         const width = this.dimKnot.pos.x - pos.x;
         const height = this.dimKnot.pos.y - pos.y;
 
-        // todo: actually fix slope
         if (this.obj instanceof Slope) {
             // hack cuz @types/p5 is doing a bad job
             const force = p5.Vector.div(this.obj.force, SLOPE_STRENGTH) as unknown as p5.Vector;

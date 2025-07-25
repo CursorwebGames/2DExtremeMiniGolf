@@ -73,12 +73,8 @@ export class Water implements Obstacle<MaybeCircPolyColResult | boolean> {
     }
 
     collide(ball: Ball) {
-        // const center = createVector(this.cx, this.cy);
-        // const dir = p5.Vector.sub(center, ball.pos);
-        // ball.applyForce(dir);
         ball.vel.mult(1 - friction);
 
-        // todo: for regular balls not mainball
         if (ball instanceof MainBall && !ball.effect) {
             ball.effect = new SinkEffect(ball);
         }

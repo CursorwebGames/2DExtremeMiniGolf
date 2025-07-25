@@ -1,6 +1,5 @@
 import { MAX_SPEED } from "../../config";
 import { MainBall } from "../mainBall";
-// import { Ball } from "../ball";
 import { BallEffect } from "./ballEffect";
 
 const maxBubbleSize = 20;
