@@ -27,6 +27,7 @@ export class GameRenderer {
 
         this.ball = new MainBall(...level.ball);
         this.hole = new Hole(...level.hole);
+        this.ball.pos = createVector(290.15149832907485, 465.174620512548);
 
         this.par = level.par;
         this.guideText = level.guideText || "";
@@ -168,7 +169,8 @@ export class GameRenderer {
     }
 
     debugMousePressed(): void {
-        const vec = createVector(6.6, 8.7);
+        // use this to have the same user input
+        const vec = createVector(6.941355705842322, 7.198442954206852);
         // const vec = p5.Vector.sub(createVector(mousex, mousey), this.ball.pos).div(32);
         console.log("ballPos:", this.ball.pos.toString(), "\n",
             "Vec:", vec.toString(), "\n",
@@ -176,7 +178,15 @@ export class GameRenderer {
         this.ball.vel = vec;
     }
 
+    debugMouseReleased() {
+        if (!this.ball.dragStart) return;
+        // use this to get a user input value
+        const dir = this.ball.getDir().div(VISUAL_SPEED);
+        console.log("ballpos:", this.ball.pos.toString(), "\n", "Vel:", dir.toString());
+    }
+
     mousePressed(): void {
+        this.debugMousePressed(); return;
         if (!this.ball.canShoot()) return;
 
         this.ball.dragStart = createVector(mouseX, mouseY);

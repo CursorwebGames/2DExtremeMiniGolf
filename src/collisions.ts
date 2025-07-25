@@ -43,6 +43,7 @@ export function circLineCol(circPoint: p5.Vector, r: number, startPoint: p5.Vect
     }
 }
 
+// todo: fix this circle polygon collision somehow
 /** All properties are optional because `let { projPoint } = false;` means `projPoint` is `undefined` */
 export type CircPolyColResult = {
     /**
@@ -95,7 +96,6 @@ export function pointPolyCol(point: p5.Vector, points: PointArr) {
             (px < (end.x - start.x) * (py - start.y) / (end.y - start.y) + start.x)) {
             collide = !collide;
         }
-
     }
 
     return collide;

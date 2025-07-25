@@ -59,6 +59,7 @@ export class Ball {
         let { projPoint, edge } = circPolyCol(this.pos, this.r, bounds) as CircPolyColResult;
         if (projPoint) {
             let diff = p5.Vector.sub(this.pos, projPoint);
+            this.vel.mult(0.8);
             let speed = this.vel.mag();
 
             let ang = Math.abs(this.vel.angleBetween(edge!));
