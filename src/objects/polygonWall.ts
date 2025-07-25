@@ -37,7 +37,6 @@ export class PolygonWall implements Obstacle<MaybeCircPolyColResult> {
         // based on the clockwise/counterclockwise of the polygon render
         // the angle can be either positive or negative, but we want positive (just think quadrant 1 vs quadrant 2)
         let ang = Math.abs(obj.vel.angleBetween(edge!));
-        console.log('collided', obj.vel.toString(), obj.pos.toString())
 
         obj.pos.add(p5.Vector.setMag(diff, obj.r - diff.mag()));
         obj.applyForce(diff.setMag(2 * Math.sin(ang) * speed));

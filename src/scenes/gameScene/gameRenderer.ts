@@ -27,7 +27,7 @@ export class GameRenderer {
 
         this.ball = new MainBall(...level.ball);
         this.hole = new Hole(...level.hole);
-        this.ball.pos = createVector(290.15149832907485, 465.174620512548);
+        // this.ball.pos = createVector(290.15149832907485, 465.174620512548);
 
         this.par = level.par;
         this.guideText = level.guideText || "";
@@ -186,7 +186,6 @@ export class GameRenderer {
     }
 
     mousePressed(): void {
-        this.debugMousePressed(); return;
         if (!this.ball.canShoot()) return;
 
         this.ball.dragStart = createVector(mouseX, mouseY);

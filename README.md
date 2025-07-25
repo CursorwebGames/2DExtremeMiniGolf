@@ -25,3 +25,9 @@ https://www.youtube.com/watch?v=V2JI_P9bvik
 
 Works Consulted
 https://www.jeffreythompson.org/collision-detection/poly-point.php
+
+## Fixing a bug
+https://editor.p5js.org/D_Snyder/sketches/09tDKzlqV
+MTV (minimum translation vector)
+https://stackoverflow.com/questions/62432809/sat-polygon-circle-collision-resolve-the-intersection-in-the-direction-of-velo
+https://dyn4j.org/2010/01/sat/
